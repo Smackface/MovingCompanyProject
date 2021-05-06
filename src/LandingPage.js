@@ -8,6 +8,7 @@ import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
 import Grid from "@material-ui/core/Grid";
 import { createMuiTheme } from "@material-ui/core/styles";
+import Button from '@material-ui/core/Button';
 
 const theme = createMuiTheme({});
 
@@ -70,6 +71,7 @@ const useStyles = makeStyles({
       marginLeft: "auto",
       marginRight: "auto",
       width: "auto",
+      '&:hover': {textShadow: "-1px -1px 4px #CD5C5C, 1px 1px 4px #F08080"},
     },
 
     [theme.breakpoints.only("md")]: {
@@ -80,12 +82,14 @@ const useStyles = makeStyles({
       fontSize: "36px",
       fontWeight: "300",
       fontHeight: "1.5",
+      '&:hover': {textShadow: "-1px -1px 4px #8B0000, 1px 1px 4px #B22222"},
     },
 
     [theme.breakpoints.up("lg")]: {
       backgroundColor: "#303030",
       width: "350px",
       marginLeft: "15%",
+      '&:hover': {textShadow: "-1px -1px 4px #000, 1px 1px 4px #696969"},
     },
     height: "65px",
     marginTop: "50px",
@@ -96,7 +100,6 @@ const useStyles = makeStyles({
     fontSize: "24px",
     letterSpacing: "1px",
     borderRadius: "40px",
-    boxShadow: "0px 0px 8px",
     color: "white",
   },
   RightArrow: {
@@ -176,14 +179,14 @@ export default function LandingPage() {
             <img src={HeroBolt} alt="Bolt" className={classes.HeroImages} />
             From start to finish, our process saves you time.
           </p>
-          <button className={classes.CTAButton}>
+          <Button variant="contained" className={classes.CTAButton}>
             Get Started
             <img
               src={RightArrow}
               alt="ArrowRight"
               className={classes.RightArrow}
             />
-          </button>
+          </Button>
         </div>
       </Grid>
     </Grid>
