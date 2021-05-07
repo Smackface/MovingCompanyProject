@@ -10,13 +10,22 @@ import Grid from "@material-ui/core/Grid";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 
-const theme = createMuiTheme({});
+const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 760,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+});
 
 const useStyles = makeStyles({
   root: {
     marginLeft: "auto",
     marginRight: "auto",
-    textAlign: "center",
     fontFamily: "Roboto",
     alignItems: "center",
     minHeight: "100vh",
@@ -36,8 +45,8 @@ const useStyles = makeStyles({
     minWidth: "25vw",
     color: "white",
     textAlign: "center",
-    paddingBottom: "20%",
-    paddingTop: "20%",
+    paddingBottom: "25%",
+    paddingTop: "10%",
   },
   BodyDiv: {
     minWidth: "25vw",
@@ -54,10 +63,12 @@ const useStyles = makeStyles({
       fontSize: "1.5em",
       paddingBottom: "0px",
       paddingTop: "5%",
+      alignText: "center",
     },
     [theme.breakpoints.down("sm")]:{
       paddingLeft: "15px",
       paddingRight: "15px",
+      textAlign: "center",
     },
   },
   HeroImages: {
@@ -118,6 +129,9 @@ const useStyles = makeStyles({
       fontSize: "72px",
       fontWeight: "300",
     },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "56px",
+    },
     fontSize: "64px",
     marginLeft: "10%",
     marginRight: "5%",
@@ -143,6 +157,11 @@ const useStyles = makeStyles({
       clipPath: "polygon(0 0, 100% 0, 80% 100%, 0% 100%)",
     },
   },
+  BodyParagraph: {
+    [theme.breakpoints.only("md")]: {
+      marginRight: "10%",
+    }
+  },
 });
 
 export default function LandingPage() {
@@ -163,7 +182,7 @@ export default function LandingPage() {
       </Grid>
       <Grid item xs={12} lg={6}>
         <div className={classes.BodyDiv}>
-          <p>
+          <p className={classes.BodyParagraph}>
             <img
               src={HeroShieldCheck}
               alt="Shield"
@@ -171,7 +190,7 @@ export default function LandingPage() {
             />
             We will handle your belongings with the utmost in care.
           </p>
-          <p>
+          <p className={classes.BodyParagraph}>
             <img
               src={HeroCreditCard}
               alt="CreditCard"
@@ -179,7 +198,7 @@ export default function LandingPage() {
             />
             Book our services now, and pay later.
           </p>
-          <p>
+          <p className={classes.BodyParagraph}>
             <img src={HeroBolt} alt="Bolt" className={classes.HeroImages} />
             From start to finish, our process saves you time.
           </p>
