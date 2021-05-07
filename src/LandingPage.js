@@ -17,10 +17,10 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginRight: "auto",
     textAlign: "center",
-    maxWidth: "30vw",
     fontFamily: "Roboto",
     alignItems: "center",
     minHeight: "100vh",
+    paddingBottom: "20px",
   },
   HeroDiv: {
     backgroundPosition: "left",
@@ -54,6 +54,10 @@ const useStyles = makeStyles({
       fontSize: "1.5em",
       paddingBottom: "0px",
       paddingTop: "5%",
+    },
+    [theme.breakpoints.down("sm")]:{
+      paddingLeft: "15px",
+      paddingRight: "15px",
     },
   },
   HeroImages: {
@@ -144,7 +148,7 @@ const useStyles = makeStyles({
 export default function LandingPage() {
   const classes = useStyles();
   return (
-    <Grid container direction="row">
+    <Grid container direction="row" className={classes.root}>
       <Grid item xs={12} lg={6} className={classes.HeroGrid}>
         <div className={classes.HeroDiv}>
           <h1 className={classes.MainHeader}>
