@@ -5,7 +5,7 @@ import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {  Link as RouterLink, BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
+import {  Link, BrowserRouter as Router, Route, Switch, useLocation, matchPath } from "react-router-dom";
 
 // const styles = makeStyles({
 //   SignUpTab: {
@@ -86,6 +86,7 @@ const useStyles = makeStyles({
     fontSize: "1.3em",
     textTransform: "initial",
     marginRight: "auto",
+    marginLeft: "auto",
   },
   SignInTab: {
     color: "#1074d8",
@@ -103,38 +104,37 @@ const useStyles = makeStyles({
   },
 });
 
+const navItems = [
+  {
+    id: 'SignUp',
+    path: "/SignUp",
+    text: 'Sign Up',
+  },
+  {
+    id: 'SignIn',
+    path: "/SignIn",
+    text: 'Sign In',
+  },
+]
+
 export default function NavBar() {
-  // const location = useLocation()
-  const [value, setValue] = React.useState(1);
-  const handleChange = (e, value) => {
-    setValue(value);
-  };
+  const { pathname } = useLocation()
+  const activeItem = navItems.find((item)=> !!matchPath(pathname, {path: item.path}));
+
 
   const classes = useStyles();
   return (
-    <div className={classes.NavBarDiv}>
       <Tabs
-        value={value}
-        onChange={handleChange}
         centered
         className={classes.FormTabs}
         aria-label="test"
         indicatorColor="secondary"
+        value={activeItem?.id}
       >
-        <Tab
-          component={RouterLink}
-          to={"/SignUp"}
-          className={classes.SignUpTab}
-          label="Sign Up"
-        />
-        <Tab
-          component={RouterLink}
-          to={"/SignIn"}
-          className={classes.SignInTab}
-          label="Sign In"
-        />
+      {navItems.map((item)=>(
+        <Tab className={classes.SignUpTab} key={item.id} value={item.id} label={item.text} component={Link} to={item.path}/>
+      ))}
       </Tabs>
-    </div>
   );
 }
 
