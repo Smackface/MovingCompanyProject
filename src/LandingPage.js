@@ -1,4 +1,5 @@
 import "./App.css";
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles";
 import HeroBolt from "./Assets/HeroBolt.png";
 import HeroShieldCheck from "./Assets/HeroShieldCheck.png";
@@ -9,6 +10,7 @@ import "@fontsource/roboto/300.css";
 import Grid from "@material-ui/core/Grid";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -92,7 +94,7 @@ const useStyles = makeStyles({
     [theme.breakpoints.only("md")]: {
       backgroundColor: "maroon",
       width: "400px",
-      marginLeft: "auto",
+      marginLeft: "25%",
       marginRight: "auto",
       fontSize: "36px",
       fontWeight: "300",
@@ -202,6 +204,7 @@ export default function LandingPage() {
             <img src={HeroBolt} alt="Bolt" className={classes.HeroImages} />
             From start to finish, our process saves you time.
           </p>
+          <Link to="/SignIn">
           <Button variant="contained" className={classes.CTAButton}>
             Get Started
             <img
@@ -210,6 +213,7 @@ export default function LandingPage() {
               className={classes.RightArrow}
             />
           </Button>
+          </Link>
         </div>
       </Grid>
     </Grid>
