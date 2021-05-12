@@ -1,7 +1,7 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
-import NavBar from '../NavBar';
+import NavBar from "../NavBar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Divider } from "@material-ui/core";
@@ -10,15 +10,36 @@ import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
 import Template from "../Template";
 
+const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 760,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+});
+
 const useStyles = makeStyles({
   BodyDiv: {
+    [theme.breakpoints.down("md")]: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      minHeight: "100vh",
+    },
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
   SignUpsDiv: {
+    [theme.breakpoints.down("md")]: {
+      width: "100vw",
+      height: "50vh",
+    },
     alignItems: "center",
-    // backgroundColor: "AliceBlue",
     width: "66.5vw",
     height: "100vh",
     display: "flex",
@@ -37,15 +58,18 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginRight: "auto",
   },
-  DividerParagraph:{
+  DividerParagraph: {
     fontSize: "1.1em",
-    color: "grey"
+    color: "grey",
   },
   BottomDiv: {
     width: "90%",
     alignItems: "center",
     marginTop: "auto",
     marginBottom: "10%",
+    [theme.breakpoints.down("md")]: {
+      paddingBottom: "20px",
+    },
   },
   SubmitButton: {
     marginTop: "20px",
@@ -55,7 +79,7 @@ const useStyles = makeStyles({
     borderRadius: "15px",
     backgroundColor: "#1074d8",
     color: "white",
-    textTransform: "initial"
+    textTransform: "initial",
   },
   SocialMedia: {
     minWidth: "40px",
@@ -90,48 +114,45 @@ export default function SignInComponent() {
   const classes = useStyles();
   return (
     <div className={classes.BodyDiv}>
-    <Template/>
-    <div className={classes.SignUpsDiv}>
-    <NavBar/>
-      <div className={classes.HeaderDiv}></div>
-      <h1>Sign In</h1>
-      <TextField
-        className={classes.EmailTextField}
-        variant="outlined"
-        label="Email"
-        placeholder="john@doe.com"
-      />
-      <TextField
-        className={classes.EmailTextField}
-        variant="outlined"
-        label="Password"
-        placeholder="*******"
-      />
-      <Button
-        variant="contained"
-        className={classes.SubmitButton}
-      >
-        Sign In
-      </Button>
-      <div className={classes.BottomDiv}>
-        <div className={classes.DividerDiv}>
-          <Divider className={classes.Divider} />
-          <p className={classes.DividerParagraph}>or</p>
-          <Divider className={classes.Divider} />
-        </div>
-        <div className={classes.SocialMediaDiv}>
-          <Button variant="outlined" className={classes.SocialMediaButton}>
-            <Facebook className={classes.SocialMedia} />
-          </Button>
-          <Button variant="outlined" className={classes.SocialMediaButton}>
-            <Google className={classes.SocialMedia} />
-          </Button>
-          <Button variant="outlined" className={classes.SocialMediaButton}>
-            <Apple className={classes.SocialMedia} />
-          </Button>
+      <Template />
+      <div className={classes.SignUpsDiv}>
+        <NavBar />
+        <div className={classes.HeaderDiv}></div>
+        <h1>Sign In</h1>
+        <TextField
+          className={classes.EmailTextField}
+          variant="outlined"
+          label="Email"
+          placeholder="john@doe.com"
+        />
+        <TextField
+          className={classes.EmailTextField}
+          variant="outlined"
+          label="Password"
+          placeholder="*******"
+        />
+        <Button variant="contained" className={classes.SubmitButton}>
+          Sign In
+        </Button>
+        <div className={classes.BottomDiv}>
+          <div className={classes.DividerDiv}>
+            <Divider className={classes.Divider} />
+            <p className={classes.DividerParagraph}>or</p>
+            <Divider className={classes.Divider} />
+          </div>
+          <div className={classes.SocialMediaDiv}>
+            <Button variant="outlined" className={classes.SocialMediaButton}>
+              <Facebook className={classes.SocialMedia} />
+            </Button>
+            <Button variant="outlined" className={classes.SocialMediaButton}>
+              <Google className={classes.SocialMedia} />
+            </Button>
+            <Button variant="outlined" className={classes.SocialMediaButton}>
+              <Apple className={classes.SocialMedia} />
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

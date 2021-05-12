@@ -1,11 +1,18 @@
 import "./App.css";
-import React, {Component} from "react";
-import {  makeStyles, withStyles } from "@material-ui/core/styles";
+import React, { Component } from "react";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {  Link, BrowserRouter as Router, Route, Switch, useLocation, matchPath } from "react-router-dom";
+import {
+  Link,
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  matchPath,
+} from "react-router-dom";
 
 // const styles = makeStyles({
 //   SignUpTab: {
@@ -39,8 +46,6 @@ import {  Link, BrowserRouter as Router, Route, Switch, useLocation, matchPath }
 //     this.setState({value})
 //   };
 
-  
-
 //   render() {
 //     const {classes, value} = this.props
 //     return(
@@ -69,16 +74,14 @@ import {  Link, BrowserRouter as Router, Route, Switch, useLocation, matchPath }
 //           label="Sign In"
 //           value={"/SignIn"}
 //         />
-//       </Tabs>   
+//       </Tabs>
 //     </div>
 //     </Router>
 //     )
 //   }
 // }
 
-
 // export default withStyles(styles)(NavBar)
-
 
 const useStyles = makeStyles({
   SignUpTab: {
@@ -98,6 +101,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     width: "100%",
+    marginTop: "auto",
   },
   NavBarDiv: {
     width: "50vw",
@@ -106,37 +110,42 @@ const useStyles = makeStyles({
 
 const navItems = [
   {
-    id: 'SignUp',
+    id: "SignUp",
     path: "/SignUp",
-    text: 'Sign Up',
+    text: "Sign Up",
   },
   {
-    id: 'SignIn',
+    id: "SignIn",
     path: "/SignIn",
-    text: 'Sign In',
+    text: "Sign In",
   },
-]
+];
 
 export default function NavBar() {
-  const { pathname } = useLocation()
-  const activeItem = navItems.find((item)=> !!matchPath(pathname, {path: item.path}));
-
+  const { pathname } = useLocation();
+  const activeItem = navItems.find(
+    (item) => !!matchPath(pathname, { path: item.path })
+  );
 
   const classes = useStyles();
   return (
-      <Tabs
-        centered
-        className={classes.FormTabs}
-        aria-label="test"
-        indicatorColor="secondary"
-        value={activeItem?.id}
-      >
-      {navItems.map((item)=>(
-        <Tab className={classes.SignUpTab} key={item.id} value={item.id} label={item.text} component={Link} to={item.path}/>
+    <Tabs
+      centered
+      className={classes.FormTabs}
+      aria-label="test"
+      indicatorColor="secondary"
+      value={activeItem?.id}
+    >
+      {navItems.map((item) => (
+        <Tab
+          className={classes.SignUpTab}
+          key={item.id}
+          value={item.id}
+          label={item.text}
+          component={Link}
+          to={item.path}
+        />
       ))}
-      </Tabs>
+    </Tabs>
   );
 }
-
-
-
