@@ -4,12 +4,12 @@ import "@fontsource/roboto/300.css";
 import NavBar from "../NavBar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Divider, FormControl, FormGroup } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import { ReactComponent as Google } from "../Assets/GOOGLogo.svg";
 import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
 import Template from "../Template";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, form } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
 
@@ -80,11 +80,12 @@ const useStyles = makeStyles({
     paddingLeft: "10%",
     paddingRight: "10%",
     width: "40%",
-    height: "12%",
+    height: "8%",
     borderRadius: "15px",
     backgroundColor: "#1074d8",
     color: "white",
     textTransform: "initial",
+    fontSize: "1.4em",
   },
   SocialMedia: {
     minWidth: "40px",
@@ -141,8 +142,9 @@ export default function SignUpComponent() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e) {
+ async function handleSubmit(e) {
     e.preventDefault();
+    console.log("submitted!")
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords Do Not Match!");
     }
@@ -164,41 +166,51 @@ export default function SignUpComponent() {
         <NavBar />
         <div className={classes.HeaderDiv}></div>
         <h1 className={classes.Account}>Create an account</h1>
-        <form onSubmit={handleSubmit} className={classes.Form}>
-        {error && <Alert variant="outlined" severity="error">{error}</Alert>}
-          <FormGroup id="email" className={classes.FormGroup}>
-            <FormControl type="email" ref={emailRef} required />
-            <TextField
-              className={classes.TextField}
-              variant="outlined"
-              label="Email"
-              placeholder="john@doe.com"
-            />
-          </FormGroup>
-          <FormGroup className={classes.FormGroup} id="password">
-            <FormControl type="password" ref={passwordRef} required />
-            <TextField
-              className={classes.TextField}
-              variant="outlined"
-              label="Password"
-              placeholder="******"
-            />
-          </FormGroup>
-          <FormGroup className={classes.FormGroup} id="password confirmation">
-            <FormControl type="password" ref={passwordConfirmRef} required />
-            <TextField
-              className={classes.TextField}
-              variant="outlined"
-              label="Password"
-              placeholder="******"
-            />
-          </FormGroup>
+
+        <form className={classes.Form}
+        onSubmit={handleSubmit}>
+          {error && (
+            <Alert variant="outlined" severity="error">
+              {error}
+            </Alert>
+          )}
+          <TextField
+            id="email"
+            className={classes.TextField}
+            variant="outlined"
+            label="Email"
+            placeholder="john@doe.com"
+            type="email"
+            ref={emailRef}
+            required
+          />
+          <TextField
+            id="password"
+            type="password"
+            ref={passwordRef}
+            required
+            className={classes.TextField}
+            variant="outlined"
+            label="Password"
+            placeholder="******"
+          />
+          <TextField
+            id="password confirm"
+            type="password"
+            ref={passwordConfirmRef}
+            required
+            className={classes.TextField}
+            variant="outlined"
+            label="Password"
+            placeholder="******"
+          />
           <Button
             disabled={loading}
             variant="contained"
             color="primary"
             className={classes.SubmitButton}
             size="large"
+            type="submit"
           >
             Sign Up
           </Button>
@@ -210,7 +222,10 @@ export default function SignUpComponent() {
             <Divider className={classes.Divider} />
           </div>
           <div className={classes.SocialMediaDiv}>
-            <Button variant="outlined" className={classes.SocialMediaButton}>
+            <Button
+              variant="outlined"
+              className={classes.SocialMediaButton}
+            >
               <Facebook className={classes.SocialMedia} />
             </Button>
             <Button variant="outlined" className={classes.SocialMediaButton}>

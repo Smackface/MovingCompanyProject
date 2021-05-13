@@ -4,7 +4,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignInComponent from "./SignUpsPageComponents/SignInComponent";
 import SignUpComponent from "./SignUpsPageComponents/SignUpComponent";
-import firebase from "firebase/app";
 import { AuthProvider } from "./Contexts/AuthContext";
 
 function App() {
