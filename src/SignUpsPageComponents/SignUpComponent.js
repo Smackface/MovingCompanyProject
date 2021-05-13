@@ -4,12 +4,14 @@ import "@fontsource/roboto/300.css";
 import NavBar from "../NavBar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Divider } from "@material-ui/core";
+import { Divider, FormControl, FormGroup } from "@material-ui/core";
 import { ReactComponent as Google } from "../Assets/GOOGLogo.svg";
 import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
 import Template from "../Template";
-import React from "react";
+import React, { useRef, useState } from "react";
+import { UseAuth } from "../Contexts/AuthContext";
+import Alert from "@material-ui/lab/Alert";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -75,8 +77,10 @@ const useStyles = makeStyles({
   SubmitButton: {
     marginTop: "20px",
     marginBottom: "20px",
+    paddingLeft: "10%",
+    paddingRight: "10%",
     width: "40%",
-    height: "6%",
+    height: "12%",
     borderRadius: "15px",
     backgroundColor: "#1074d8",
     color: "white",
@@ -91,7 +95,7 @@ const useStyles = makeStyles({
     marginLeft: "5%",
     marginRight: "5%",
   },
-  EmailTextField: {
+  TextField: {
     width: "40%",
     marginTop: "20px",
     marginBottom: "20px",
@@ -115,10 +119,44 @@ const useStyles = makeStyles({
     },
     fontSize: "300%",
   },
+  FormGroup: {
+    width: "100%",
+    alignItems: "center",
+  },
+  Form: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+  },
 });
 
 export default function SignUpComponent() {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
   const classes = useStyles();
+  const { signup } = UseAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      return setError("Passwords Do Not Match!");
+    }
+
+    try {
+      setError("");
+      setLoading(true);
+      await signup(emailRef.current.value, passwordRef.current.value);
+    } catch {
+      setError("Failed To Create An Account!");
+    }
+    setLoading(false);
+  }
+
   return (
     <div className={classes.BodyDiv}>
       <Template className={classes.Template} />
@@ -126,20 +164,45 @@ export default function SignUpComponent() {
         <NavBar />
         <div className={classes.HeaderDiv}></div>
         <h1 className={classes.Account}>Create an account</h1>
-        <TextField
-          className={classes.EmailTextField}
-          variant="outlined"
-          label="Email"
-          placeholder="john@doe.com"
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.SubmitButton}
-          size="large"
-        >
-          Sign Up
-        </Button>
+        <form onSubmit={handleSubmit} className={classes.Form}>
+        {error && <Alert variant="outlined" severity="error">{error}</Alert>}
+          <FormGroup id="email" className={classes.FormGroup}>
+            <FormControl type="email" ref={emailRef} required />
+            <TextField
+              className={classes.TextField}
+              variant="outlined"
+              label="Email"
+              placeholder="john@doe.com"
+            />
+          </FormGroup>
+          <FormGroup className={classes.FormGroup} id="password">
+            <FormControl type="password" ref={passwordRef} required />
+            <TextField
+              className={classes.TextField}
+              variant="outlined"
+              label="Password"
+              placeholder="******"
+            />
+          </FormGroup>
+          <FormGroup className={classes.FormGroup} id="password confirmation">
+            <FormControl type="password" ref={passwordConfirmRef} required />
+            <TextField
+              className={classes.TextField}
+              variant="outlined"
+              label="Password"
+              placeholder="******"
+            />
+          </FormGroup>
+          <Button
+            disabled={loading}
+            variant="contained"
+            color="primary"
+            className={classes.SubmitButton}
+            size="large"
+          >
+            Sign Up
+          </Button>
+        </form>
         <div className={classes.BottomDiv}>
           <div className={classes.DividerDiv}>
             <Divider className={classes.Divider} />

@@ -1,15 +1,12 @@
 import "./App.css";
-import React, { Component } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {
   Link,
-  BrowserRouter as Router,
-  Route,
-  Switch,
   useLocation,
   matchPath,
 } from "react-router-dom";
