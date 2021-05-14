@@ -9,7 +9,7 @@ import { ReactComponent as Google } from "../Assets/GOOGLogo.svg";
 import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
 import Template from "../Template";
-import React, { useRef, useState, form } from "react";
+import React, { useState } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
 
@@ -134,29 +134,39 @@ const useStyles = makeStyles({
 });
 
 export default function SignUpComponent() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
   const classes = useStyles();
-  const { signup } = UseAuth();
+  const { register, currentUser } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("")
 
- async function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("submitted!")
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (password !== passwordConfirm) {
       return setError("Passwords Do Not Match!");
     }
 
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-    } catch {
+      await register(email, password);
+    } catch(e) {
+      console.log(e)
       setError("Failed To Create An Account!");
     }
     setLoading(false);
+  }
+
+  function handleChange(e) {
+    setEmail(e.target.value);
+  }
+  function handlePasswordChange(e) {
+    setPassword(e.target.value);
+  }
+  function handleConfirmChange(e) {
+    setPasswordConfirm(e.target.value)
   }
 
   return (
@@ -165,50 +175,51 @@ export default function SignUpComponent() {
       <div className={classes.SignUpsDiv}>
         <NavBar />
         <div className={classes.HeaderDiv}></div>
+        {currentUser && currentUser.email}
         <h1 className={classes.Account}>Create an account</h1>
-
-        <form className={classes.Form}
-        onSubmit={handleSubmit}>
+        <form className={classes.Form} onSubmit={handleSubmit}>
           {error && (
             <Alert variant="outlined" severity="error">
               {error}
             </Alert>
           )}
           <TextField
-            id="email"
             className={classes.TextField}
+            id="email"
             variant="outlined"
-            label="Email"
             placeholder="john@doe.com"
             type="email"
-            ref={emailRef}
+            value={email}
+            onChange={handleChange}
             required
           />
           <TextField
+            className={classes.TextField}
             id="password"
-            type="password"
-            ref={passwordRef}
-            required
-            className={classes.TextField}
             variant="outlined"
             label="Password"
             placeholder="******"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            required
           />
           <TextField
-            id="password confirm"
-            type="password"
-            ref={passwordConfirmRef}
-            required
             className={classes.TextField}
+            id="password-confirm"
             variant="outlined"
-            label="Password"
+            label="Confirm Password"
+            type="password"
             placeholder="******"
+            value={passwordConfirm}
+            onChange={handleConfirmChange}
+            required
           />
           <Button
+            className={classes.SubmitButton}
             disabled={loading}
             variant="contained"
             color="primary"
-            className={classes.SubmitButton}
             size="large"
             type="submit"
           >
@@ -222,10 +233,7 @@ export default function SignUpComponent() {
             <Divider className={classes.Divider} />
           </div>
           <div className={classes.SocialMediaDiv}>
-            <Button
-              variant="outlined"
-              className={classes.SocialMediaButton}
-            >
+            <Button variant="outlined" className={classes.SocialMediaButton}>
               <Facebook className={classes.SocialMedia} />
             </Button>
             <Button variant="outlined" className={classes.SocialMediaButton}>

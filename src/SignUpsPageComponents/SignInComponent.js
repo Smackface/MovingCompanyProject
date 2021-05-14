@@ -9,6 +9,9 @@ import { ReactComponent as Google } from "../Assets/GOOGLogo.svg";
 import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
 import Template from "../Template";
+import React, { useState } from "react";
+import { UseAuth } from "../Contexts/AuthContext";
+import Alert from "@material-ui/lab/Alert";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -74,12 +77,15 @@ const useStyles = makeStyles({
   SubmitButton: {
     marginTop: "20px",
     marginBottom: "20px",
+    paddingLeft: "10%",
+    paddingRight: "10%",
     width: "40%",
-    height: "6%",
+    height: "8%",
     borderRadius: "15px",
     backgroundColor: "#1074d8",
     color: "white",
     textTransform: "initial",
+    fontSize: "1.4em",
   },
   SocialMedia: {
     minWidth: "40px",
@@ -90,7 +96,7 @@ const useStyles = makeStyles({
     marginLeft: "5%",
     marginRight: "5%",
   },
-  EmailTextField: {
+  TextField: {
     width: "40%",
     marginTop: "20px",
     marginBottom: "20px",
@@ -108,32 +114,89 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
   },
+  Form: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+  },
 });
 
 export default function SignInComponent() {
   const classes = useStyles();
+  const { login, currentUser } = UseAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      setError("");
+      setLoading(true);
+      await login(email, password);
+    } catch (e) {
+      console.log(e);
+      setError("Failed To Sign In!");
+    }
+    setLoading(false);
+  }
+
+  function handleChange(e) {
+    setEmail(e.target.value);
+  }
+  function handlePasswordChange(e) {
+    setPassword(e.target.value);
+  }
+
   return (
     <div className={classes.BodyDiv}>
       <Template />
       <div className={classes.SignUpsDiv}>
         <NavBar />
         <div className={classes.HeaderDiv}></div>
+        {currentUser && currentUser.email}
         <h1>Sign In</h1>
-        <TextField
-          className={classes.EmailTextField}
-          variant="outlined"
-          label="Email"
-          placeholder="john@doe.com"
-        />
-        <TextField
-          className={classes.EmailTextField}
-          variant="outlined"
-          label="Password"
-          placeholder="*******"
-        />
-        <Button variant="contained" className={classes.SubmitButton}>
+        {error && (
+          <Alert variant="outlined" severity="error">
+            {error}
+          </Alert>
+        )}
+        <form className={classes.Form} onSubmit={handleSubmit}>
+          <TextField
+            className={classes.TextField}
+            id="email"
+            variant="outlined"
+            placeholder="john@doe.com"
+            type="email"
+            value={email}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            className={classes.TextField}
+            id="password"
+            variant="outlined"
+            label="Password"
+            placeholder="******"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            required
+          />
+          <Button
+          className={classes.SubmitButton}
+          disabled={loading}
+          variant="contained"
+          color="primary"
+          size="large"
+          type="submit">
           Sign In
-        </Button>
+          </Button>
+        </form>
         <div className={classes.BottomDiv}>
           <div className={classes.DividerDiv}>
             <Divider className={classes.Divider} />
