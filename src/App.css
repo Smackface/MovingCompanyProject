@@ -24,3 +24,7 @@
 .HeroImages {
   filter: brightness(0%);
 }
+
+.TextFieldBorderRadius fieldset{
+  border-radius: 100px
+}

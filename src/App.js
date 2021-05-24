@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignInComponent from "./SignUpsPageComponents/SignInComponent";
 import SignUpComponent from "./SignUpsPageComponents/SignUpComponent";
 import { AuthProvider } from "./Contexts/AuthContext";
+import MoveSetUp from "./MoveSetUp"
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
             </Route>
             <Route path="/SignIn" component={SignInComponent}>
               <SignInComponent />
+            </Route>
+            <Route path="/MoveSetUp" component={MoveSetUp}>
+              <MoveSetUp />
             </Route>
           </div>
         </Switch>
