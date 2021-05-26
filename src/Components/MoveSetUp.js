@@ -1,15 +1,17 @@
 import TextField from "@material-ui/core/TextField";
-import { FormLabel } from "@material-ui/core";
+import { FormLabel, TableHead, TableBody, TableCell, Button } from "@material-ui/core";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
-import MenuComponent from "./SubComponents/MenuComponent";
 import { ThemeProvider } from "@material-ui/styles";
 import "../App.css";
-import ReactGoogleAutocomplete from "react-google-autocomplete";
-import useFirestore from "../Hooks/useFirestore";
-import useStorage from "../Hooks/useStorage";
+import ReactGoogleAutocomplete, {
+  usePlacesWidget,
+} from "react-google-autocomplete";
 import { useFormik } from "formik";
+import AddSharpIcon from "@material-ui/icons/AddSharp";
+import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
+import { doc, setDoc } from "firebase/firestore"
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -94,9 +96,76 @@ const useStyles = makeStyles({
     marginLeft: "13%",
     color: "#3C5C68",
   },
+   Background: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+  },
+  ItemList: {
+    display: "flex",
+    alignItems: "center",
+    textAlign: "left",
+    color: "#474C4E",
+    minWidth: "35vw",
+  },
+  ItemContainer: {
+    display: "flex",
+  },
+  Completed: {},
+  Quantity: {
+    display: "flex",
+  },
+  InfoDiv: {
+    width: "12%",
+  },
+  Button: {
+    marginLeft: "5px",
+    marginRight: "5px",
+    padding: "0px",
+    borderRadius: "40px",
+  },
+  Icons: {},
+  qtydiv: {
+    marginLeft: "5px",
+    marginRight: "5px",
+  },
 });
 
 export default function MoveSetUp() {
+  const [place, setPlace] = useState();
+  
+  
+
+
+
+
+
+  const [items, setItems] = useState([
+    { itemName: "Desks", quantity: 0,},
+    { itemName: "Computers", quantity: 0, },
+    { itemName: "TVs", quantity: 0, },
+    { itemName: "Chairs", quantity: 0,},
+    { itemName: "Tables", quantity: 0,},
+    { itemName: "Appliances", quantity: 0,},
+  ]);
+  const handleQuantityIncrease = (index) => {
+    const newItems = [...items];
+
+    newItems[index].quantity++;
+
+    setItems(newItems);
+    console.log(newItems[index].quantity);
+    console.log(newItems[index].itemName);
+  };
+  const handleQuantityDecrease = (index) => {
+    const newItems = [...items];
+
+    newItems[index].quantity--;
+
+    setItems(newItems);
+    console.log(newItems[index].quantity);
+    console.log(newItems[index].itemName)
+  };
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -104,11 +173,49 @@ export default function MoveSetUp() {
       Number: "",
       Origin: "",
       Destination: "",
+      Furniture: {items}
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      setDoc(doc(db, "test", "Customer Data"), {
+        name: values.fullName,
+        number: values.Number,
+        origin: values.Origin,
+        destination: values.Destination,
+        furniture: values.Furniture
+      })
     },
   });
+
+  const { ref } = usePlacesWidget({
+    apiKey: process.env.REACT_APP_GOOGLE,
+    onPlaceSelected: (place) => {
+      formik.setFieldValue(
+        "Origin", place.formatted_address,
+      )
+      setPlace(place);
+    },
+    options: {
+      componentRestrictions: { country: "us" },
+      types: ["address"],
+      fields: ["formatted_address", "geometry"],
+    },
+  });
+  const { ref: newRef } = usePlacesWidget({
+    apiKey: process.env.REACT_APP_GOOGLE,
+    onPlaceSelected: (place) => {
+      formik.setFieldValue(
+        "Destination", place.formatted_address,
+      )
+      setPlace(place);
+    },
+    options: {
+      componentRestrictions: { country: "us" },
+      types: ["address"],
+      fields: ["formatted_address", "geometry"],
+    },
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.movegrid}>
@@ -146,55 +253,113 @@ export default function MoveSetUp() {
             </div>
             <FormLabel className={classes.FormLabel}>Address</FormLabel>
             <div className={classes.InputGroup}>
-              <ReactGoogleAutocomplete
-              id="Origin"
-              label="Origin"
-              value={formik.values.Origin}
-              apiKey={process.env.REACT_APP_GOOGLE}
-              onPlaceSelected={
-                ((place) =>
-                  formik.setFieldValue(
-                    "Origin",
-                    place.formatted_address
-                  ))
-              }
-              onChange={formik.handleChange}
-              options={{
-                componentRestrictions: { country: "us" },
-                types: ["address"],
-                fields: ["formatted_address", "geometry"],
-              }}
-              className={classes.InputText}
-              name="Origin"
-            />
-
-              <ReactGoogleAutocomplete
-                id="Destination"
-                label="Destination"
-                value={formik.values.Destination}
-                apiKey={process.env.REACT_APP_GOOGLE}
-                onPlaceSelected={
-                  ((place) =>
-                    formik.setFieldValue(
-                      "Destination",
-                      place.formatted_address
-                    ))
-                }
-                onChange={formik.handleChange}
-                options={{
-                  componentRestrictions: { country: "us" },
-                  types: ["address"],
-                  fields: ["formatted_address", "geometry"],
-                }}
+              <TextField
+                value={formik.values.origin}
                 className={classes.InputText}
-                name="Destination"
+                variant="outlined"
+                size="small"
+                inputRef={ref}
+                id="Origin"
+                label="Origin"
+                onChange={formik.handleChange}
+                name="Origin"
               />
+              <TextField
+                value={formik.values.destination}
+                className={classes.InputText}
+                variant="outlined"
+                label="Destination"
+                size="small"
+                inputRef={newRef}
+                name="Destination"
+                id="Destination"
+                onChange={formik.handleChange}
+              />
+
             </div>
             <button type="button" onClick={formik.handleSubmit}>Submit</button>
           </div>
-          <MenuComponent />
+          <div className={classes.MainContainer}>
+          <TableHead>
+            Items to move
+            <TableBody className={classes.TableBody}>
+              {items.map((items, index) => (
+                <TableCell
+                  className={classes.ItemList}
+                  key={index}
+                  value={index}
+                  onChange={formik.handleChange}
+                >
+                  <div className={classes.InfoDiv}>{items.itemName}</div>
+                  <Button
+                    className={classes.Button}
+                    onClick={() => handleQuantityDecrease(index)}
+                    variant="outlined"
+                  >
+                    <RemoveSharpIcon className={classes.Icons} />
+                  </Button>
+                  <div className={classes.qtydiv}>{items.quantity}</div>
+                  <Button
+                    className={classes.Button}
+                    onClick={() => handleQuantityIncrease(index)}
+                    variant="outlined"
+                  >
+                    <AddSharpIcon className={classes.Icons} />
+                  </Button>
+                </TableCell>
+              ))}
+            </TableBody>
+          </TableHead>
+        </div>
         </form>
       </div>
     </ThemeProvider>
   );
 }
+
+
+
+
+// <ReactGoogleAutocomplete
+// id="Origin"
+// label="Origin"
+// value={formik.values.Origin}
+// apiKey={process.env.REACT_APP_GOOGLE}
+// onPlaceSelected={
+//   ((place) =>
+//     formik.setFieldValue(
+//       "Origin",
+//       place.formatted_address
+//     ))
+// }
+// onChange={formik.handleChange}
+// options={{
+//   componentRestrictions: { country: "us" },
+//   types: ["address"],
+//   fields: ["formatted_address", "geometry"],
+// }}
+// className={classes.InputText}
+// name="Origin"
+// />
+
+// <ReactGoogleAutocomplete
+//   id="Destination"
+//   label="Destination"
+//   value={formik.values.Destination}
+//   apiKey={process.env.REACT_APP_GOOGLE}
+//   onPlaceSelected={
+//     ((place) =>
+//       formik.setFieldValue(
+//         "Destination",
+//         place.formatted_address
+//       ))
+//   }
+//   onChange={formik.handleChange}
+//   options={{
+//     componentRestrictions: { country: "us" },
+//     types: ["address"],
+//     fields: ["formatted_address", "geometry"],
+//   }}
+//   className={classes.InputText}
+//   name="Destination"
+// />
