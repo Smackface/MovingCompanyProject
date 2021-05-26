@@ -1,14 +1,14 @@
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
-import NavBar from "../NavBar";
+import NavBar from "../Components/NavBar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Divider } from "@material-ui/core";
 import { ReactComponent as Google } from "../Assets/GOOGLogo.svg";
 import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
-import Template from "../Template";
+import Template from "../Components/Template";
 import React, { useState } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";

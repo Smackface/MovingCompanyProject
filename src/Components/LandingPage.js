@@ -1,10 +1,10 @@
-import "./App.css";
+import "../App.css";
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles";
-import HeroBolt from "./Assets/HeroBolt.png";
-import HeroShieldCheck from "./Assets/HeroShieldCheck.png";
-import HeroCreditCard from "./Assets/credit-card.png";
-import RightArrow from "./Assets/HeroNarrowArrowRight.png";
+import HeroBolt from "../Assets/HeroBolt.png";
+import HeroShieldCheck from "../Assets/HeroShieldCheck.png";
+import HeroCreditCard from "../Assets/credit-card.png";
+import RightArrow from "../Assets/HeroNarrowArrowRight.png";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
 import Grid from "@material-ui/core/Grid";

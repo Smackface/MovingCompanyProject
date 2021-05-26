@@ -1,8 +1,8 @@
-import "./App.css";
+import "../App.css";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
-import { ReactComponent as Delivery } from "./Assets/delivery2.svg";
+import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
 
 const theme = createMuiTheme({
   breakpoints: {

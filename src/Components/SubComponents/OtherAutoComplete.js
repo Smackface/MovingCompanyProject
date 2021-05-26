@@ -1,0 +1,136 @@
+
+// Another useless file, again kept for personal documentation.
+
+// import ReactGoogleAutocomplete, {
+//   usePlacesWidget,
+// } from "react-google-autocomplete";
+// import { FormGroup, FormLabel, TextField } from "@material-ui/core";
+// import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+// import { useState } from "react";
+
+// export default function MyOtherAutoComplete() {
+//   const theme = createMuiTheme({
+//     breakpoints: {
+//       values: {
+//         xs: 0,
+//         sm: 600,
+//         md: 760,
+//         lg: 1280,
+//         xl: 1920,
+//       },
+//     },
+//     overrides: {
+//       MuiOutlinedInput: {
+//         root: {
+//           borderRadius: "15px",
+//         },
+//       },
+//     },
+//   });
+
+//   const useStyles = makeStyles({
+//     InputText: {
+//       marginLeft: "auto",
+//       marginRight: "auto",
+//       marginTop: "5px",
+//       marginBottom: "5px",
+//       maxWidth: "75%",
+//     },
+//     InputGrid: {
+//       marginLeft: "auto",
+//       marginRight: "auto",
+//       textAlign: "center",
+//       alignItems: "center",
+//       justifyContent: "center",
+//       display: "flex",
+//       flexDirection: "column",
+//       minWidth: "100%",
+//       FormLabel: {
+//         position: "relative",
+//         alignSelf: "flex-start",
+//         marginLeft: "13%",
+//         color: "#3C5C68",
+//       },
+//     },
+//   });
+//   const [newPayload, setNewPayload] = useState();
+//   const [newPlace, setNewPlace] = useState();
+
+//   const { newRef } = usePlacesWidget({
+//     id: "Origin",
+//     apiKey: process.env.REACT_APP_GOOGLE,
+//     onPlaceSelected: (place) => {
+//       const newPayload = {
+//         destination: {
+//           lng: place.lng,
+//           lat: place.lat,
+//           locationName: place.address_components,
+//         },
+//       };
+//       setNewPlace(place);
+//       setNewPayload(newPlace);
+//       console.log(newPayload);
+//     },
+//     options: {
+//       componentRestrictions: { country: "us" },
+//       types: ["address"],
+//       fields: ["address_components", "geometry"],
+//     },
+//   });
+
+//   const classes = useStyles();
+
+//   return (
+//     <div className={classes.InputGrid}>
+//     <ReactGoogleAutocomplete
+//     apiKey={process.env.REACT_APP_GOOGLE}
+//     onPlaceSelected={(place) => {
+//       console.log(place)
+//     }}
+//     options={{
+//       componentRestrictions: { country: "us" },
+//       types: ["address"],
+//       fields: ["address_components", "geometry"],
+//     }}
+//     className={classes.InputText}
+//     variant="outlined"
+//     label="Origin"
+//     size="small"
+//     name="Origin"
+//     id="Origin"
+//     />
+//     <ReactGoogleAutocomplete
+//     apiKey={process.env.REACT_APP_GOOGLE}
+//     onPlaceSelected={(place) => {
+//       console.log(place)
+//     }}
+//     options={{
+//       componentRestrictions: { country: "us" },
+//       types: ["address"],
+//       fields: ["address_components", "geometry"],
+//     }}
+//     className={classes.InputText}
+//     variant="outlined"
+//     label="Origin2"
+//     size="small"
+//     name="Origin2"
+//     id="Origin2"
+//     />
+//     </div>
+//   );
+// }
+
+
+
+// <TextField
+// className={classes.InputText}
+// variant="outlined"
+// label="Origin"
+// size="small"
+// inputRef={newRef}
+// name="Origin"
+// id="Origin"
+// />
+
+
+// Another useless file, again kept for personal documentation.

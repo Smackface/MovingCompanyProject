@@ -1,11 +1,12 @@
 import "./App.css";
-import LandingPage from "./LandingPage";
+import LandingPage from "./Components/LandingPage";
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignInComponent from "./SignUpsPageComponents/SignInComponent";
 import SignUpComponent from "./SignUpsPageComponents/SignUpComponent";
 import { AuthProvider } from "./Contexts/AuthContext";
-import MoveSetUp from "./MoveSetUp"
+import MoveSetUp from "./Components/MoveSetUp";
+// import { PlaceProvider } from "./Contexts/PlaceContext";
 
 function App() {
   return (
