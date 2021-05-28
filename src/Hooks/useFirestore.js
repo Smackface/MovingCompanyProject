@@ -20,4 +20,6 @@ const useFirestore = (collection) => {
     return {docs}
 }
 
+projectFirestore.coll
+
 export default useFirestore

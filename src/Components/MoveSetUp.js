@@ -1,5 +1,11 @@
 import TextField from "@material-ui/core/TextField";
-import { FormLabel, TableHead, TableBody, TableCell, Button } from "@material-ui/core";
+import {
+  FormLabel,
+  TableHead,
+  TableBody,
+  TableCell,
+  Button,
+} from "@material-ui/core";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
@@ -11,7 +17,8 @@ import ReactGoogleAutocomplete, {
 import { useFormik } from "formik";
 import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
-import { doc, setDoc } from "firebase/firestore"
+import firebase, { projectFirestore } from "./firebase";
+import projectStorage from './firebase'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -96,7 +103,7 @@ const useStyles = makeStyles({
     marginLeft: "13%",
     color: "#3C5C68",
   },
-   Background: {
+  Background: {
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
@@ -132,21 +139,18 @@ const useStyles = makeStyles({
 });
 
 export default function MoveSetUp() {
-  const [place, setPlace] = useState();
-  
-  
-
-
-
-
+  const [place, setPlace] = useState([
+    {lat:0},
+    {lng:0}
+  ]);
 
   const [items, setItems] = useState([
-    { itemName: "Desks", quantity: 0,},
-    { itemName: "Computers", quantity: 0, },
-    { itemName: "TVs", quantity: 0, },
-    { itemName: "Chairs", quantity: 0,},
-    { itemName: "Tables", quantity: 0,},
-    { itemName: "Appliances", quantity: 0,},
+    { itemName: "Desks", quantity: 0 },
+    { itemName: "Computers", quantity: 0 },
+    { itemName: "TVs", quantity: 0 },
+    { itemName: "Chairs", quantity: 0 },
+    { itemName: "Tables", quantity: 0 },
+    { itemName: "Appliances", quantity: 0 },
   ]);
   const handleQuantityIncrease = (index) => {
     const newItems = [...items];
@@ -164,36 +168,61 @@ export default function MoveSetUp() {
 
     setItems(newItems);
     console.log(newItems[index].quantity);
-    console.log(newItems[index].itemName)
+    console.log(newItems[index].itemName);
   };
-  const classes = useStyles();
+  const [geometry, setGeometry] = useState()
+  const classes = useStyles();  
   const formik = useFormik({
     initialValues: {
-      fullName: "",
-      Number: "",
-      Origin: "",
-      Destination: "",
-      Furniture: {items}
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      setDoc(doc(db, "test", "Customer Data"), {
-        name: values.fullName,
-        number: values.Number,
-        origin: values.Origin,
-        destination: values.Destination,
-        furniture: values.Furniture
+      payload:{
+        origin:{
+          Origin: "",
+          OriginGeometry: "",
+          },
+        destination:{
+          fullName: "",
+          Number: "",
+          Destination: "",
+          DestinationGeometry: "",
+        },
+      Furniture: { items },
+    }},
+    onSubmit: (payload) => {
+      alert(JSON.stringify(payload, null, 2));
+      projectFirestore.collection('Customer Address').add({
+        payload,
       })
     },
   });
 
+  
+  // const payload = {
+  //   origin:{
+  //     name: formik.values.fullName,
+  //     number: formik.values.Number,
+  //     address: formik.values.Origin,
+  //     location: formik.values.OriginGeometry
+  //   },
+  //   destination:{
+  //     name: formik.values.fullName,
+  //     number: formik.values.Number,
+  //     address: formik.values.Destination,
+  //     location: formik.values.DestinationGeometry
+  //   },
+  //   items: {
+  //     furniture: formik.values.Furniture
+  //   }
+  // }
+
+
   const { ref } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
-      formik.setFieldValue(
-        "Origin", place.formatted_address,
-      )
       setPlace(place);
+      formik.setFieldValue("Origin", place.formatted_address);
+      JSON.stringify(place.geometry.location)
+      setGeometry(place.geometry.location)
+      formik.setFieldValue("OriginGeometry", JSON.stringify(place.geometry.location))
     },
     options: {
       componentRestrictions: { country: "us" },
@@ -204,15 +233,16 @@ export default function MoveSetUp() {
   const { ref: newRef } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
-      formik.setFieldValue(
-        "Destination", place.formatted_address,
-      )
+      formik.setFieldValue("Destination", place.formatted_address);
+      formik.setFieldValue("DestinationGeometry", JSON.stringify(place.geometry.location))
+      JSON.stringify(place.geometry.location)
+      setGeometry(place.geometry.location)
       setPlace(place);
     },
     options: {
       componentRestrictions: { country: "us" },
       types: ["address"],
-      fields: ["formatted_address", "geometry"],
+      fields: ["formatted_address", "geometry.location"],
     },
   });
 
@@ -221,12 +251,7 @@ export default function MoveSetUp() {
       <div className={classes.movegrid}>
         <Delivery className={classes.Delivery} />
         <h1>Place an order</h1>
-        <form
-          className={classes.FormDiv}
-          onSubmit={
-            formik.handleSubmit
-          }
-        >
+        <form className={classes.FormDiv} onSubmit={formik.handleSubmit}>
           <div className={classes.InputGrid}>
             <label className={classes.FormLabel}>Person to talk to</label>
             <div className={classes.InputGroup}>
@@ -275,50 +300,48 @@ export default function MoveSetUp() {
                 id="Destination"
                 onChange={formik.handleChange}
               />
-
             </div>
-            <button type="button" onClick={formik.handleSubmit}>Submit</button>
+            <button type="button" onClick={formik.handleSubmit}>
+              Submit
+            </button>
           </div>
           <div className={classes.MainContainer}>
-          <TableHead>
-            Items to move
-            <TableBody className={classes.TableBody}>
-              {items.map((items, index) => (
-                <TableCell
-                  className={classes.ItemList}
-                  key={index}
-                  value={index}
-                  onChange={formik.handleChange}
-                >
-                  <div className={classes.InfoDiv}>{items.itemName}</div>
-                  <Button
-                    className={classes.Button}
-                    onClick={() => handleQuantityDecrease(index)}
-                    variant="outlined"
+            <TableHead>
+              Items to move
+              <TableBody className={classes.TableBody}>
+                {items.map((items, index) => (
+                  <TableCell
+                    className={classes.ItemList}
+                    key={index}
+                    value={index}
+                    onChange={formik.handleChange}
                   >
-                    <RemoveSharpIcon className={classes.Icons} />
-                  </Button>
-                  <div className={classes.qtydiv}>{items.quantity}</div>
-                  <Button
-                    className={classes.Button}
-                    onClick={() => handleQuantityIncrease(index)}
-                    variant="outlined"
-                  >
-                    <AddSharpIcon className={classes.Icons} />
-                  </Button>
-                </TableCell>
-              ))}
-            </TableBody>
-          </TableHead>
-        </div>
+                    <div className={classes.InfoDiv}>{items.itemName}</div>
+                    <Button
+                      className={classes.Button}
+                      onClick={() => handleQuantityDecrease(index)}
+                      variant="outlined"
+                    >
+                      <RemoveSharpIcon className={classes.Icons} />
+                    </Button>
+                    <div className={classes.qtydiv}>{items.quantity}</div>
+                    <Button
+                      className={classes.Button}
+                      onClick={() => handleQuantityIncrease(index)}
+                      variant="outlined"
+                    >
+                      <AddSharpIcon className={classes.Icons} />
+                    </Button>
+                  </TableCell>
+                ))}
+              </TableBody>
+            </TableHead>
+          </div>
         </form>
       </div>
     </ThemeProvider>
   );
 }
-
-
-
 
 // <ReactGoogleAutocomplete
 // id="Origin"
