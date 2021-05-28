@@ -171,11 +171,13 @@ export default function MoveSetUp() {
     console.log(newItems[index].itemName);
   };
   const [geometry, setGeometry] = useState()
-  const classes = useStyles();  
+  const classes = useStyles();
   const formik = useFormik({
     initialValues: {
       payload:{
         origin:{
+          fullName: "",
+          Number: "",
           Origin: "",
           OriginGeometry: "",
           },
@@ -190,30 +192,10 @@ export default function MoveSetUp() {
     onSubmit: (payload) => {
       alert(JSON.stringify(payload, null, 2));
       projectFirestore.collection('Customer Address').add({
-        payload,
+        payload
       })
     },
   });
-
-  
-  // const payload = {
-  //   origin:{
-  //     name: formik.values.fullName,
-  //     number: formik.values.Number,
-  //     address: formik.values.Origin,
-  //     location: formik.values.OriginGeometry
-  //   },
-  //   destination:{
-  //     name: formik.values.fullName,
-  //     number: formik.values.Number,
-  //     address: formik.values.Destination,
-  //     location: formik.values.DestinationGeometry
-  //   },
-  //   items: {
-  //     furniture: formik.values.Furniture
-  //   }
-  // }
-
 
   const { ref } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
