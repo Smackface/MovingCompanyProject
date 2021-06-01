@@ -341,8 +341,6 @@ export default function MoveSetUp() {
                 label="Full Name"
                 size="small"
                 id="payload.origin.fullName"
-                // name="fullName"
-                // value={formik.values.fullName}
                 onChange={formik.handleChange}
               />
               <TextField
@@ -351,15 +349,12 @@ export default function MoveSetUp() {
                 label="Number"
                 size="small"
                 id="payload.origin.Number"
-                // name="Number"
-                // value={formik.values.Number}
                 onChange={formik.handleChange}
               />
             </div>
             <FormLabel className={classes.FormLabel}>Address</FormLabel>
             <div className={classes.InputGroup}>
               <TextField
-                // value={formik.values.Origin}
                 className={classes.InputText}
                 variant="outlined"
                 size="small"
@@ -367,16 +362,13 @@ export default function MoveSetUp() {
                 id="payload.origin.Origin"
                 label="Origin"
                 onChange={formik.handleChange}
-                // name="Origin"
               />
               <TextField
-                // value={formik.values.Destination}
                 className={classes.InputText}
                 variant="outlined"
                 label="Destination"
                 size="small"
                 inputRef={newRef}
-                // name="Destination"
                 id="payload.destination.Destination"
                 onChange={formik.handleChange}
               />
