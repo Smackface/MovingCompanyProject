@@ -1,5 +1,5 @@
 import "../App.css";
-import React from "react"
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import HeroBolt from "../Assets/HeroBolt.png";
 import HeroShieldCheck from "../Assets/HeroShieldCheck.png";
@@ -9,8 +9,8 @@ import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
 import Grid from "@material-ui/core/Grid";
 import { createMuiTheme } from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom'
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles({
       paddingTop: "5%",
       alignText: "center",
     },
-    [theme.breakpoints.down("sm")]:{
+    [theme.breakpoints.down("sm")]: {
       paddingLeft: "15px",
       paddingRight: "15px",
       textAlign: "center",
@@ -88,7 +88,7 @@ const useStyles = makeStyles({
       marginLeft: "auto",
       marginRight: "auto",
       width: "auto",
-      '&:hover': {textShadow: "-1px -1px 4px #CD5C5C, 1px 1px 4px #F08080"},
+      "&:hover": { textShadow: "-1px -1px 4px #CD5C5C, 1px 1px 4px #F08080" },
     },
 
     [theme.breakpoints.only("md")]: {
@@ -99,14 +99,14 @@ const useStyles = makeStyles({
       fontSize: "36px",
       fontWeight: "300",
       fontHeight: "1.5",
-      '&:hover': {textShadow: "-1px -1px 4px #8B0000, 1px 1px 4px #B22222"},
+      "&:hover": { textShadow: "-1px -1px 4px #8B0000, 1px 1px 4px #B22222" },
     },
 
     [theme.breakpoints.up("lg")]: {
       backgroundColor: "#303030",
       width: "350px",
       marginLeft: "15%",
-      '&:hover': {textShadow: "-1px -1px 4px #000, 1px 1px 4px #696969"},
+      "&:hover": { textShadow: "-1px -1px 4px #000, 1px 1px 4px #696969" },
     },
     height: "65px",
     marginTop: "50px",
@@ -162,7 +162,7 @@ const useStyles = makeStyles({
   BodyParagraph: {
     [theme.breakpoints.only("md")]: {
       marginRight: "10%",
-    }
+    },
   },
 });
 
@@ -205,14 +205,14 @@ export default function LandingPage() {
             From start to finish, our process saves you time.
           </p>
           <Link to="/SignIn">
-          <Button variant="contained" className={classes.CTAButton}>
-            Get Started
-            <img
-              src={RightArrow}
-              alt="ArrowRight"
-              className={classes.RightArrow}
-            />
-          </Button>
+            <Button variant="contained" className={classes.CTAButton}>
+              Get Started
+              <img
+                src={RightArrow}
+                alt="ArrowRight"
+                className={classes.RightArrow}
+              />
+            </Button>
           </Link>
         </div>
       </Grid>

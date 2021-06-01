@@ -1,6 +1,4 @@
-
 // Another useless file, again kept for personal documentation.
-
 
 import ReactGoogleAutocomplete, {
   usePlacesWidget,
@@ -46,7 +44,7 @@ export default function MyAutoComplete() {
       display: "flex",
       flexDirection: "column",
       minWidth: "100%",
-    FormLabel: {
+      FormLabel: {
         position: "relative",
         alignSelf: "flex-start",
         marginLeft: "13%",
@@ -56,7 +54,7 @@ export default function MyAutoComplete() {
   });
   const [payload, setPayload] = useState();
   const [place, setPlace] = useState();
-  const [newPayload, setNewPayload] = useState()
+  const [newPayload, setNewPayload] = useState();
 
   const { ref } = usePlacesWidget({
     id: "Destination",
@@ -71,7 +69,7 @@ export default function MyAutoComplete() {
       };
       setPlace(place);
       setPayload(place);
-      console.log(payload)
+      console.log(payload);
     },
     options: {
       componentRestrictions: { country: "us" },

@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
 import firebase, { projectFirestore } from "./firebase";
-import projectStorage from './firebase'
+import projectStorage from "./firebase";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -37,13 +37,11 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      root: {
-
-      },
+      root: {},
       label: {
-        boxShadow: "#EDF3F5"
-      }
-    }
+        boxShadow: "#EDF3F5",
+      },
+    },
   },
 });
 
@@ -57,35 +55,35 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginRight: "auto",
     color: "#3A5666",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       width: "100vw",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       textAlign: "center",
-    }
+    },
   },
   MainContainer: {
     display: "flex",
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       display: "flex",
       width: "100vw",
       textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       display: "flex",
       width: "100vw",
       textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
-    }
+    },
   },
   TableHead: {
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       width: "100%",
       display: "flex",
       flexDirection: "column",
@@ -94,15 +92,15 @@ const useStyles = makeStyles({
       width: "100%",
       display: "flex",
       flexDirection: "column",
-    }
+    },
   },
   TableBody: {
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       marginLeft: "auto",
       marginRight: "auto",
       width: "80%",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       marginLeft: "auto",
       marginRight: "auto",
       width: "100%",
@@ -121,7 +119,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     width: "50vw",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       textAlign: "center",
     },
   },
@@ -151,7 +149,6 @@ const useStyles = makeStyles({
     maxWidth: "75%",
     border: "0",
     color: "#EDF3F5",
-    
   },
   InputGroup: {
     backgroundColor: "white",
@@ -160,21 +157,21 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       display: "flex",
       flexDirection: "column",
-    }
+    },
   },
   FormLabel: {
     position: "relative",
     alignSelf: "flex-start",
     marginLeft: "13%",
     color: "#3C5C68",
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       alignSelf: "center",
-      marginLeft: "0"
-    }
+      marginLeft: "0",
+    },
   },
   Background: {
     alignItems: "center",
@@ -187,7 +184,7 @@ const useStyles = makeStyles({
     textAlign: "left",
     color: "#474C4E",
     minWidth: "35vw",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       marginLeft: "auto",
       marginRight: "auto",
       textAlign: "left",
@@ -195,13 +192,13 @@ const useStyles = makeStyles({
       justifyContent: "center",
       paddingRight: "80px",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       marginLeft: "auto",
       marginRight: "auto",
       textAlign: "left",
       alignItems: "center",
       justifyContent: "center",
-    }
+    },
   },
   ItemContainer: {
     display: "flex",
@@ -212,9 +209,9 @@ const useStyles = makeStyles({
   },
   InfoDiv: {
     width: "12%",
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       marginRight: "50px",
-    }
+    },
   },
   Button: {
     marginLeft: "5px",
@@ -224,7 +221,7 @@ const useStyles = makeStyles({
     backgroundColor: "#A2B8CE",
   },
   Icons: {
-    color: "#727E8A"
+    color: "#727E8A",
   },
   qtydiv: {
     marginLeft: "5px",
@@ -235,14 +232,11 @@ const useStyles = makeStyles({
     backgroundColor: "#A2B8CE",
     color: "#474C4E",
     borderRadius: "40px",
-  }
+  },
 });
 
 export default function MoveSetUp() {
-  const [place, setPlace] = useState([
-    {lat:0},
-    {lng:0}
-  ]);
+  const [place, setPlace] = useState([{ lat: 0 }, { lng: 0 }]);
 
   const [items, setItems] = useState([
     { itemName: "Desks", quantity: 0 },
@@ -270,28 +264,23 @@ export default function MoveSetUp() {
     console.log(newItems[index].quantity);
     console.log(newItems[index].itemName);
   };
-  const [geometry, setGeometry] = useState()
+  const [geometry, setGeometry] = useState();
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-      payload:{
-        origin:{
-          fullName: "",
-          Number: "",
-          Origin: "",
-          OriginGeometry: "",
-          },
-        destination:{
-          Destination: "",
-          DestinationGeometry: "",
-        },
+      fullName: "",
+      Number: "",
+      Origin: "",
+      OriginGeometry: "",
+      Destination: "",
+      DestinationGeometry: "",
       Furniture: { items },
-    }},
+    },
     onSubmit: (payload) => {
       alert(JSON.stringify(payload, null, 2));
-      projectFirestore.collection('Customer Address').add({
-        payload
-      })
+      projectFirestore.collection("Customer Address").add({
+        payload,
+      });
     },
   });
 
@@ -299,10 +288,13 @@ export default function MoveSetUp() {
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
       setPlace(place);
-      formik.setFieldValue("payload.origin.Origin", place.formatted_address);
-      JSON.stringify(place.geometry.location)
-      setGeometry(place.geometry.location)
-      formik.setFieldValue("payload.origin.OriginGeometry", JSON.stringify(place.geometry.location))
+      formik.setFieldValue("Origin", place.formatted_address);
+      JSON.stringify(place.geometry.location);
+      setGeometry(place.geometry.location);
+      formik.setFieldValue(
+        "OriginGeometry",
+        JSON.stringify(place.geometry.location)
+      );
     },
     options: {
       componentRestrictions: { country: "us" },
@@ -313,10 +305,13 @@ export default function MoveSetUp() {
   const { ref: newRef } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
-      formik.setFieldValue("payload.destination.Destination", place.formatted_address);
-      formik.setFieldValue("payload.destination.DestinationGeometry", JSON.stringify(place.geometry.location))
-      JSON.stringify(place.geometry.location)
-      setGeometry(place.geometry.location)
+      formik.setFieldValue("Destination", place.formatted_address);
+      formik.setFieldValue(
+        "DestinationGeometry",
+        JSON.stringify(place.geometry.location)
+      );
+      JSON.stringify(place.geometry.location);
+      setGeometry(place.geometry.location);
       setPlace(place);
     },
     options: {
@@ -359,7 +354,7 @@ export default function MoveSetUp() {
             <FormLabel className={classes.FormLabel}>Address</FormLabel>
             <div className={classes.InputGroup}>
               <TextField
-                value={formik.values.origin}
+                value={formik.values.Origin}
                 className={classes.InputText}
                 variant="outlined"
                 size="small"
@@ -370,7 +365,7 @@ export default function MoveSetUp() {
                 name="Origin"
               />
               <TextField
-                value={formik.values.destination}
+                value={formik.values.Destination}
                 className={classes.InputText}
                 variant="outlined"
                 label="Destination"
@@ -381,7 +376,12 @@ export default function MoveSetUp() {
                 onChange={formik.handleChange}
               />
             </div>
-            <Button variant="outlined" type="button" onClick={formik.handleSubmit} className={classes.FormSubmit}>
+            <Button
+              variant="outlined"
+              type="button"
+              onClick={formik.handleSubmit}
+              className={classes.FormSubmit}
+            >
               Submit
             </Button>
           </div>

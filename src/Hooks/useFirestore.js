@@ -1,25 +1,23 @@
-import { useState, useEffect } from "react"
-import { projectFirestore } from "../Components/firebase"
+import { useState, useEffect } from "react";
+import { projectFirestore } from "../Components/firebase";
 
 const useFirestore = (collection) => {
-    let [docs, setDocs] = useState();
+  const [docs, setDocs] = useState([]);
 
-    useEffect(() => {
-        const unsub = projectFirestore
-        .collection(collection)
-        .orderBy("address_components", "geometry")
-        .onSnapshot((snap) => {
-            let documents = [];
-            snap.forEach((doc) => {
-                documents.push({...doc.data(), id: doc.id})
-            })
-            setDocs(documents);
-        })
-        return () => unsub()
-    }, [collection])
-    return {docs}
-}
+  useEffect(() => {
+    const unsub = projectFirestore
+      .collection(collection)
+      // .orderBy("address_components", "geometry")
+      .onSnapshot((snap) => {
+        let documents = [];
+        snap.forEach((doc) => {
+          documents.push({ ...doc.data(), id: doc.id });
+        });
+        setDocs(documents);
+      });
+    return () => unsub();
+  }, [collection]);
+  return { docs };
+};
 
-projectFirestore.coll
-
-export default useFirestore
+export default useFirestore;

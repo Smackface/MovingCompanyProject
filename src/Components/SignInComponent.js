@@ -1,17 +1,18 @@
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
-import NavBar from "../Components/NavBar";
+import NavBar from "./SubComponents/NavBar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Divider } from "@material-ui/core";
 import { ReactComponent as Google } from "../Assets/GOOGLogo.svg";
 import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
-import Template from "../Components/Template";
+import Template from "./SubComponents/Template";
 import React, { useState } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 const theme = createMuiTheme({
@@ -101,7 +102,7 @@ const useStyles = makeStyles({
     width: "40%",
     marginTop: "20px",
     marginBottom: "20px",
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       width: "75%",
     },
   },
@@ -118,16 +119,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
   },
-  Account: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.3em",
-    },
-    fontSize: "300%",
-  },
-  FormGroup: {
-    width: "100%",
-    alignItems: "center",
-  },
   Form: {
     width: "100%",
     height: "100%",
@@ -137,30 +128,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SignUpComponent() {
+export default function SignInComponent() {
   const classes = useStyles();
-  const { register, currentUser } = UseAuth();
+  const { login, currentUser } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("")
-  let history = useHistory()
+  let history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    history.push("/MoveSetUp")
-    if (password !== passwordConfirm) {
-      return setError("Passwords Do Not Match!");
-    }
+    history.push("/MoveSetUp");
 
     try {
       setError("");
       setLoading(true);
-      await register(email, password);
-    } catch(e) {
-      console.log(e)
-      setError("Failed To Create An Account!");
+      await login(email, password);
+    } catch (e) {
+      console.log(e);
+      setError("Failed To Sign In!");
     }
     setLoading(false);
   }
@@ -171,24 +158,21 @@ export default function SignUpComponent() {
   function handlePasswordChange(e) {
     setPassword(e.target.value);
   }
-  function handleConfirmChange(e) {
-    setPasswordConfirm(e.target.value)
-  }
 
   return (
     <div className={classes.BodyDiv}>
-      <Template className={classes.Template} />
+      <Template />
       <div className={classes.SignUpsDiv}>
         <NavBar />
         <div className={classes.HeaderDiv}></div>
         {currentUser && currentUser.email}
-        <h1 className={classes.Account}>Create an account</h1>
+        <h1>Sign In</h1>
+        {error && (
+          <Alert variant="outlined" severity="error">
+            {error}
+          </Alert>
+        )}
         <form className={classes.Form} onSubmit={handleSubmit}>
-          {error && (
-            <Alert variant="outlined" severity="error">
-              {error}
-            </Alert>
-          )}
           <TextField
             className={classes.TextField}
             id="email"
@@ -210,17 +194,6 @@ export default function SignUpComponent() {
             onChange={handlePasswordChange}
             required
           />
-          <TextField
-            className={classes.TextField}
-            id="password-confirm"
-            variant="outlined"
-            label="Confirm Password"
-            type="password"
-            placeholder="******"
-            value={passwordConfirm}
-            onChange={handleConfirmChange}
-            required
-          />
           <Button
             className={classes.SubmitButton}
             disabled={loading}
@@ -229,7 +202,7 @@ export default function SignUpComponent() {
             size="large"
             type="submit"
           >
-            Sign Up
+            Sign In
           </Button>
         </form>
         <div className={classes.BottomDiv}>
