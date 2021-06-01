@@ -6,6 +6,7 @@ import SignInComponent from "./SignUpsPageComponents/SignInComponent";
 import SignUpComponent from "./SignUpsPageComponents/SignUpComponent";
 import { AuthProvider } from "./Contexts/AuthContext";
 import MoveSetUp from "./Components/MoveSetUp";
+import Appointments from "./Components/Appointments";
 // import { PlaceProvider } from "./Contexts/PlaceContext";
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
             </Route>
             <Route path="/MoveSetUp" component={MoveSetUp}>
               <MoveSetUp />
+            </Route>
+            <Route path="/Appointments" component={Appointments}>
+              <Appointments />
             </Route>
           </div>
         </Switch>

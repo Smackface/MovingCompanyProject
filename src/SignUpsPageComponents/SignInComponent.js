@@ -12,6 +12,8 @@ import Template from "../Components/Template";
 import React, { useState } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
+import {Link} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -79,8 +81,8 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     paddingLeft: "10%",
     paddingRight: "10%",
-    width: "40%",
-    height: "8%",
+    width: "350px",
+    height: "40px",
     borderRadius: "15px",
     backgroundColor: "#1074d8",
     color: "white",
@@ -123,6 +125,7 @@ const useStyles = makeStyles({
   },
 });
 
+
 export default function SignInComponent() {
   const classes = useStyles();
   const { login, currentUser } = UseAuth();
@@ -130,9 +133,11 @@ export default function SignInComponent() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let history = useHistory()
 
   async function handleSubmit(e) {
     e.preventDefault();
+    history.push("/MoveSetUp")
 
     try {
       setError("");

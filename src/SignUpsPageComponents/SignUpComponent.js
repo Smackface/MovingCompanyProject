@@ -12,6 +12,7 @@ import Template from "../Components/Template";
 import React, { useState } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
+import { useHistory } from "react-router-dom";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -141,9 +142,11 @@ export default function SignUpComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("")
+  let history = useHistory()
 
   async function handleSubmit(e) {
     e.preventDefault();
+    history.push("/MoveSetUp")
     if (password !== passwordConfirm) {
       return setError("Passwords Do Not Match!");
     }

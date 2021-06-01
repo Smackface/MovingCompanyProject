@@ -49,6 +49,52 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginRight: "auto",
     color: "#3A5666",
+    [theme.breakpoints.only("md")] : {
+      width: "100vw",
+    },
+    [theme.breakpoints.down("sm")] : {
+      textAlign: "center",
+    }
+  },
+  MainContainer: {
+    [theme.breakpoints.only("md")] : {
+      display: "flex",
+      width: "100vw",
+      textAlign: "center",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    [theme.breakpoints.down("sm")] : {
+      display: "flex",
+      width: "100vw",
+      textAlign: "center",
+      alignItems: "center",
+      justifyContent: "center",
+    }
+  },
+  TableHead: {
+    [theme.breakpoints.only("md")] : {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+    }
+  },
+  TableBody: {
+    [theme.breakpoints.only("md")] : {
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "80%",
+    },
+    [theme.breakpoints.down("sm")] : {
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "100%",
+    },
   },
   Delivery: {
     height: "200px",
@@ -62,7 +108,10 @@ const useStyles = makeStyles({
   FormDiv: {
     alignItems: "center",
     justifyContent: "center",
-    minWidth: "100%",
+    minWidth: "100vw",
+    [theme.breakpoints.only("md")] : {
+      textAlign: "center",
+    },
   },
   InputGrid: {
     marginLeft: "auto",
@@ -96,12 +145,21 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     width: "100%",
+    [theme.breakpoints.down("sm")] : {
+      display: "flex",
+      flexDirection: "column",
+    }
   },
   FormLabel: {
     position: "relative",
     alignSelf: "flex-start",
     marginLeft: "13%",
     color: "#3C5C68",
+    [theme.breakpoints.down("sm")] : {
+      textAlign: "center",
+      alignSelf: "center",
+      marginLeft: "0"
+    }
   },
   Background: {
     alignItems: "center",
@@ -114,6 +172,21 @@ const useStyles = makeStyles({
     textAlign: "left",
     color: "#474C4E",
     minWidth: "35vw",
+    [theme.breakpoints.only("md")] : {
+      marginLeft: "auto",
+      marginRight: "auto",
+      textAlign: "left",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingRight: "80px",
+    },
+    [theme.breakpoints.down("sm")] : {
+      marginLeft: "auto",
+      marginRight: "auto",
+      textAlign: "left",
+      alignItems: "center",
+      justifyContent: "center",
+    }
   },
   ItemContainer: {
     display: "flex",
@@ -124,6 +197,9 @@ const useStyles = makeStyles({
   },
   InfoDiv: {
     width: "12%",
+    [theme.breakpoints.down("sm")] : {
+      marginRight: "50px",
+    }
   },
   Button: {
     marginLeft: "5px",
@@ -182,8 +258,6 @@ export default function MoveSetUp() {
           OriginGeometry: "",
           },
         destination:{
-          fullName: "",
-          Number: "",
           Destination: "",
           DestinationGeometry: "",
         },
@@ -201,10 +275,10 @@ export default function MoveSetUp() {
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
       setPlace(place);
-      formik.setFieldValue("Origin", place.formatted_address);
+      formik.setFieldValue("payload.origin.Origin", place.formatted_address);
       JSON.stringify(place.geometry.location)
       setGeometry(place.geometry.location)
-      formik.setFieldValue("OriginGeometry", JSON.stringify(place.geometry.location))
+      formik.setFieldValue("payload.origin.OriginGeometry", JSON.stringify(place.geometry.location))
     },
     options: {
       componentRestrictions: { country: "us" },
@@ -215,8 +289,8 @@ export default function MoveSetUp() {
   const { ref: newRef } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
-      formik.setFieldValue("Destination", place.formatted_address);
-      formik.setFieldValue("DestinationGeometry", JSON.stringify(place.geometry.location))
+      formik.setFieldValue("payload.destination.Destination", place.formatted_address);
+      formik.setFieldValue("payload.destination.DestinationGeometry", JSON.stringify(place.geometry.location))
       JSON.stringify(place.geometry.location)
       setGeometry(place.geometry.location)
       setPlace(place);
@@ -244,7 +318,7 @@ export default function MoveSetUp() {
                 size="small"
                 id="fullName"
                 name="fullName"
-                value={formik.values.fullName}
+                value={formik.values.payload.origin.fullName}
                 onChange={formik.handleChange}
               />
               <TextField
@@ -254,7 +328,7 @@ export default function MoveSetUp() {
                 size="small"
                 id="Number"
                 name="Number"
-                value={formik.values.Number}
+                value={formik.values.payload.origin.Number}
                 onChange={formik.handleChange}
               />
             </div>
@@ -288,7 +362,7 @@ export default function MoveSetUp() {
             </button>
           </div>
           <div className={classes.MainContainer}>
-            <TableHead>
+            <TableHead className={classes.TableHead}>
               Items to move
               <TableBody className={classes.TableBody}>
                 {items.map((items, index) => (
