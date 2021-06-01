@@ -102,6 +102,9 @@ const useStyles = makeStyles({
     width: "40%",
     marginTop: "20px",
     marginBottom: "20px",
+    [theme.breakpoints.down("sm")] : {
+      width: "75%",
+    },
   },
   Delivery: {
     maxWidth: "400px",

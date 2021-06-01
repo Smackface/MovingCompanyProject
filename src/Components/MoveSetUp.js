@@ -36,6 +36,14 @@ const theme = createMuiTheme({
         borderRadius: "15px",
       },
     },
+    MuiButton: {
+      root: {
+
+      },
+      label: {
+        boxShadow: "#EDF3F5"
+      }
+    }
   },
 });
 
@@ -57,6 +65,10 @@ const useStyles = makeStyles({
     }
   },
   MainContainer: {
+    display: "flex",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
     [theme.breakpoints.only("md")] : {
       display: "flex",
       width: "100vw",
@@ -108,7 +120,7 @@ const useStyles = makeStyles({
   FormDiv: {
     alignItems: "center",
     justifyContent: "center",
-    minWidth: "100vw",
+    width: "50vw",
     [theme.breakpoints.only("md")] : {
       textAlign: "center",
     },
@@ -137,6 +149,9 @@ const useStyles = makeStyles({
     marginTop: "5px",
     marginBottom: "5px",
     maxWidth: "75%",
+    border: "0",
+    color: "#EDF3F5",
+    
   },
   InputGroup: {
     backgroundColor: "white",
@@ -206,12 +221,21 @@ const useStyles = makeStyles({
     marginRight: "5px",
     padding: "0px",
     borderRadius: "40px",
+    backgroundColor: "#A2B8CE",
   },
-  Icons: {},
+  Icons: {
+    color: "#727E8A"
+  },
   qtydiv: {
     marginLeft: "5px",
     marginRight: "5px",
   },
+  FormSubmit: {
+    textTransform: "initial",
+    backgroundColor: "#A2B8CE",
+    color: "#474C4E",
+    borderRadius: "40px",
+  }
 });
 
 export default function MoveSetUp() {
@@ -318,7 +342,7 @@ export default function MoveSetUp() {
                 size="small"
                 id="fullName"
                 name="fullName"
-                value={formik.values.payload.origin.fullName}
+                value={formik.values.fullName}
                 onChange={formik.handleChange}
               />
               <TextField
@@ -328,7 +352,7 @@ export default function MoveSetUp() {
                 size="small"
                 id="Number"
                 name="Number"
-                value={formik.values.payload.origin.Number}
+                value={formik.values.Number}
                 onChange={formik.handleChange}
               />
             </div>
@@ -357,9 +381,9 @@ export default function MoveSetUp() {
                 onChange={formik.handleChange}
               />
             </div>
-            <button type="button" onClick={formik.handleSubmit}>
+            <Button variant="outlined" type="button" onClick={formik.handleSubmit} className={classes.FormSubmit}>
               Submit
-            </button>
+            </Button>
           </div>
           <div className={classes.MainContainer}>
             <TableHead className={classes.TableHead}>
@@ -398,47 +422,3 @@ export default function MoveSetUp() {
     </ThemeProvider>
   );
 }
-
-// <ReactGoogleAutocomplete
-// id="Origin"
-// label="Origin"
-// value={formik.values.Origin}
-// apiKey={process.env.REACT_APP_GOOGLE}
-// onPlaceSelected={
-//   ((place) =>
-//     formik.setFieldValue(
-//       "Origin",
-//       place.formatted_address
-//     ))
-// }
-// onChange={formik.handleChange}
-// options={{
-//   componentRestrictions: { country: "us" },
-//   types: ["address"],
-//   fields: ["formatted_address", "geometry"],
-// }}
-// className={classes.InputText}
-// name="Origin"
-// />
-
-// <ReactGoogleAutocomplete
-//   id="Destination"
-//   label="Destination"
-//   value={formik.values.Destination}
-//   apiKey={process.env.REACT_APP_GOOGLE}
-//   onPlaceSelected={
-//     ((place) =>
-//       formik.setFieldValue(
-//         "Destination",
-//         place.formatted_address
-//       ))
-//   }
-//   onChange={formik.handleChange}
-//   options={{
-//     componentRestrictions: { country: "us" },
-//     types: ["address"],
-//     fields: ["formatted_address", "geometry"],
-//   }}
-//   className={classes.InputText}
-//   name="Destination"
-// />

@@ -80,8 +80,8 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     paddingLeft: "10%",
     paddingRight: "10%",
-    width: "40%",
-    height: "8%",
+    width: "350px",
+    height: "40px",
     borderRadius: "15px",
     backgroundColor: "#1074d8",
     color: "white",
@@ -101,6 +101,9 @@ const useStyles = makeStyles({
     width: "40%",
     marginTop: "20px",
     marginBottom: "20px",
+    [theme.breakpoints.down("sm")] : {
+      width: "75%",
+    },
   },
   Delivery: {
     maxWidth: "400px",
