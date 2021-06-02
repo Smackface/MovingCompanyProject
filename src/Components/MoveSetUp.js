@@ -270,6 +270,7 @@ export default function MoveSetUp() {
     console.log(newItems[index].quantity);
     console.log(newItems[index].itemName);
   };
+  JSON.stringify({items})
   const [geometry, setGeometry] = useState()
   const classes = useStyles();
   const formik = useFormik({

@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import useFirestore from "../Hooks/useFirestore";
 import "firebase/firestore";
 import { projectFirestore } from "./firebase";
-import { makeStyles } from "@material-ui/core";
+import { Divider, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   dataDiv: {
     marginTop: "10px",
-    margingBottom: "10px",
+    marginBottom: "10px",
+    width: "40vw",
+    marginLeft: "10px",
+    marginRight: "10px",
+  },
+  customerDiv: {
+    marginTop: "20px",
+    marginBottom: "20px",
   }
-})
+});
 
 export default function Appointments() {
   const classes = useStyles();
@@ -22,30 +29,34 @@ export default function Appointments() {
         {docs &&
           docs.map((doc) => (
             <div>
-              <div>
-                <div className={classes.dataDiv} key={doc.id}>{JSON.stringify(doc.id)}</div>
+              <Divider/>
+              <div className={classes.customerDiv}>
                 <div className={classes.dataDiv} key={doc.id}>
-                  {JSON.stringify(doc.payload.origin.fullName)}
+                  Appointment ID: {JSON.stringify(doc.id)}
                 </div>
                 <div className={classes.dataDiv} key={doc.id}>
+                  Contact Information: {JSON.stringify(doc.payload.origin.fullName)},{" "}
                   {JSON.stringify(doc.payload.origin.Number)}
                 </div>
                 <div className={classes.dataDiv} key={doc.id}>
-                  {JSON.stringify(doc.payload.origin.Origin)}
-                </div>
-                <div className={classes.dataDiv} key={doc.id}>
+                  Start Address: {JSON.stringify(doc.payload.origin.Origin)},{" "}
                   {JSON.stringify(doc.payload.origin.OriginGeometry)}
                 </div>
-                <div className={classes.dataDiv} key={doc.id}>
-                  {JSON.stringify(doc.payload.Furniture.items)}
+                <div className={classes.dataDiv} key={doc.id}>Furniture:{" "}
+                  {JSON.stringify(doc.payload.Furniture.items[0])},{" "}
+                  {JSON.stringify(doc.payload.Furniture.items[1])},{" "}
+                  {JSON.stringify(doc.payload.Furniture.items[2])},{" "}
+                  {JSON.stringify(doc.payload.Furniture.items[3])},{" "}
+                  {JSON.stringify(doc.payload.Furniture.items[4])},{" "}
+                  {JSON.stringify(doc.payload.Furniture.items[5])}
                 </div>
                 <div className={classes.dataDiv} key={doc.id}>
-                  {JSON.stringify(doc.payload.destination.Destination)}
-                </div>
-                <div className={classes.dataDiv} key={doc.id}>
+                  End Address:{" "}
+                  {JSON.stringify(doc.payload.destination.Destination)},{" "}
                   {JSON.stringify(doc.payload.destination.DestinationGeometry)}
                 </div>
               </div>
+              <Divider/>
             </div>
           ))}
       </div>
@@ -78,3 +89,9 @@ export default function Appointments() {
 // }
 
 //
+
+// <div className={classes.dataDiv} key={doc.id}>
+// Furniture: {JSON.stringify(doc.payload.Furniture.items[0])}, {JSON.stringify(doc.payload.Furniture.items[1])}, {JSON.stringify(doc.payload.Furniture.items[2])},
+// {JSON.stringify(doc.payload.Furniture.items[3])}, {JSON.stringify(doc.payload.Furniture.items[4])},
+// {JSON.stringify(doc.payload.Furniture.items[5])},
+// </div>
