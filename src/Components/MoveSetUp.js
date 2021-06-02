@@ -19,6 +19,7 @@ import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
 import firebase, { projectFirestore } from "./firebase";
 import projectStorage from './firebase'
+import { useHistory } from "react-router-dom";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -239,6 +240,7 @@ const useStyles = makeStyles({
 });
 
 export default function MoveSetUp() {
+  let history = useHistory();
   const [place, setPlace] = useState([
     {lat:0},
     {lng:0}
@@ -292,6 +294,7 @@ export default function MoveSetUp() {
       projectFirestore.collection('Customer Address').add({
         payload
       })
+      history.push("/Appointments");
     },
   });
 

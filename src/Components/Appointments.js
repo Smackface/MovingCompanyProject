@@ -29,7 +29,6 @@ const useStyles = makeStyles({
     marginLeft: "10vw",
     marginRight: "10vw",
     marginTop: "10px",
-    backgroundColor: "red",
     maxWidth: "80vw",
   }
 });
