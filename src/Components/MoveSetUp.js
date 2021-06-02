@@ -274,19 +274,18 @@ export default function MoveSetUp() {
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-      payload:{
-        origin:{
-          fullName: "",
-          Number: "",
-          Origin: "",
-          OriginGeometry: "",
+        "origin":{
+          "fullName": "",
+          "Number": "",
+          "Origin": "",
+          "OriginGeometry": "",
           },
-        destination:{
-          Destination: "",
-          DestinationGeometry: "",
+        "destination":{
+          "Destination": "",
+          "DestinationGeometry": "",
         },
-      Furniture: { items },
-    }},
+      "Furniture": { items },
+    },
     onSubmit: (payload) => {
       alert(JSON.stringify(payload, null, 2));
       projectFirestore.collection('Customer Address').add({
@@ -299,10 +298,10 @@ export default function MoveSetUp() {
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
       setPlace(place);
-      formik.setFieldValue("payload.origin.Origin", place.formatted_address);
+      formik.setFieldValue("origin.Origin", place.formatted_address);
       JSON.stringify(place.geometry.location)
       setGeometry(place.geometry.location)
-      formik.setFieldValue("payload.origin.OriginGeometry", JSON.stringify(place.geometry.location))
+      formik.setFieldValue("origin.OriginGeometry", JSON.stringify(place.geometry.location))
     },
     options: {
       componentRestrictions: { country: "us" },
@@ -313,8 +312,8 @@ export default function MoveSetUp() {
   const { ref: newRef } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
-      formik.setFieldValue("payload.destination.Destination", place.formatted_address);
-      formik.setFieldValue("payload.destination.DestinationGeometry", JSON.stringify(place.geometry.location))
+      formik.setFieldValue("destination.Destination", place.formatted_address);
+      formik.setFieldValue("destination.DestinationGeometry", JSON.stringify(place.geometry.location))
       JSON.stringify(place.geometry.location)
       setGeometry(place.geometry.location)
       setPlace(place);
@@ -340,7 +339,7 @@ export default function MoveSetUp() {
                 variant="outlined"
                 label="Full Name"
                 size="small"
-                id="payload.origin.fullName"
+                id="origin.fullName"
                 onChange={formik.handleChange}
               />
               <TextField
@@ -348,7 +347,7 @@ export default function MoveSetUp() {
                 variant="outlined"
                 label="Number"
                 size="small"
-                id="payload.origin.Number"
+                id="origin.Number"
                 onChange={formik.handleChange}
               />
             </div>
@@ -359,7 +358,7 @@ export default function MoveSetUp() {
                 variant="outlined"
                 size="small"
                 inputRef={ref}
-                id="payload.origin.Origin"
+                id="origin.Origin"
                 label="Origin"
                 onChange={formik.handleChange}
               />
@@ -369,7 +368,7 @@ export default function MoveSetUp() {
                 label="Destination"
                 size="small"
                 inputRef={newRef}
-                id="payload.destination.Destination"
+                id="destination.Destination"
                 onChange={formik.handleChange}
               />
             </div>
