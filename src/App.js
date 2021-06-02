@@ -1,15 +1,18 @@
 import "./App.css";
 import LandingPage from "./Components/LandingPage";
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignInComponent from "./Components/SignInComponent";
 import SignUpComponent from "./Components/SignUpComponent";
 import { AuthProvider } from "./Contexts/AuthContext";
 import MoveSetUp from "./Components/MoveSetUp";
-import Appointments from "./Components/Appointments";
+import {Appointments} from "./Components/Appointments";
+import Modal from "./Components/SubComponents/Modal"
 // import { PlaceProvider } from "./Contexts/PlaceContext";
 
 function App() {
+  const [selectedDiv, setSelectedDiv] = useState(null);
+
   return (
     <AuthProvider>
       <Router>
@@ -28,7 +31,10 @@ function App() {
               <MoveSetUp />
             </Route>
             <Route path="/Appointments" component={Appointments}>
-              <Appointments />
+              <Appointments setSelectedDiv={setSelectedDiv} />
+              {selectedDiv && (
+                <Modal selectedDiv={selectedDiv} setSelectedDiv={setSelectedDiv} />
+              )}
             </Route>
           </div>
         </Switch>
