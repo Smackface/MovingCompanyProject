@@ -50,13 +50,13 @@ export const Appointments = ({ setSelectedDiv }) => {
           <Grid container spacing={3} className={classes.AppointmentsGrid}>
           {docs &&
             docs.map((doc) => (
-              <motion.GridItem xs={3}
+              <motion.GridItem xs={4}
                 className={classes.dataDiv}
                 key={doc.id}
                 layout
                 whileHover={{ opacity: 1 }}
-                onClick={() => setSelectedDiv(doc.id)}
-              > <p>This is Location Placeholder text</p>
+                onClick={() => setSelectedDiv(doc)}
+              > <p>{doc.id}</p>
                 <p>This is items amount placeholder text</p>
                 <Delivery className={classes.Delivery} />
               </motion.GridItem>
@@ -68,6 +68,8 @@ export const Appointments = ({ setSelectedDiv }) => {
   );
 }
 
+
+// ***Probably useless, holding onto it anyways***
 //{docs && docs.map((doc) => (<div key={doc.id} layout="true"/>))}
 
 // I think this code will work, holding onto it while I continue experimenting
@@ -97,6 +99,8 @@ export const Appointments = ({ setSelectedDiv }) => {
 // {JSON.stringify(doc.payload.Furniture.items[3])}, {JSON.stringify(doc.payload.Furniture.items[4])},
 // {JSON.stringify(doc.payload.Furniture.items[5])},
 // </div>
+
+
 
 /* *****THIS IS THE CODE NEEDED FOR THE ACTUAL FUNCTIONALITY DON'T LOSE THIS HUNTER*****
 
