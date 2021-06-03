@@ -63,12 +63,8 @@ export const Appointments = ({ setSelectedDiv }) => {
                   {" "}
                   <p>{doc.id}</p>
                   <p>
-                    {doc.payload.Furniture.items[0].quantity +
-                      doc.payload.Furniture.items[1].quantity +
-                      doc.payload.Furniture.items[2].quantity +
-                      doc.payload.Furniture.items[3].quantity +
-                      doc.payload.Furniture.items[4].quantity +
-                      doc.payload.Furniture.items[5].quantity}{" "}
+                    {doc.payload.Furniture.items.reduce((a,b) => a + b.quantity, 0)}{" "}
+                      items to move
                   </p>
                   <Delivery className={classes.Delivery} />
                 </motion.GridItem>
@@ -146,4 +142,14 @@ export const Appointments = ({ setSelectedDiv }) => {
               <Divider/>
             </div>
           ))}
+          */
+
+
+          /*
+doc.payload.Furniture.items[0].quantity +
+                      doc.payload.Furniture.items[1].quantity +
+                      doc.payload.Furniture.items[2].quantity +
+                      doc.payload.Furniture.items[3].quantity +
+                      doc.payload.Furniture.items[4].quantity +
+                      doc.payload.Furniture.items[5].quantity
           */
