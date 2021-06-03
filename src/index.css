@@ -47,7 +47,11 @@ code {
   align-items: center;
   align-content: center;
   text-align: center;
-  background-color: antiquewhite;
-  width: 50vw;
+  background-color: whitesmoke;
+  max-width: 50vw;
   margin-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-radius: 20px;
 }
