@@ -4,17 +4,18 @@ import { makeStyles } from "@material-ui/core";
 import "firebase/firestore";
 import useFirestore from "../../Hooks/useFirestore";
 import Divider from "@material-ui/core/Divider";
-import index from "../../index.css";
+import index from "../../index.css"
+
 
 const useStyles = makeStyles({
-  customerDiv: {
-    maxWidth: "50vw",
-    maxHeight: "50vh",
-    display: "flex",
-  },
-  dataDiv: {
-    maxWidth: "600px",
-  },
+    customerDiv: {
+        maxWidth: "50vw",
+        maxHeight: "50vh",
+        display: "flex",
+    },
+    dataDiv: {
+        maxWidth: "600px",
+    },
 });
 
 const Modal = ({ selectedDiv, setSelectedDiv }) => {
@@ -32,13 +33,25 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
         initial={{ y: "-100vh" }}
         animate={{ y: 0 }}
       >
-        {JSON.stringify(selectedDiv)}
+      <div className="customerDiv">
+      <div className="dataDiv">
+      {JSON.stringify(selectedDiv.id)}
+      {JSON.stringify(selectedDiv.payload.origin.fullName)}
+      {JSON.stringify(selectedDiv.payload.origin.Number)}
+      {JSON.stringify(selectedDiv.payload.origin.Origin)}
+      {JSON.stringify(selectedDiv.payload.origin.OriginGeometry)}
+      {JSON.stringify(selectedDiv.payload.destination.Destination)}
+      {JSON.stringify(selectedDiv.payload.destination.DestinationGeometry)}
+      {JSON.stringify(selectedDiv.payload.Furniture)}
+      </div>
+      </div>
       </motion.selectedDiv>
     </div>
   );
 };
 
 export default Modal;
+
 
 /*
         {docs &&
