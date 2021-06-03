@@ -4,18 +4,17 @@ import { makeStyles } from "@material-ui/core";
 import "firebase/firestore";
 import useFirestore from "../../Hooks/useFirestore";
 import Divider from "@material-ui/core/Divider";
-import index from "../../index.css"
-
+import index from "../../index.css";
 
 const useStyles = makeStyles({
-    customerDiv: {
-        maxWidth: "50vw",
-        maxHeight: "50vh",
-        display: "flex",
-    },
-    dataDiv: {
-        maxWidth: "600px",
-    },
+  customerDiv: {
+    maxWidth: "50vw",
+    maxHeight: "50vh",
+    display: "flex",
+  },
+  dataDiv: {
+    maxWidth: "600px",
+  },
 });
 
 const Modal = ({ selectedDiv, setSelectedDiv }) => {
@@ -33,25 +32,39 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
         initial={{ y: "-100vh" }}
         animate={{ y: 0 }}
       >
-      <div className="customerDiv">
-      <div className="dataDiv">
-      {JSON.stringify(selectedDiv.id)}
-      {JSON.stringify(selectedDiv.payload.origin.fullName)}
-      {JSON.stringify(selectedDiv.payload.origin.Number)}
-      {JSON.stringify(selectedDiv.payload.origin.Origin)}
-      {JSON.stringify(selectedDiv.payload.origin.OriginGeometry)}
-      {JSON.stringify(selectedDiv.payload.destination.Destination)}
-      {JSON.stringify(selectedDiv.payload.destination.DestinationGeometry)}
-      {JSON.stringify(selectedDiv.payload.Furniture)}
-      </div>
-      </div>
+        <div className="customerDiv">
+          <div>
+            <div className="dataDiv">
+              Appointment ID: {JSON.stringify(selectedDiv.id)}
+            </div>
+            <div className="dataDiv">
+              Contact Information:{" "}
+              {JSON.stringify(selectedDiv.payload.origin.fullName)}{" "}
+              {JSON.stringify(selectedDiv.payload.origin.Number)}
+            </div>
+            <div className="dataDiv">
+              Origin Location:{" "}
+              {JSON.stringify(selectedDiv.payload.origin.Origin)}{" "}
+              {JSON.stringify(selectedDiv.payload.origin.OriginGeometry)}{" "}
+            </div>
+            <div className="dataDiv">
+              Destination Location:{" "}
+              {JSON.stringify(selectedDiv.payload.destination.Destination)}{" "}
+              {JSON.stringify(
+                selectedDiv.payload.destination.DestinationGeometry
+              )}{" "}
+            </div>
+            <div className="dataDiv">
+              Items: {JSON.stringify(selectedDiv.payload.Furniture)}{" "}
+            </div>
+          </div>
+        </div>
       </motion.selectedDiv>
     </div>
   );
 };
 
 export default Modal;
-
 
 /*
         {docs &&

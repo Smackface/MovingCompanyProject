@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import useFirestore from "../Hooks/useFirestore";
 import "firebase/firestore";
 import { projectFirestore } from "./firebase";
@@ -30,44 +30,55 @@ const useStyles = makeStyles({
     marginRight: "10vw",
     marginTop: "10px",
     maxWidth: "80vw",
-  }
+  },
 });
 
 export const Appointments = ({ setSelectedDiv }) => {
   const classes = useStyles();
   const { docs } = useFirestore("Customer Address");
   console.log(docs);
-
+  // function someQuantity(total, quantity) {
+  //   return total + quantity
+  // }
 
   return (
     <div>
       <div>
         <div>
           <div className={classes.header}>
-          <Delivery className={classes.Delivery}/>
-            This is a header, it has an image to the left            
+            <Delivery className={classes.Delivery} />
+            This is a header, it has an image to the left
           </div>
           <Grid container spacing={3} className={classes.AppointmentsGrid}>
-          {docs &&
-            docs.map((doc) => (
-              <motion.GridItem xs={4}
-                className={classes.dataDiv}
-                key={doc.id}
-                layout
-                whileHover={{ opacity: 1 }}
-                onClick={() => setSelectedDiv(doc)}
-              > <p>{doc.id}</p>
-                <p>This is items amount placeholder text</p>
-                <Delivery className={classes.Delivery} />
-              </motion.GridItem>
-            ))}
+            {docs &&
+              docs.map((doc) => (
+                <motion.GridItem
+                  xs={4}
+                  className={classes.dataDiv}
+                  key={doc.id}
+                  layout
+                  whileHover={{ opacity: 1 }}
+                  onClick={() => setSelectedDiv(doc)}
+                >
+                  {" "}
+                  <p>{doc.id}</p>
+                  <p>
+                    {doc.payload.Furniture.items[0].quantity +
+                      doc.payload.Furniture.items[1].quantity +
+                      doc.payload.Furniture.items[2].quantity +
+                      doc.payload.Furniture.items[3].quantity +
+                      doc.payload.Furniture.items[4].quantity +
+                      doc.payload.Furniture.items[5].quantity}{" "}
+                  </p>
+                  <Delivery className={classes.Delivery} />
+                </motion.GridItem>
+              ))}
           </Grid>
         </div>
       </div>
     </div>
   );
-}
-
+};
 
 // ***Probably useless, holding onto it anyways***
 //{docs && docs.map((doc) => (<div key={doc.id} layout="true"/>))}
@@ -99,8 +110,6 @@ export const Appointments = ({ setSelectedDiv }) => {
 // {JSON.stringify(doc.payload.Furniture.items[3])}, {JSON.stringify(doc.payload.Furniture.items[4])},
 // {JSON.stringify(doc.payload.Furniture.items[5])},
 // </div>
-
-
 
 /* *****THIS IS THE CODE NEEDED FOR THE ACTUAL FUNCTIONALITY DON'T LOSE THIS HUNTER*****
 
