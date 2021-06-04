@@ -1,28 +1,18 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 /* modal styles */
-.modalDiv{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  align-content: center;
-  text-align: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-}
 .backdrop {
   position: fixed;
   top: 0;
@@ -37,21 +27,85 @@ code {
   text-align: center;
   justify-content: center;
 }
+.dataDisplay {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-color: aquamarine;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding-bottom: 2%;
+  padding-top: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+  overflow: initial;
+}
 .dataDiv {
-  width: 50vw;
   margin-top: 2%;
 }
-.customerDiv{
+.customerDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: center;
   text-align: center;
   background-color: whitesmoke;
-  max-width: 50vw;
   margin-top: 2%;
+  margin-bottom: 2%;
+  padding-top: 2%;
   padding-bottom: 2%;
   padding-left: 5%;
   padding-right: 5%;
   border-radius: 20px;
+}
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media only screen and (max-width: 800px) {
+  .dataDisplay{
+    height: 80%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-radius: 20px;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+  }
+  .dataDiv {
+    width: unset;
+    text-align: center;
+  }
+  .customerDiv {
+    width: unset;
+    background-color: red;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 20px;
+  }
+  .backdrop {
+    width: 150vw;
+    height: 200vh;
+    position: absolute;
+  }
 }

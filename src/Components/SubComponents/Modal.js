@@ -1,24 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { makeStyles } from "@material-ui/core";
 import "firebase/firestore";
 import useFirestore from "../../Hooks/useFirestore";
-import Divider from "@material-ui/core/Divider";
 import index from "../../index.css";
 
-const useStyles = makeStyles({
-  customerDiv: {
-    maxWidth: "50vw",
-    maxHeight: "50vh",
-    display: "flex",
-  },
-  dataDiv: {
-    maxWidth: "600px",
-  },
-});
-
 const Modal = ({ selectedDiv, setSelectedDiv }) => {
-  const classes = useStyles;
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) setSelectedDiv(null);
   };
@@ -33,7 +19,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
         animate={{ y: 0 }}
       >
         <div className="customerDiv">
-          <div>
+          <div className="dataDisplay">
             <div className="dataDiv">
               Appointment ID: {JSON.stringify(selectedDiv.id)}
             </div>
