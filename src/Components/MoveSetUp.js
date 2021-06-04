@@ -290,7 +290,6 @@ export default function MoveSetUp() {
       "Furniture": { items },
     },
     onSubmit: (payload) => {
-      alert(JSON.stringify(payload, null, 2));
       projectFirestore.collection('Customer Address').add({
         payload
       })

@@ -4,6 +4,20 @@ import "firebase/firestore";
 import { Grid, makeStyles } from "@material-ui/core";
 import { motion } from "framer-motion";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
+import { createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 760,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+});
+
 
 const useStyles = makeStyles({
   bodyDiv: {
@@ -12,39 +26,48 @@ const useStyles = makeStyles({
     minWidth: "100vw",
   },
   header: {
-    marginLeft: "5vw",
-    marginBottom: "20px",
+    marginLeft: "5%",
+    marginBottom: ".5%",
     display: "flex",
     justifyItems: "center",
     alignItems: "center",
     fontSize: "26px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "16px",
+    }
   },
   DeliveryH: {
-    width: "150px",
-    height: "150px",
-    marginRight: "25px",
+    width: "10%",
+    marginRight: "2%",
+    [theme.breakpoints.down("sm")]: {
+      width: "25%"
+    },
   },
   dataDiv: {
     boxShadow: "0px 0px 10px grey",
-    marginLeft: "32px",
-    marginTop: "32px",
-    paddingLeft: "10px",
-    paddingRight: "10px",
+    marginLeft: "2%",
+    marginTop: "2%",
+    paddingLeft: ".5%",
+    paddingRight: ".5%",
     display: "flex",
     flexDirection: "row-reverse",
-    maxWidth: "400px",
+    width: "30%",
     borderRadius: "20px",
     fontSize: "1.15em",
     alignItems: "center",
-    justifyItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      padding: ".5%",
+      width: "110%"
+    },
+    [theme.breakpoints.only("md")]: {
+      width: "80vw",
+    }
   },
-  customerDiv: {
-    marginTop: "20px",
-    marginBottom: "20px",
+  dataInsideDiv: {
+    width: "80%",
   },
   Delivery: {
-    width: "200px",
-    height: "200px",
+    width: "25%",
   },
   AppointmentsGrid: {
     marginLeft: "10vw",
@@ -53,13 +76,20 @@ const useStyles = makeStyles({
     maxWidth: "80vw",
   },
   cardP: {
-    marginLeft: "5%",
     textAlign: "left",
     textJustify: "center",
+    [theme.breakpoints.only("md")]:{
+      width: "100%",
+    }
   },
   HeroIcon: {
     maxHeight: "1em",
   },
+  cardMap: {
+    minWidth: "50px",
+    maxWidth: "20%",
+    marginRight: "auto",
+  }
 });
 
 
@@ -86,7 +116,7 @@ export const Appointments = ({ setSelectedDiv }) => {
                   layout
                   onClick={() => setSelectedDiv(doc)}
                 >
-                  <div>
+                  <div className={classes.dataInsideDiv}>
                     {" "}
                     <p className={classes.cardP}>
                       <svg
@@ -151,7 +181,7 @@ export const Appointments = ({ setSelectedDiv }) => {
                     </p>
                   </div>
                   <svg
-                    className={classes.Delivery}
+                    className={classes.cardMap}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
