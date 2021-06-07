@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState, Component } from "react";
 import { motion } from "framer-motion";
 import "firebase/firestore";
-import useFirestore from "../../Hooks/useFirestore";
-import { makeStyles } from "@material-ui/core";
+import { Box, Hidden, makeStyles, Tab, Tabs, Button } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import PhoneIcon from "@material-ui/icons/Phone";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import RoomIcon from "@material-ui/icons/Room";
+import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
+import GoogleMapReact from 'google-map-react';
+import { Marker } from "google-maps-react";
+
+
+
+
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -29,10 +39,13 @@ const useStyles = makeStyles({
     margin: "2%",
     padding: "2%",
     borderRadius: "20px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.only("md")]: {
       width: "85vw",
       marginLeft: "auto",
       marginRight: "auto",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "85vw",
     },
   },
   dataDisplay: {
@@ -58,31 +71,251 @@ const useStyles = makeStyles({
     width: "80%",
     borderRadius: "10px",
     padding: "1%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
   },
   HeroIcon: {
-    width: "2em"
+    width: "2em",
   },
+  dataPanel: {
+    alignItems: "center",
+    alignContent: "center",
+    textAlign: "center",
+    width: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    overflow: "auto",
+  },
+  dataContent: {
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "100%",
+    overflow: "auto",
+  },
+  modalInfo: {
+    display: "flex",
+    textAlign: "center",
+    alignContent: "center",
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+    },
+  },
+  HeroIcon2: {
+    width: "1em",
+  },
+  modalH2: {
+    fontSize: "1.3em",
+    marginRight: "5px",
+  },
+  modalTabs: {
+    maxWidth: "20px",
+  },
+  furnitureList: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }
 });
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <div>{children}</div>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `tab-${index}`,
+  };
+}
 
 const Modal = ({ selectedDiv, setSelectedDiv }) => {
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) setSelectedDiv(null);
   };
-  const { docs } = useFirestore("Customer Address");
   const classes = useStyles();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleClose = (e) => {
+    setSelectedDiv(null);
+  };
+
+  console.log(selectedDiv.payload.origin.OriginGeometry.OriginLat)
+
+  const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
+  const zoomProp = 11
+
+  const thisLat = useState(selectedDiv.payload.origin.OriginGeometry.OriginLat)
+  const thisLng = useState(selectedDiv.payload.origin.OriginGeometry.OriginLng)
+
+  let centerProp = {
+    lat: {thisLat},
+    lng: {thisLng}
+  }
 
   return (
     <div className="backdrop" onClick={handleClick}>
-      <motion.selectedDiv
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        initial={{ y: "-100vh" }}
-        animate={{ y: 0 }}
-      >
+      <motion.selectedDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <div className={classes.customerDiv}>
+          <Hidden mdUp>
+            <Button onClick={handleClose} type="button">
+              Close
+            </Button>
+          </Hidden>
           <div className={classes.dataDisplay}>
+            <div className={classes.modalInfo}>
+              <h2 className={classes.modalH2}>
+                <ContactPhoneIcon className={classes.HeroIcon2} /> Appointment
+                ID:
+              </h2>
+              <p>{selectedDiv.id}</p>
+            </div>
+            <div className={classes.modalInfo}>
+              <h2 className={classes.modalH2}>
+                <RoomIcon className={classes.HeroIcon2} /> Destination:
+              </h2>
+              <p>{selectedDiv.payload.destination.Destination}</p>
+            </div>
+            
+      <div style={{ height: '200px', width: '100%' }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: "AIzaSyBZMkJMEH-fxzT8CjlZ-GewRJ8lYJRnEgw" }}
+        defaultZoom={zoomProp}
+        center={centerProp}
+      >
+        <RoomIcon
+        lat={selectedDiv.payload.origin.OriginGeometry.OriginLat}
+        lng={selectedDiv.payload.origin.OriginGeometry.OriginLng}
+        label="My Marker"
+        />
+      </GoogleMapReact>
+    </div>
+
+            <Tabs scrollButtons="auto" value={value} onChange={handleChange}>
+              <Tab
+                className={classes.modalTabs}
+                icon={<PhoneIcon className={classes.HeroIcon2} />}
+                label="Contact"
+                {...a11yProps(0)}
+              >
+                {" "}
+              </Tab>
+              <Tab
+                className={classes.modalTabs}
+                icon={<LocalShippingIcon className={classes.HeroIcon2} />}
+                label="Items"
+                {...a11yProps(1)}
+              ></Tab>
+              <Tab
+                className={classes.modalTabs}
+                icon={<RoomIcon className={classes.HeroIcon2} />}
+                label="Delivery"
+                {...a11yProps(2)}
+              ></Tab>
+            </Tabs>
             <div className={classes.dataDiv}>
-              <svg
+              <TabPanel value={value} index={0} className={classes.dataPanel}>
+                <div className={classes.dataContent}>
+                  <h3>Name:</h3> {selectedDiv.payload.origin.fullName}{" "}
+                </div>
+                <div className={classes.dataContent}>
+                  <h3>Number:</h3> {selectedDiv.payload.origin.Number}{" "}
+                </div>
+                <div className={classes.dataContent}>
+                  <h3>Home Address:</h3> {selectedDiv.payload.origin.Origin}{" "}
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={1} className={classes.dataPanel}>
+                <div className={classes.dataContent}>
+                  <h3>Furniture:</h3>{" "}
+                  {selectedDiv.payload.Furniture.items && 
+                  selectedDiv.payload.Furniture.items.map(({itemName, quantity}) => (<div className={classes.furnitureList}>
+                <div key={itemName}>{itemName}:{" "}{quantity}</div>
+                </div> 
+                ))}
+
+
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={2} className={classes.dataPanel}>
+                <div className={classes.dataContent}>
+                  <h3>Destination:</h3>{" "}
+                  {selectedDiv.payload.destination.Destination}{" "}
+                </div>
+              </TabPanel>
+            </div>
+          </div>
+        </div>
+      </motion.selectedDiv>
+    </div>
+  );
+};
+// const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
+// class SimpleMap extends Component {
+//   static defaultProps = {
+//     // center: {
+//     //   lat: 59.95,
+//     //   lng: 30.33
+//     // },
+//     zoom: 11
+//   };
+
+//   render({selectedDiv}) {
+//     return (
+//       // Important! Always set the container height explicitly
+//       <div style={{ height: '200px', width: '100%' }}>
+//         <GoogleMapReact
+//           bootstrapURLKeys={{ key: "AIzaSyBZMkJMEH-fxzT8CjlZ-GewRJ8lYJRnEgw" }}
+//           defaultZoom={this.props.zoom}
+//         >
+//           <AnyReactComponent
+//             lat={selectedDiv.payload.origin.OriginGeometry.OriginLat}
+//             lng={selectedDiv.payload.origin.OriginGeometry.OriginLng}
+//             text="My Marker"
+//           />
+//         </GoogleMapReact>
+//       </div>
+//     );
+//   }
+// }
+
+export default Modal;
+
+/*
+
+
+
+<svg
                 className={classes.HeroIcon}
                 fill="none"
                 stroke="currentColor"
@@ -186,49 +419,6 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
                 ></path>
               </svg>
               <p>Items: {JSON.stringify(selectedDiv.payload.Furniture)} </p>
-            </div>
-          </div>
-        </div>
-      </motion.selectedDiv>
-    </div>
-  );
-};
 
-export default Modal;
 
-/*
-        {docs &&
-          docs.map((doc) => (
-            <div className="modalDiv">
-              <Divider />
-              <div className="customerDiv">
-                <div className="dataDiv" key={doc.id}>
-                  Appointment ID: {JSON.stringify(doc.id)}
-                </div>
-                <div className="dataDiv" key={doc.id}>
-                  Contact Information:{" "}
-                  {JSON.stringify(doc.payload.origin.fullName)},{" "}
-                  {JSON.stringify(doc.payload.origin.Number)}
-                </div>
-                <div className="dataDiv" key={doc.id}>
-                  Start Address: {JSON.stringify(doc.payload.origin.Origin)},{" "}
-                  {JSON.stringify(doc.payload.origin.OriginGeometry)}
-                </div>
-                <div className="dataDiv" key={doc.id}>
-                  Furniture: {JSON.stringify(doc.payload.Furniture.items[0])},{" "}
-                  {JSON.stringify(doc.payload.Furniture.items[1])},{" "}
-                  {JSON.stringify(doc.payload.Furniture.items[2])},{" "}
-                  {JSON.stringify(doc.payload.Furniture.items[3])},{" "}
-                  {JSON.stringify(doc.payload.Furniture.items[4])},{" "}
-                  {JSON.stringify(doc.payload.Furniture.items[5])}
-                </div>
-                <div className="dataDiv" key={doc.id}>
-                  End Address:{" "}
-                  {JSON.stringify(doc.payload.destination.Destination)},{" "}
-                  {JSON.stringify(doc.payload.destination.DestinationGeometry)}
-                </div>
-              </div>
-              <Divider />
-            </div>
-          ))}
-          */
+              */

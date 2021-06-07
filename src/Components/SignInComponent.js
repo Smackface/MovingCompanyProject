@@ -12,7 +12,6 @@ import Template from "./SubComponents/Template";
 import React, { useState } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 const theme = createMuiTheme({
@@ -130,7 +129,7 @@ const useStyles = makeStyles({
 
 export default function SignInComponent() {
   const classes = useStyles();
-  const { login, currentUser } = UseAuth();
+  const { login } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -165,7 +164,6 @@ export default function SignInComponent() {
       <div className={classes.SignUpsDiv}>
         <NavBar />
         <div className={classes.HeaderDiv}></div>
-        {currentUser && currentUser.email}
         <h1>Sign In</h1>
         {error && (
           <Alert variant="outlined" severity="error">

@@ -139,7 +139,7 @@ const useStyles = makeStyles({
 
 export default function SignUpComponent() {
   const classes = useStyles();
-  const { register, currentUser } = UseAuth();
+  const { register } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");

@@ -11,14 +11,13 @@ import React, { useState } from "react";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
 import { ThemeProvider } from "@material-ui/styles";
 import "../App.css";
-import ReactGoogleAutocomplete, {
+import {
   usePlacesWidget,
 } from "react-google-autocomplete";
 import { useFormik } from "formik";
 import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
-import firebase, { projectFirestore } from "./firebase";
-import projectStorage from './firebase'
+import { projectFirestore } from "./firebase";
 import { useHistory } from "react-router-dom";
 
 const theme = createMuiTheme({
@@ -241,10 +240,7 @@ const useStyles = makeStyles({
 
 export default function MoveSetUp() {
   let history = useHistory();
-  const [place, setPlace] = useState([
-    {lat:0},
-    {lng:0}
-  ]);
+
 
   const [items, setItems] = useState([
     { itemName: "Desks", quantity: 0 },
@@ -272,8 +268,6 @@ export default function MoveSetUp() {
     console.log(newItems[index].quantity);
     console.log(newItems[index].itemName);
   };
-  // JSON.stringify({items})
-  const [geometry, setGeometry] = useState()
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -281,11 +275,17 @@ export default function MoveSetUp() {
           "fullName": "",
           "Number": "",
           "Origin": "",
-          "OriginGeometry": "",
+          "OriginGeometry":{
+            OriginLat: "",
+            OriginLng: "",
+          },
           },
         "destination":{
           "Destination": "",
-          "DestinationGeometry": "",
+          "DestinationGeometry":{
+            DestinationLat: "",
+            DestinationLng: "",
+          }
         },
       "Furniture": { items },
     },
@@ -300,11 +300,9 @@ export default function MoveSetUp() {
   const { ref } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
-      setPlace(place);
       formik.setFieldValue("origin.Origin", place.formatted_address);
-      JSON.stringify(place.geometry.location)
-      setGeometry(place.geometry.location)
-      formik.setFieldValue("origin.OriginGeometry", JSON.stringify(place.geometry.location))
+      formik.setFieldValue("origin.OriginGeometry.OriginLat", JSON.stringify(place.geometry.location.lat()))
+      formik.setFieldValue("origin.OriginGeometry.OriginLng", JSON.stringify(place.geometry.location.lng()))
     },
     options: {
       componentRestrictions: { country: "us" },
@@ -316,10 +314,10 @@ export default function MoveSetUp() {
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
       formik.setFieldValue("destination.Destination", place.formatted_address);
-      formik.setFieldValue("destination.DestinationGeometry", JSON.stringify(place.geometry.location))
+      formik.setFieldValue("destination.DestinationGeometry.DestinationLat", JSON.stringify(place.geometry.location.lat()))
+      formik.setFieldValue("destination.DestinationGeometry.DestinationLng", JSON.stringify(place.geometry.location.lng()))
       JSON.stringify(place.geometry.location)
-      setGeometry(place.geometry.location)
-      setPlace(place);
+      console.log(JSON.stringify(place.geometry.location.lat()))
     },
     options: {
       componentRestrictions: { country: "us" },
