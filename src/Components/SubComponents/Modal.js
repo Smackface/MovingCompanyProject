@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "firebase/firestore";
 import { Box, Hidden, makeStyles, Tab, Tabs, Button } from "@material-ui/core";
@@ -9,7 +9,6 @@ import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import RoomIcon from "@material-ui/icons/Room";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
 import GoogleMapReact from 'google-map-react';
-import { Marker } from "google-maps-react";
 
 
 
@@ -172,10 +171,11 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
 
   console.log(selectedDiv.payload.origin.OriginGeometry.OriginLat)
 
+  const apiKey = process.env.REACT_APP_GOOGLE
 
   const zoomProp = 8
 
-  let centerProp = {
+  const centerProp = {
     lat: 35.5321,
     lng: -77.3766
   }
@@ -206,7 +206,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
             
       <div style={{ height: '200px', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY }}
+        bootstrapURLKeys={{ key: apiKey }}
         defaultZoom={zoomProp}
         center={centerProp}
       >
