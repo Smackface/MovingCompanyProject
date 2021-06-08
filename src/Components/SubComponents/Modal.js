@@ -170,15 +170,14 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
 
   console.log(selectedDiv.payload.origin.OriginGeometry.OriginLat)
 
-  const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
   const zoomProp = 8
 
   const thisLat = selectedDiv.payload.origin.OriginGeometry.OriginLat
   const thisLng = selectedDiv.payload.origin.OriginGeometry.OriginLng
   let centerProp = {
-    lat: {thisLat},
-    lng: {thisLng}
+    lat: 35.5321,
+    lng: -77.3766
   }
 
   return (
