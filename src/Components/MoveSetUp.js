@@ -316,8 +316,6 @@ export default function MoveSetUp() {
       formik.setFieldValue("destination.Destination", place.formatted_address);
       formik.setFieldValue("destination.DestinationGeometry.DestinationLat", JSON.stringify(place.geometry.location.lat()))
       formik.setFieldValue("destination.DestinationGeometry.DestinationLng", JSON.stringify(place.geometry.location.lng()))
-      JSON.stringify(place.geometry.location)
-      console.log(JSON.stringify(place.geometry.location.lat()))
     },
     options: {
       componentRestrictions: { country: "us" },

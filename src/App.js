@@ -8,8 +8,6 @@ import { AuthProvider } from "./Contexts/AuthContext";
 import MoveSetUp from "./Components/MoveSetUp";
 import {Appointments} from "./Components/Appointments";
 import Modal from "./Components/SubComponents/Modal"
-import Map from './Components/SubComponents/Map'
-// import { PlaceProvider } from "./Contexts/PlaceContext";
 
 function App() {
   const [selectedDiv, setSelectedDiv] = useState(null);

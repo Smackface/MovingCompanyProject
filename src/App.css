@@ -1,21 +1,3 @@
-/* .MyFirstDiv {
-  background-size: contain;
-  background-image: 
-    url(/src/assets/MovingCompany.png)
-} */
-/* 
-
-.root {
-    min-height: '50vh';
-    min-width: '50%';
-    margin-left: 'auto';
-    margin-right: 'auto';
-    background-image: 'url(${process.env.PUBLIC_URL + '/MovingCompany.png'})';
-    background-Repeat: 'no-repeat';
-    background-Size: 'cover';
-    clip-Path: 'polygon(0 0, 100% 0, 60% 100%, 0% 100%)';
-} */
-
 .body {
   padding-left: 20%;
   padding-right: 20%;
