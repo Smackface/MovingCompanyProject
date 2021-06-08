@@ -46,6 +46,8 @@ const useStyles = makeStyles({
     },
     [theme.breakpoints.down("sm")]: {
       width: "85vw",
+      overflow: "auto",
+      maxHeight: "100vh",
     },
   },
   dataDisplay: {
@@ -173,8 +175,6 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
 
   const zoomProp = 8
 
-  const thisLat = selectedDiv.payload.origin.OriginGeometry.OriginLat
-  const thisLng = selectedDiv.payload.origin.OriginGeometry.OriginLng
   let centerProp = {
     lat: 35.5321,
     lng: -77.3766
