@@ -96,7 +96,6 @@ const useStyles = makeStyles({
 export const Appointments = ({ setSelectedDiv }) => {
   const classes = useStyles();
   const { docs } = useFirestore("Customer Address");
-  console.log(docs);
   
   return (
     <div className={classes.bodyDiv}>

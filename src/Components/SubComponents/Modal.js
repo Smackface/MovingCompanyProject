@@ -172,11 +172,10 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
 
   const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-  const zoomProp = 11
+  const zoomProp = 8
 
-  const thisLat = useState(selectedDiv.payload.origin.OriginGeometry.OriginLat)
-  const thisLng = useState(selectedDiv.payload.origin.OriginGeometry.OriginLng)
-
+  const thisLat = selectedDiv.payload.origin.OriginGeometry.OriginLat
+  const thisLng = selectedDiv.payload.origin.OriginGeometry.OriginLng
   let centerProp = {
     lat: {thisLat},
     lng: {thisLng}

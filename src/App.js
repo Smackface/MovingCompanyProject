@@ -8,6 +8,7 @@ import { AuthProvider } from "./Contexts/AuthContext";
 import MoveSetUp from "./Components/MoveSetUp";
 import {Appointments} from "./Components/Appointments";
 import Modal from "./Components/SubComponents/Modal"
+import Map from './Components/SubComponents/Map'
 // import { PlaceProvider } from "./Contexts/PlaceContext";
 
 function App() {
@@ -32,8 +33,9 @@ function App() {
             </Route>
             <Route path="/Appointments" component={Appointments}>
               <Appointments setSelectedDiv={setSelectedDiv} />
-              {selectedDiv && (
+              {selectedDiv && (<div>
                 <Modal selectedDiv={selectedDiv} setSelectedDiv={setSelectedDiv} />
+                </div>
               )}
             </Route>
           </div>

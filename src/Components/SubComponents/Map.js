@@ -1,33 +1,22 @@
-import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
+// import React, { useState } from 'react';
+// import { useGoogleMaps } from "react-hook-google-maps";
+// import "firebase/firestore";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-export default class SimpleMap extends Component {
-  static defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
-    zoom: 11
-  };
 
-  render() {
-    return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyBZMkJMEH-fxzT8CjlZ-GewRJ8lYJRnEgw" }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text="My Marker"
-          />
-        </GoogleMapReact>
-      </div>
-    );
-  }
-}
+// const Map = (selectedDiv) => {
+//   const { ref, map, google } = useGoogleMaps(
+//     "AIzaSyBZMkJMEH-fxzT8CjlZ-GewRJ8lYJRnEgw",
+//     {
+//       center: { lat: 35.5321, lng: -77.3766},
+//       zoom: 7,
+//     },
+//   );
+//   console.log(map);
+//   console.log(google);
+  
+//   if (selectedDiv) {
+//   return <div ref={ref} style={{ width: 400, height: 300 }} />;
+// }};
+
+// export default Map;
