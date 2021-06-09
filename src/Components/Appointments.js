@@ -5,6 +5,8 @@ import { Grid, makeStyles } from "@material-ui/core";
 import { motion } from "framer-motion";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
 import { createMuiTheme } from "@material-ui/core/styles";
+import MoveEdit from './SubComponents/EditAppointments'
+
 
 const theme = createMuiTheme({
   breakpoints: {

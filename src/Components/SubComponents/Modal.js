@@ -8,11 +8,9 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import RoomIcon from "@material-ui/icons/Room";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
-import GoogleMapReact from 'google-map-react';
-
-
-
-
+import EditIcon from '@material-ui/icons/Edit';
+import GoogleMapReact from "google-map-react";
+import MoveEdit from "./EditAppointments";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -28,7 +26,6 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles({
   customerDiv: {
-    width: "50vw",
     backgroundColor: "whitesmoke",
     display: "flex",
     flexDirection: "column",
@@ -38,13 +35,17 @@ const useStyles = makeStyles({
     margin: "2%",
     padding: "2%",
     borderRadius: "20px",
+    maxHeight: "100vh",
+    [theme.breakpoints.up("lg")]: {
+      maxWidth: "50vw",
+    },
     [theme.breakpoints.only("md")]: {
       width: "85vw",
       marginLeft: "auto",
       marginRight: "auto",
     },
     [theme.breakpoints.down("sm")]: {
-      width: "85vw",
+      width: "100vw",
       overflow: "auto",
       maxHeight: "100vh",
     },
@@ -55,14 +56,14 @@ const useStyles = makeStyles({
     marginLeft: "2%",
     marginRight: "2%",
     width: "95%",
-    height: "95%",
+    height: "100%",
     paddingLeft: "2%",
     textAlign: "left",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     borderRadius: "20px",
-    backgroundColor: "snow",
+    overflow: "auto",
   },
   dataDiv: {
     marginTop: "2%",
@@ -84,7 +85,6 @@ const useStyles = makeStyles({
     alignItems: "center",
     alignContent: "center",
     textAlign: "center",
-    width: "100%",
     marginLeft: "auto",
     marginRight: "auto",
     overflow: "auto",
@@ -95,6 +95,7 @@ const useStyles = makeStyles({
     marginRight: "auto",
     width: "100%",
     overflow: "auto",
+    maxHeight: "200px",
   },
   modalInfo: {
     display: "flex",
@@ -120,7 +121,11 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
+  MoveEdit: {
+    height: "50%",
+    width: "50%",
+  },
 });
 
 function TabPanel(props) {
@@ -155,6 +160,7 @@ function a11yProps(index) {
 }
 
 const Modal = ({ selectedDiv, setSelectedDiv }) => {
+  console.log("hi", selectedDiv.id)
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) setSelectedDiv(null);
   };
@@ -169,20 +175,20 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
     setSelectedDiv(null);
   };
 
-  console.log(selectedDiv.payload.origin.OriginGeometry.OriginLat)
+  console.log(selectedDiv.payload.origin.OriginGeometry.OriginLat);
 
-  const apiKey = process.env.REACT_APP_GOOGLE
+  const apiKey = process.env.REACT_APP_GOOGLE;
 
-  const zoomProp = 8
+  const zoomProp = 8;
 
   const centerProp = {
     lat: 35.5321,
-    lng: -77.3766
-  }
+    lng: -77.3766,
+  };
 
   return (
     <div className="backdrop" onClick={handleClick}>
-      <motion.selectedDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <div className={classes.customerDiv}>
           <Hidden mdUp>
             <Button onClick={handleClose} type="button">
@@ -203,22 +209,21 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               </h2>
               <p>{selectedDiv.payload.destination.Destination}</p>
             </div>
-            
-      <div style={{ height: '200px', width: '100%' }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: apiKey }}
-        defaultZoom={zoomProp}
-        center={centerProp}
-      >
-        <RoomIcon
-        lat={selectedDiv.payload.origin.OriginGeometry.OriginLat}
-        lng={selectedDiv.payload.origin.OriginGeometry.OriginLng}
-        label="My Marker"
-        />
-      </GoogleMapReact>
-    </div>
 
-            <Tabs scrollButtons="auto" value={value} onChange={handleChange}>
+            <div style={{ height: "200px", width: "100%" }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{ key: apiKey }}
+                defaultZoom={zoomProp}
+                center={centerProp}
+              >
+                <RoomIcon
+                  lat={selectedDiv.payload.origin.OriginGeometry.OriginLat}
+                  lng={selectedDiv.payload.origin.OriginGeometry.OriginLng}
+                  label="My Marker"
+                />
+              </GoogleMapReact>
+            </div>
+            <Tabs scrollButtons="auto" value={value} onChange={handleChange} className={classes.TabBar}>
               <Tab
                 className={classes.modalTabs}
                 icon={<PhoneIcon className={classes.HeroIcon2} />}
@@ -239,6 +244,12 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
                 label="Delivery"
                 {...a11yProps(2)}
               ></Tab>
+              <Tab
+                className={classes.modalTabs}
+                icon={<EditIcon className={classes.HeroIcon2} />}
+                label="Edit"
+                {...a11yProps(3)}
+                ></Tab>
             </Tabs>
             <div className={classes.dataDiv}>
               <TabPanel value={value} index={0} className={classes.dataPanel}>
@@ -255,13 +266,16 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               <TabPanel value={value} index={1} className={classes.dataPanel}>
                 <div className={classes.dataContent}>
                   <h3>Furniture:</h3>{" "}
-                  {selectedDiv.payload.Furniture.items && 
-                  selectedDiv.payload.Furniture.items.map(({itemName, quantity}) => (<div className={classes.furnitureList}>
-                <div key={itemName}>{itemName}:{" "}{quantity}</div>
-                </div> 
-                ))}
-
-
+                  {selectedDiv.payload.Furniture.items &&
+                    selectedDiv.payload.Furniture.items.map(
+                      ({ itemName, quantity }) => (
+                        <div className={classes.furnitureList}>
+                          <div key={itemName}>
+                            {itemName}: {quantity}
+                          </div>
+                        </div>
+                      )
+                    )}
                 </div>
               </TabPanel>
               <TabPanel value={value} index={2} className={classes.dataPanel}>
@@ -270,10 +284,16 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
                   {selectedDiv.payload.destination.Destination}{" "}
                 </div>
               </TabPanel>
+              <TabPanel value={value} index={3} className={classes.dataPanel}>
+                <div className={classes.dataContent}>
+                  <h3>Edit Your Information</h3>
+                  <MoveEdit selectedDiv={selectedDiv} className={classes.MoveEdit} />
+                </div>
+              </TabPanel>
             </div>
           </div>
         </div>
-      </motion.selectedDiv>
+      </motion.div>
     </div>
   );
 };
