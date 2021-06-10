@@ -1,10 +1,12 @@
 import React from "react";
 import useFirestore from "../Hooks/useFirestore";
 import "firebase/firestore";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Hidden } from "@material-ui/core";
 import { motion } from "framer-motion";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
 import { createMuiTheme } from "@material-ui/core/styles";
+import MoveSetUp from "./MoveSetUp";
+import { usePlacesWidget } from "react-google-autocomplete";
 
 
 const theme = createMuiTheme({
@@ -97,12 +99,14 @@ const useStyles = makeStyles({
 export const Appointments = ({ setSelectedDiv }) => {
   const classes = useStyles();
   const { docs } = useFirestore("Customer Address");
+
+  
   
   return (
     <div className={classes.bodyDiv}>
       <div>
         <div>
-          <div className={classes.header}>
+          <div className={classes.header}>    
             <Delivery className={classes.DeliveryH} />
             <h1 classname={classes.headerText}>Appointments</h1>
           </div>

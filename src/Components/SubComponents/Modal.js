@@ -11,6 +11,7 @@ import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
 import EditIcon from '@material-ui/icons/Edit';
 import GoogleMapReact from "google-map-react";
 import MoveEdit from "./EditAppointments";
+import { usePlacesWidget } from "react-google-autocomplete";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -160,6 +161,7 @@ function a11yProps(index) {
   };
 }
 
+
 const Modal = ({ selectedDiv, setSelectedDiv }) => {
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) setSelectedDiv(null);
@@ -174,7 +176,6 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
   const handleClose = (e) => {
     setSelectedDiv(null);
   };
-
 
   const myMapKey = process.env.REACT_APP_GOOGLE;
 
@@ -289,8 +290,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               <TabPanel value={value} index={3} className={classes.dataPanel}>
                 <div className={classes.dataContent}>
                   <h3>Edit Your Information</h3>
-                  <MoveEdit selectedDiv={selectedDiv} className={classes.MoveEdit}
-                  apiKey={{key: process.env.REACT_APP_GOOGLE}} />
+                  <MoveEdit selectedDiv={selectedDiv} />
                 </div>
               </TabPanel>
             </div>

@@ -1,5 +1,5 @@
 import TextField from "@material-ui/core/TextField";
-import C from '../../Constants/Collections'
+import C from "../../Constants/Collections";
 import {
   FormLabel,
   TableHead,
@@ -11,9 +11,7 @@ import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { ReactComponent as Delivery } from "../../Assets/delivery2.svg";
 import { ThemeProvider } from "@material-ui/styles";
-import {
-  usePlacesWidget,
-} from "react-google-autocomplete";
+import { usePlacesWidget } from "react-google-autocomplete";
 import { useFormik } from "formik";
 import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
@@ -36,13 +34,11 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      root: {
-
-      },
+      root: {},
       label: {
-        boxShadow: "#EDF3F5"
-      }
-    }
+        boxShadow: "#EDF3F5",
+      },
+    },
   },
 });
 const useStyles = makeStyles({
@@ -56,13 +52,13 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginRight: "auto",
     color: "#3A5666",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       width: "55vw",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       maxWidth: "300px",
-    }
+    },
   },
   MainContainer: {
     display: "flex",
@@ -70,25 +66,25 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       display: "flex",
       width: "90%",
       textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       display: "flex",
       textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
       width: "80%",
-    }
+    },
   },
   TableHead: {
     fontSize: "14px",
     width: "100%",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       width: "100%",
       display: "flex",
       flexDirection: "column",
@@ -99,16 +95,16 @@ const useStyles = makeStyles({
       flexDirection: "column",
       width: "100%",
       textAlign: "center",
-    }
+    },
   },
   TableBody: {
     width: "100%",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       marginLeft: "auto",
       marginRight: "auto",
       width: "80%",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       marginLeft: "auto",
       marginRight: "auto",
     },
@@ -126,7 +122,7 @@ const useStyles = makeStyles({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       textAlign: "center",
     },
   },
@@ -157,7 +153,7 @@ const useStyles = makeStyles({
     color: "#EDF3F5",
     fontSize: "12px",
     [theme.breakpoints.down("sm")]: {
-        width: "40%",
+      width: "40%",
     },
   },
   InputGroup: {
@@ -167,22 +163,22 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       display: "flex",
       flexDirection: "row",
-    }
+    },
   },
   FormLabel: {
     position: "relative",
     alignSelf: "flex-start",
     marginLeft: "13%",
     color: "#3C5C68",
-    fontSize: '12px',
-    [theme.breakpoints.down("sm")] : {
+    fontSize: "12px",
+    [theme.breakpoints.down("sm")]: {
       textAlign: "center",
       alignSelf: "center",
-      marginLeft: "0"
-    }
+      marginLeft: "0",
+    },
   },
   Background: {
     alignItems: "center",
@@ -195,23 +191,24 @@ const useStyles = makeStyles({
     textAlign: "left",
     color: "#474C4E",
     width: "750px",
-    [theme.breakpoints.only("md")] : {
+    [theme.breakpoints.only("md")]: {
       marginLeft: "auto",
       marginRight: "auto",
       textAlign: "left",
       alignItems: "center",
       justifyContent: "center",
       paddingRight: "80px",
+      maxWidth: "300px",
     },
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       marginLeft: "auto",
       marginRight: "auto",
       textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
       width: "150px",
-      flexDirection: "column"
-    }
+      flexDirection: "column",
+    },
   },
   ItemContainer: {
     display: "flex",
@@ -223,10 +220,15 @@ const useStyles = makeStyles({
   InfoDiv: {
     width: "20%",
     marginRight: "20%",
-    [theme.breakpoints.down("sm")] : {
+    [theme.breakpoints.down("sm")]: {
       marginRight: "0",
       textAlign: "left",
-    }
+    },
+  },
+  FlexInfo: {
+    [theme.breakpoints.up("lg")]: {
+      display: "flex",
+    },
   },
   Button: {
     marginLeft: "5px",
@@ -236,21 +238,21 @@ const useStyles = makeStyles({
     backgroundColor: "#A2B8CE",
     height: "20px",
     [theme.breakpoints.down("sm")]: {
-        width: "20px",
-        marginLeft: "0",
-        marginRight: "0",
-    }
+      width: "20px",
+      marginLeft: "0",
+      marginRight: "0",
+    },
   },
   Icons: {
-    color: "#727E8A"
+    color: "#727E8A",
   },
   qtydiv: {
     marginLeft: "5px",
     marginRight: "5px",
-    [theme.breakpoints.down("sm")]:{
-        marginLeft: "0",
-        marginRight: "0",
-    }
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "0",
+      marginRight: "0",
+    },
   },
   FormSubmit: {
     textTransform: "initial",
@@ -258,22 +260,21 @@ const useStyles = makeStyles({
     color: "#474C4E",
     borderRadius: "40px",
     height: "20px",
-  }
+  },
 });
-
-const MoveEdit = ({selectedDiv}) => {
-    useEffect(() => {
-        projectFirestore.collection(C.customerAddress)
-        .doc(selectedDiv.id)
-        .get()
-        .then(doc => {
-            console.log(doc.data())
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    },[selectedDiv.id]);
-
+const MoveEdit = ({ selectedDiv }) => {
+  useEffect(() => {
+    projectFirestore
+      .collection(C.customerAddress)
+      .doc(selectedDiv.id)
+      .get()
+      .then((doc) => {
+        console.log(doc.data());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [selectedDiv.id]);
   const [items, setItems] = useState([
     { itemName: "Desks", quantity: 0 },
     { itemName: "Computers", quantity: 0 },
@@ -303,36 +304,44 @@ const MoveEdit = ({selectedDiv}) => {
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-        "origin":{
-          "fullName": "",
-          "Number": "",
-          "Origin": "",
-          "OriginGeometry":{
-            OriginLat: "",
-            OriginLng: "",
-          },
-          },
-        "destination":{
-          "Destination": "",
-          "DestinationGeometry":{
-            DestinationLat: "",
-            DestinationLng: "",
-          }
+      origin: {
+        fullName: "",
+        Number: "",
+        Origin: "",
+        OriginGeometry: {
+          OriginLat: "",
+          OriginLng: "",
         },
-      "Furniture": { items },
+      },
+      destination: {
+        Destination: "",
+        DestinationGeometry: {
+          DestinationLat: "",
+          DestinationLng: "",
+        },
+      },
+      Furniture: { items },
     },
     onSubmit: (payload) => {
-        console.log(selectedDiv.id)
-      projectFirestore.collection('Customer Address').doc(selectedDiv.id).update({payload})
+      console.log(selectedDiv.id);
+      projectFirestore
+        .collection("Customer Address")
+        .doc(selectedDiv.id)
+        .update({ payload });
     },
   });
-
   const { ref } = usePlacesWidget({
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
       formik.setFieldValue("origin.Origin", place.formatted_address);
-      formik.setFieldValue("origin.OriginGeometry.OriginLat", JSON.stringify(place.geometry.location.lat()))
-      formik.setFieldValue("origin.OriginGeometry.OriginLng", JSON.stringify(place.geometry.location.lng()))
+      formik.setFieldValue(
+        "origin.OriginGeometry.OriginLat",
+        JSON.stringify(place.geometry.location.lat())
+      );
+      formik.setFieldValue(
+        "origin.OriginGeometry.OriginLng",
+        JSON.stringify(place.geometry.location.lng())
+      );
     },
     options: {
       componentRestrictions: { country: "us" },
@@ -344,8 +353,14 @@ const MoveEdit = ({selectedDiv}) => {
     apiKey: process.env.REACT_APP_GOOGLE,
     onPlaceSelected: (place) => {
       formik.setFieldValue("destination.Destination", place.formatted_address);
-      formik.setFieldValue("destination.DestinationGeometry.DestinationLat", JSON.stringify(place.geometry.location.lat()))
-      formik.setFieldValue("destination.DestinationGeometry.DestinationLng", JSON.stringify(place.geometry.location.lng()))
+      formik.setFieldValue(
+        "destination.DestinationGeometry.DestinationLat",
+        JSON.stringify(place.geometry.location.lat())
+      );
+      formik.setFieldValue(
+        "destination.DestinationGeometry.DestinationLng",
+        JSON.stringify(place.geometry.location.lng())
+      );
     },
     options: {
       componentRestrictions: { country: "us" },
@@ -353,7 +368,6 @@ const MoveEdit = ({selectedDiv}) => {
       fields: ["formatted_address", "geometry.location"],
     },
   });
-
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.movegrid}>
@@ -401,7 +415,12 @@ const MoveEdit = ({selectedDiv}) => {
                 onChange={formik.handleChange}
               />
             </div>
-            <Button variant="outlined" type="button" onClick={formik.handleSubmit} className={classes.FormSubmit}>
+            <Button
+              variant="outlined"
+              type="button"
+              onClick={formik.handleSubmit}
+              className={classes.FormSubmit}
+            >
               Submit
             </Button>
           </div>
@@ -417,26 +436,26 @@ const MoveEdit = ({selectedDiv}) => {
                     onChange={formik.handleChange}
                   >
                     <div className={classes.InfoDiv}>{items.itemName}</div>
-                    <div>
-                    <Button
-                      className={classes.Button}
-                      onClick={() => handleQuantityDecrease(index)}
-                      size="small"
-                      variant="outlined"
-                      width="20"
-                    >
-                      <RemoveSharpIcon className={classes.Icons} />
-                    </Button>
-                    <div className={classes.qtydiv}>{items.quantity}</div>
-                    <Button
-                      className={classes.Button}
-                      onClick={() => handleQuantityIncrease(index)}
-                      variant="outlined"
-                      size="small"
-                      width="20"
-                    >
-                      <AddSharpIcon className={classes.Icons} />
-                    </Button>
+                    <div className={classes.FlexInfo}>
+                      <Button
+                        className={classes.Button}
+                        onClick={() => handleQuantityDecrease(index)}
+                        size="small"
+                        variant="outlined"
+                        width="20"
+                      >
+                        <RemoveSharpIcon className={classes.Icons} />
+                      </Button>
+                      <div className={classes.qtydiv}>{items.quantity}</div>
+                      <Button
+                        className={classes.Button}
+                        onClick={() => handleQuantityIncrease(index)}
+                        variant="outlined"
+                        size="small"
+                        width="20"
+                      >
+                        <AddSharpIcon className={classes.Icons} />
+                      </Button>
                     </div>
                   </TableCell>
                 ))}
@@ -447,6 +466,6 @@ const MoveEdit = ({selectedDiv}) => {
       </div>
     </ThemeProvider>
   );
-}
+};
 
-export default MoveEdit 
+export default MoveEdit;
