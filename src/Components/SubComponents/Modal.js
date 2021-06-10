@@ -12,6 +12,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import GoogleMapReact from "google-map-react";
 import MoveEdit from "./EditAppointments";
 import { usePlacesWidget } from "react-google-autocomplete";
+import GoogleMap from "./GoogleMap";
 
 const theme = createMuiTheme({
   breakpoints: {
