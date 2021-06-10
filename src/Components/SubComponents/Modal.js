@@ -290,7 +290,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               <TabPanel value={value} index={3} className={classes.dataPanel}>
                 <div className={classes.dataContent}>
                   <h3>Edit Your Information</h3>
-                  <MoveEdit selectedDiv={selectedDiv} />
+                  <MoveEdit selectedDiv={selectedDiv} apiKey= {{ key: process.env.REACT_APP_GOOGLE }} />
                 </div>
               </TabPanel>
             </div>

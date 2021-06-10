@@ -32,7 +32,7 @@ function App() {
             <Route path="/Appointments" component={Appointments}>
               <Appointments setSelectedDiv={setSelectedDiv} />
               {selectedDiv && (<div>
-                <Modal selectedDiv={selectedDiv} setSelectedDiv={setSelectedDiv}/>
+                <Modal selectedDiv={selectedDiv} setSelectedDiv={setSelectedDiv} />
                 </div>
               )}
             </Route>
