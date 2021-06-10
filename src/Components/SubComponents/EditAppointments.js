@@ -18,7 +18,6 @@ import { useFormik } from "formik";
 import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
 import { projectFirestore } from "../firebase";
-import { sizing } from '@material-ui/system';
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -52,13 +51,13 @@ const useStyles = makeStyles({
     justifyContent: "center",
     display: "flex",
     flexDirection: "column",
-    maxWidth: "800px",
+    width: "100%",
     maxHeight: "100%",
     marginLeft: "auto",
     marginRight: "auto",
     color: "#3A5666",
     [theme.breakpoints.only("md")] : {
-      width: "100vw",
+      width: "55vw",
     },
     [theme.breakpoints.down("sm")] : {
       textAlign: "center",
@@ -73,7 +72,7 @@ const useStyles = makeStyles({
     width: "100%",
     [theme.breakpoints.only("md")] : {
       display: "flex",
-      width: "100vw",
+      width: "90%",
       textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
@@ -93,6 +92,7 @@ const useStyles = makeStyles({
       width: "100%",
       display: "flex",
       flexDirection: "column",
+      textAlign: "center",
     },
     [theme.breakpoints.down("sm")]: {
       display: "flex",
@@ -123,6 +123,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   FormDiv: {
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     [theme.breakpoints.only("md")] : {
@@ -156,11 +157,8 @@ const useStyles = makeStyles({
     color: "#EDF3F5",
     fontSize: "12px",
     [theme.breakpoints.down("sm")]: {
-        width: "50%",
+        width: "40%",
     },
-    [theme.breakpoints.up('lg')]: {        
-    maxWidth: "35%",
-    }
   },
   InputGroup: {
     backgroundColor: "white",
@@ -196,7 +194,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     textAlign: "left",
     color: "#474C4E",
-    width: "300px",
+    width: "750px",
     [theme.breakpoints.only("md")] : {
       marginLeft: "auto",
       marginRight: "auto",
@@ -274,7 +272,7 @@ const MoveEdit = ({selectedDiv}) => {
         .catch(error => {
             console.log(error)
         })
-    },[projectFirestore]);
+    },[selectedDiv.id]);
 
   const [items, setItems] = useState([
     { itemName: "Desks", quantity: 0 },
@@ -452,30 +450,3 @@ const MoveEdit = ({selectedDiv}) => {
 }
 
 export default MoveEdit 
-
-
-
-/*
-
-
-
-
-const EditAppointments = ({selectedDiv}) => {    
-  const { docs } = useFirestore("Customer Address");
-
-  docs
-    .doc(selectedDiv.id)
-    .get
-    .then(function(doc) {
-        if (doc.exists) {
-            console.log("Document Data:", doc.data())
-        } else {
-            console.log ("no such doc")
-        }
-    }).catch(function(error) {
-        console.log("error", error)
-    })
-}
-
-export default EditAppointments
-*/

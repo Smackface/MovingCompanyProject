@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     borderRadius: "20px",
     maxHeight: "100vh",
     [theme.breakpoints.up("lg")]: {
-      maxWidth: "50vw",
+      width: "75vw",
     },
     [theme.breakpoints.only("md")]: {
       width: "85vw",
@@ -161,7 +161,6 @@ function a11yProps(index) {
 }
 
 const Modal = ({ selectedDiv, setSelectedDiv }) => {
-  console.log("hi", selectedDiv.id)
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) setSelectedDiv(null);
   };
@@ -176,9 +175,8 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
     setSelectedDiv(null);
   };
 
-  console.log(selectedDiv.payload.origin.OriginGeometry.OriginLat);
 
-  const apiKey = process.env.REACT_APP_GOOGLE;
+  const myMapKey = process.env.REACT_APP_GOOGLE;
 
   const zoomProp = 8;
 
@@ -213,7 +211,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
 
             <div style={{ height: "200px", width: "100%" }}>
               <GoogleMapReact
-                bootstrapURLKeys={{ key: apiKey }}
+                bootstrapURLKeys={{ key: myMapKey }}
                 defaultZoom={zoomProp}
                 center={centerProp}
               >
@@ -291,7 +289,8 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               <TabPanel value={value} index={3} className={classes.dataPanel}>
                 <div className={classes.dataContent}>
                   <h3>Edit Your Information</h3>
-                  <MoveEdit selectedDiv={selectedDiv} className={classes.MoveEdit} />
+                  <MoveEdit selectedDiv={selectedDiv} className={classes.MoveEdit}
+                  apiKey={{key: process.env.REACT_APP_GOOGLE}} />
                 </div>
               </TabPanel>
             </div>
