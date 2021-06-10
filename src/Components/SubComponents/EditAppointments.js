@@ -18,6 +18,7 @@ import { useFormik } from "formik";
 import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
 import { projectFirestore } from "../firebase";
+import { sizing } from '@material-ui/system';
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -82,6 +83,7 @@ const useStyles = makeStyles({
       textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
+      width: "80%",
     }
   },
   TableHead: {
@@ -95,6 +97,8 @@ const useStyles = makeStyles({
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       flexDirection: "column",
+      width: "100%",
+      textAlign: "center",
     }
   },
   TableBody: {
@@ -148,11 +152,15 @@ const useStyles = makeStyles({
     marginRight: "auto",
     marginTop: "5px",
     marginBottom: "5px",
-    maxWidth: "35%",
     border: "0",
     color: "#EDF3F5",
     fontSize: "12px",
-    
+    [theme.breakpoints.down("sm")]: {
+        width: "50%",
+    },
+    [theme.breakpoints.up('lg')]: {        
+    maxWidth: "35%",
+    }
   },
   InputGroup: {
     backgroundColor: "white",
@@ -163,7 +171,7 @@ const useStyles = makeStyles({
     width: "100%",
     [theme.breakpoints.down("sm")] : {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "row",
     }
   },
   FormLabel: {
@@ -200,9 +208,11 @@ const useStyles = makeStyles({
     [theme.breakpoints.down("sm")] : {
       marginLeft: "auto",
       marginRight: "auto",
-      textAlign: "left",
+      textAlign: "center",
       alignItems: "center",
       justifyContent: "center",
+      width: "150px",
+      flexDirection: "column"
     }
   },
   ItemContainer: {
@@ -213,10 +223,11 @@ const useStyles = makeStyles({
     display: "flex",
   },
   InfoDiv: {
-    width: "12%",
+    width: "20%",
     marginRight: "20%",
     [theme.breakpoints.down("sm")] : {
-      marginRight: "50px",
+      marginRight: "0",
+      textAlign: "left",
     }
   },
   Button: {
@@ -226,6 +237,11 @@ const useStyles = makeStyles({
     borderRadius: "40px",
     backgroundColor: "#A2B8CE",
     height: "20px",
+    [theme.breakpoints.down("sm")]: {
+        width: "20px",
+        marginLeft: "0",
+        marginRight: "0",
+    }
   },
   Icons: {
     color: "#727E8A"
@@ -233,6 +249,10 @@ const useStyles = makeStyles({
   qtydiv: {
     marginLeft: "5px",
     marginRight: "5px",
+    [theme.breakpoints.down("sm")]:{
+        marginLeft: "0",
+        marginRight: "0",
+    }
   },
   FormSubmit: {
     textTransform: "initial",
@@ -399,10 +419,13 @@ const MoveEdit = ({selectedDiv}) => {
                     onChange={formik.handleChange}
                   >
                     <div className={classes.InfoDiv}>{items.itemName}</div>
+                    <div>
                     <Button
                       className={classes.Button}
                       onClick={() => handleQuantityDecrease(index)}
+                      size="small"
                       variant="outlined"
+                      width="20"
                     >
                       <RemoveSharpIcon className={classes.Icons} />
                     </Button>
@@ -411,9 +434,12 @@ const MoveEdit = ({selectedDiv}) => {
                       className={classes.Button}
                       onClick={() => handleQuantityIncrease(index)}
                       variant="outlined"
+                      size="small"
+                      width="20"
                     >
                       <AddSharpIcon className={classes.Icons} />
                     </Button>
+                    </div>
                   </TableCell>
                 ))}
               </TableBody>

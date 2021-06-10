@@ -48,6 +48,7 @@ const useStyles = makeStyles({
       width: "100vw",
       overflow: "auto",
       maxHeight: "100vh",
+      margin: "0",
     },
   },
   dataDisplay: {
@@ -226,7 +227,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
             <Tabs scrollButtons="auto" value={value} onChange={handleChange} className={classes.TabBar}>
               <Tab
                 className={classes.modalTabs}
-                icon={<PhoneIcon className={classes.HeroIcon2} />}
+                icon={<Hidden smDown><PhoneIcon className={classes.HeroIcon2} /></Hidden>}
                 label="Contact"
                 {...a11yProps(0)}
               >
@@ -234,19 +235,22 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               </Tab>
               <Tab
                 className={classes.modalTabs}
-                icon={<LocalShippingIcon className={classes.HeroIcon2} />}
+                icon={<Hidden smDown><LocalShippingIcon className={classes.HeroIcon2} /></Hidden>}
                 label="Items"
                 {...a11yProps(1)}
               ></Tab>
               <Tab
                 className={classes.modalTabs}
-                icon={<RoomIcon className={classes.HeroIcon2} />}
+                icon={<Hidden smDown>
+                  <RoomIcon className={classes.HeroIcon2}/>
+                  </Hidden>
+                }
                 label="Delivery"
                 {...a11yProps(2)}
               ></Tab>
               <Tab
                 className={classes.modalTabs}
-                icon={<EditIcon className={classes.HeroIcon2} />}
+                icon={<Hidden smDown><EditIcon className={classes.HeroIcon2} /></Hidden>}
                 label="Edit"
                 {...a11yProps(3)}
                 ></Tab>
