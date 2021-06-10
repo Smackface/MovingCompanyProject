@@ -177,7 +177,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
     setSelectedDiv(null);
   };
 
-  const myMapKey = process.env.REACT_APP_GOOGLE;
+  const myMapKey = process.env.REACT_APP_MAPS;
 
   const zoomProp = 8;
 
@@ -210,19 +210,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               <p>{selectedDiv.payload.destination.Destination}</p>
             </div>
 
-            <div style={{ height: "200px", width: "100%" }}>
-              <GoogleMapReact
-                bootstrapURLKeys={{ key: myMapKey }}
-                defaultZoom={zoomProp}
-                center={centerProp}
-              >
-                <RoomIcon
-                  lat={selectedDiv.payload.origin.OriginGeometry.OriginLat}
-                  lng={selectedDiv.payload.origin.OriginGeometry.OriginLng}
-                  label="My Marker"
-                />
-              </GoogleMapReact>
-            </div>
+
             <Tabs scrollButtons="auto" value={value} onChange={handleChange} className={classes.TabBar}>
               <Tab
                 className={classes.modalTabs}
@@ -301,3 +289,23 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
   );
 };
 export default Modal;
+
+
+/*                    Google Maps and Places APIs don't play together very well.
+
+            <div style={{ height: "200px", width: "100%" }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{ key: myMapKey }}
+                defaultZoom={zoomProp}
+                center={centerProp}
+              >
+                <RoomIcon
+                  lat={selectedDiv.payload.origin.OriginGeometry.OriginLat}
+                  lng={selectedDiv.payload.origin.OriginGeometry.OriginLng}
+                  label="My Marker"
+                />
+              </GoogleMapReact>
+            </div>
+
+
+            */

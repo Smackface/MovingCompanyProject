@@ -16,7 +16,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Switch>
-          <div className="App">
+          <div className="App"  >
             <Route path exact="/" component={LandingPage}>
               <LandingPage />
             </Route>
@@ -29,10 +29,10 @@ function App() {
             <Route path="/MoveSetUp" component={MoveSetUp}>
               <MoveSetUp />
             </Route>
-            <Route path="/Appointments" component={Appointments}>
-              <Appointments setSelectedDiv={setSelectedDiv} />
-              {selectedDiv && (<div>
-                <Modal selectedDiv={selectedDiv} setSelectedDiv={setSelectedDiv} />
+            <Route path="/Appointments" component={Appointments} >
+              <Appointments setSelectedDiv={setSelectedDiv}  />
+              {selectedDiv &&  (<div>
+                <Modal selectedDiv={selectedDiv} setSelectedDiv={setSelectedDiv}/>
                 </div>
               )}
             </Route>
