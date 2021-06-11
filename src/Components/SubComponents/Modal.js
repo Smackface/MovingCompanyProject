@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "firebase/firestore";
 import { Box, Hidden, makeStyles, Tab, Tabs, Button } from "@material-ui/core";
@@ -15,6 +15,8 @@ import { usePlacesWidget } from "react-google-autocomplete";
 import GoogleMap from "./GoogleMap";
 import StreetviewIcon from '@material-ui/icons/Streetview';
 import AppBar from '@material-ui/core/AppBar';
+import { projectFirestore } from "../firebase";
+import C from "../../Constants/Collections";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -176,7 +178,20 @@ function a11yProps(index) {
 }
 
 
-const Modal = ({ selectedDiv, setSelectedDiv }) => {
+const Modal = ({ selectedDiv, setSelectedDiv }) => {  
+//   useEffect(() => {
+//   projectFirestore
+//     .collection(C.customerAddress)
+//     .doc(selectedDiv.id)
+//     .get()
+//     .then((doc) => {
+//       console.log(doc.data());
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// }, [selectedDiv.id]);
+
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) setSelectedDiv(null);
   };
@@ -211,6 +226,13 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
             </Button>
           </Hidden>
           <div className={classes.dataDisplay}>
+            <Button type="button" 
+            onClick={(doc) => {
+              projectFirestore
+             .collection(C.customerAddress)
+             .doc(selectedDiv.id)
+             .delete({ doc })}
+           }>DELETE APPOINTMENT?</Button>
             <div className={classes.modalInfo}>
               <h2 className={classes.modalH2}>
                 <ContactPhoneIcon className={classes.HeroIcon2} /> Appointment
