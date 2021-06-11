@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
 import { createMuiTheme } from "@material-ui/core/styles";
 
-
 const theme = createMuiTheme({
   breakpoints: {
     values: {
@@ -18,7 +17,6 @@ const theme = createMuiTheme({
     },
   },
 });
-
 
 const useStyles = makeStyles({
   bodyDiv: {
@@ -35,13 +33,13 @@ const useStyles = makeStyles({
     fontSize: "26px",
     [theme.breakpoints.down("sm")]: {
       fontSize: "16px",
-    }
+    },
   },
   DeliveryH: {
     width: "10%",
     marginRight: "2%",
     [theme.breakpoints.down("sm")]: {
-      width: "25%"
+      width: "25%",
     },
   },
   dataDiv: {
@@ -58,11 +56,11 @@ const useStyles = makeStyles({
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
       padding: ".5%",
-      width: "110%"
+      width: "110%",
     },
     [theme.breakpoints.only("md")]: {
       width: "80vw",
-    }
+    },
   },
   dataInsideDiv: {
     width: "80%",
@@ -79,9 +77,9 @@ const useStyles = makeStyles({
   cardP: {
     textAlign: "left",
     textJustify: "center",
-    [theme.breakpoints.only("md")]:{
+    [theme.breakpoints.only("md")]: {
       width: "100%",
-    }
+    },
   },
   HeroIcon: {
     maxHeight: "1em",
@@ -90,19 +88,18 @@ const useStyles = makeStyles({
     minWidth: "50px",
     maxWidth: "20%",
     marginRight: "auto",
-  }
+  },
 });
-
 
 export const Appointments = ({ setSelectedDiv }) => {
   const classes = useStyles();
   const { docs } = useFirestore("Customer Address");
-  
+
   return (
     <div className={classes.bodyDiv}>
       <div>
         <div>
-          <div className={classes.header}>    
+          <div className={classes.header}>
             <Delivery className={classes.DeliveryH} />
             <h1 classname={classes.headerText}>Appointments</h1>
           </div>

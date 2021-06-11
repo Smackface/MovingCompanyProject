@@ -8,13 +8,13 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import RoomIcon from "@material-ui/icons/Room";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 import GoogleMapReact from "google-map-react";
 import MoveEdit from "./EditAppointments";
 import { usePlacesWidget } from "react-google-autocomplete";
 import GoogleMap from "./GoogleMap";
-import StreetviewIcon from '@material-ui/icons/Streetview';
-import AppBar from '@material-ui/core/AppBar';
+import StreetviewIcon from "@material-ui/icons/Streetview";
+import AppBar from "@material-ui/core/AppBar";
 import { projectFirestore } from "../firebase";
 import C from "../../Constants/Collections";
 
@@ -134,7 +134,7 @@ const useStyles = makeStyles({
   },
   AppBar: {
     [theme.breakpoints.down("sm")]: {
-      width: "90%",      
+      width: "90%",
     },
     [theme.breakpoints.only("md")]: {
       width: "95%",
@@ -143,7 +143,7 @@ const useStyles = makeStyles({
       width: "60%",
     },
     borderRadius: "40px",
-},
+  },
 });
 
 function TabPanel(props) {
@@ -164,57 +164,34 @@ function TabPanel(props) {
     </div>
   );
 }
-
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
-
 function a11yProps(index) {
   return {
     id: `tab-${index}`,
   };
 }
-
-
-const Modal = ({ selectedDiv, setSelectedDiv }) => {  
-//   useEffect(() => {
-//   projectFirestore
-//     .collection(C.customerAddress)
-//     .doc(selectedDiv.id)
-//     .get()
-//     .then((doc) => {
-//       console.log(doc.data());
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// }, [selectedDiv.id]);
-
+const Modal = ({ selectedDiv, setSelectedDiv }) => {
   const handleClick = (e) => {
     if (e.target.classList.contains("backdrop")) setSelectedDiv(null);
   };
   const classes = useStyles();
   const [value, setValue] = useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const handleClose = (e) => {
     setSelectedDiv(null);
   };
-
   const myMapKey = process.env.REACT_APP_MAPS;
-
   const zoomProp = 8;
-
   const centerProp = {
     lat: 35.5321,
     lng: -77.3766,
   };
-
 
   return (
     <div className="backdrop" onClick={handleClick}>
@@ -226,13 +203,17 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
             </Button>
           </Hidden>
           <div className={classes.dataDisplay}>
-            <Button type="button" 
-            onClick={(doc) => {
-              projectFirestore
-             .collection(C.customerAddress)
-             .doc(selectedDiv.id)
-             .delete({ doc })}
-           }>DELETE APPOINTMENT?</Button>
+            <Button
+              type="button"
+              onClick={(doc) => {
+                projectFirestore
+                  .collection(C.customerAddress)
+                  .doc(selectedDiv.id)
+                  .delete({ doc });
+              }}
+            >
+              DELETE APPOINTMENT?
+            </Button>
             <div className={classes.modalInfo}>
               <h2 className={classes.modalH2}>
                 <ContactPhoneIcon className={classes.HeroIcon2} /> Appointment
@@ -246,46 +227,71 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               </h2>
               <p>{selectedDiv.payload.destination.Destination}</p>
             </div>
-            
-          <AppBar position="static" color="default" className={classes.AppBar}>
-            <Tabs scrollButtons="auto" value={value} onChange={handleChange} className={classes.TabBar}
-            variant="scrollable">
-              <Tab
-                className={classes.modalTabs}
-                icon={<Hidden smDown><PhoneIcon className={classes.HeroIcon2} /></Hidden>}
-                label="Contact"
-                {...a11yProps(0)}
+            <AppBar
+              position="static"
+              color="default"
+              className={classes.AppBar}
+            >
+              <Tabs
+                scrollButtons="auto"
+                value={value}
+                onChange={handleChange}
+                className={classes.TabBar}
+                variant="scrollable"
               >
-                {" "}
-              </Tab>
-              <Tab
-                className={classes.modalTabs}
-                icon={<Hidden smDown><LocalShippingIcon className={classes.HeroIcon2} /></Hidden>}
-                label="Items"
-                {...a11yProps(1)}
-              ></Tab>
-              <Tab
-                className={classes.modalTabs}
-                icon={<Hidden smDown>
-                  <RoomIcon className={classes.HeroIcon2}/>
-                  </Hidden>
-                }
-                label="Delivery"
-                {...a11yProps(2)}
-              ></Tab>
-              <Tab
-                className={classes.modalTabs}
-                icon={<Hidden smDown><EditIcon className={classes.HeroIcon2} /></Hidden>}
-                label="Edit"
-                {...a11yProps(3)}
+                <Tab
+                  className={classes.modalTabs}
+                  icon={
+                    <Hidden smDown>
+                      <PhoneIcon className={classes.HeroIcon2} />
+                    </Hidden>
+                  }
+                  label="Contact"
+                  {...a11yProps(0)}
+                >
+                  {" "}
+                </Tab>
+                <Tab
+                  className={classes.modalTabs}
+                  icon={
+                    <Hidden smDown>
+                      <LocalShippingIcon className={classes.HeroIcon2} />
+                    </Hidden>
+                  }
+                  label="Items"
+                  {...a11yProps(1)}
                 ></Tab>
-              <Tab
-                className={classes.modalTabs}
-                icon={<Hidden smDown><StreetviewIcon className={classes.HeroIcon2} /></Hidden>}
-                label="Map"
-                {...a11yProps(4)}
+                <Tab
+                  className={classes.modalTabs}
+                  icon={
+                    <Hidden smDown>
+                      <RoomIcon className={classes.HeroIcon2} />
+                    </Hidden>
+                  }
+                  label="Delivery"
+                  {...a11yProps(2)}
                 ></Tab>
-            </Tabs>
+                <Tab
+                  className={classes.modalTabs}
+                  icon={
+                    <Hidden smDown>
+                      <EditIcon className={classes.HeroIcon2} />
+                    </Hidden>
+                  }
+                  label="Edit"
+                  {...a11yProps(3)}
+                ></Tab>
+                <Tab
+                  className={classes.modalTabs}
+                  icon={
+                    <Hidden smDown>
+                      <StreetviewIcon className={classes.HeroIcon2} />
+                    </Hidden>
+                  }
+                  label="Map"
+                  {...a11yProps(4)}
+                ></Tab>
+              </Tabs>
             </AppBar>
             <div className={classes.dataDiv}>
               <TabPanel value={value} index={0} className={classes.dataPanel}>
@@ -323,15 +329,20 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               <TabPanel value={value} index={3} className={classes.dataPanel}>
                 <div className={classes.dataContent}>
                   <h3>Edit Your Information</h3>
-                  <MoveEdit selectedDiv={selectedDiv} apiKey= {{ key: process.env.REACT_APP_GOOGLE }} />
+                  <MoveEdit
+                    selectedDiv={selectedDiv}
+                    apiKey={{ key: process.env.REACT_APP_GOOGLE }}
+                  />
                 </div>
               </TabPanel>
               <TabPanel value={value} index={4} className={classes.dataPanel}>
                 <div className={classes.dataContent}>
                   <h3>Map</h3>
-                  <GoogleMap selectedDiv={selectedDiv}
-                  className={classes.Map} 
-                  bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS }} />
+                  <GoogleMap
+                    selectedDiv={selectedDiv}
+                    className={classes.Map}
+                    bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS }}
+                  />
                 </div>
               </TabPanel>
             </div>
@@ -342,23 +353,3 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
   );
 };
 export default Modal;
-
-
-/*                    Google Maps and Places APIs don't play together very well.
-
-            <div style={{ height: "200px", width: "100%" }}>
-              <GoogleMapReact
-                bootstrapURLKeys={{ key: myMapKey }}
-                defaultZoom={zoomProp}
-                center={centerProp}
-              >
-                <RoomIcon
-                  lat={selectedDiv.payload.origin.OriginGeometry.OriginLat}
-                  lng={selectedDiv.payload.origin.OriginGeometry.OriginLng}
-                  label="My Marker"
-                />
-              </GoogleMapReact>
-            </div>
-
-
-            */

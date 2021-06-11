@@ -263,8 +263,6 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 const MoveEdit = ({ selectedDiv }) => {
   useEffect(() => {
     projectFirestore
