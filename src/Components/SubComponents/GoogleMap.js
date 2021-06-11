@@ -14,7 +14,7 @@ export default function GoogleMap({selectedDiv}) {
       lng: -77.3766,
     };
     return (
-        <div style={{ height: "200px", width: "100%" }}>
+        <div style={{ height: "400px", width: "800px" }}>
 <GoogleMapReact
   bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS }}
   defaultZoom={zoomProp}

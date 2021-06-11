@@ -13,6 +13,8 @@ import GoogleMapReact from "google-map-react";
 import MoveEdit from "./EditAppointments";
 import { usePlacesWidget } from "react-google-autocomplete";
 import GoogleMap from "./GoogleMap";
+import StreetviewIcon from '@material-ui/icons/Streetview';
+import AppBar from '@material-ui/core/AppBar';
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -97,7 +99,6 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginRight: "auto",
     width: "100%",
-    overflow: "auto",
     maxHeight: "200px",
   },
   modalInfo: {
@@ -129,6 +130,18 @@ const useStyles = makeStyles({
     height: "50%",
     width: "50%",
   },
+  AppBar: {
+    [theme.breakpoints.down("sm")]: {
+      width: "90%",      
+    },
+    [theme.breakpoints.only("md")]: {
+      width: "95%",
+    },
+    [theme.breakpoints.up("lg")]: {
+      width: "60%",
+    },
+    borderRadius: "40px",
+},
 });
 
 function TabPanel(props) {
@@ -187,6 +200,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
     lng: -77.3766,
   };
 
+
   return (
     <div className="backdrop" onClick={handleClick}>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -210,9 +224,10 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
               </h2>
               <p>{selectedDiv.payload.destination.Destination}</p>
             </div>
-
-
-            <Tabs scrollButtons="auto" value={value} onChange={handleChange} className={classes.TabBar}>
+            
+          <AppBar position="static" color="default" className={classes.AppBar}>
+            <Tabs scrollButtons="auto" value={value} onChange={handleChange} className={classes.TabBar}
+            variant="scrollable">
               <Tab
                 className={classes.modalTabs}
                 icon={<Hidden smDown><PhoneIcon className={classes.HeroIcon2} /></Hidden>}
@@ -242,7 +257,14 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
                 label="Edit"
                 {...a11yProps(3)}
                 ></Tab>
+              <Tab
+                className={classes.modalTabs}
+                icon={<Hidden smDown><StreetviewIcon className={classes.HeroIcon2} /></Hidden>}
+                label="Map"
+                {...a11yProps(4)}
+                ></Tab>
             </Tabs>
+            </AppBar>
             <div className={classes.dataDiv}>
               <TabPanel value={value} index={0} className={classes.dataPanel}>
                 <div className={classes.dataContent}>
@@ -280,6 +302,14 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
                 <div className={classes.dataContent}>
                   <h3>Edit Your Information</h3>
                   <MoveEdit selectedDiv={selectedDiv} apiKey= {{ key: process.env.REACT_APP_GOOGLE }} />
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={4} className={classes.dataPanel}>
+                <div className={classes.dataContent}>
+                  <h3>Map</h3>
+                  <GoogleMap selectedDiv={selectedDiv}
+                  className={classes.Map} 
+                  bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS }} />
                 </div>
               </TabPanel>
             </div>
