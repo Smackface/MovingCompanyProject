@@ -1,10 +1,11 @@
 import React from "react";
 import useFirestore from "../Hooks/useFirestore";
 import "firebase/firestore";
-import { Grid, makeStyles, Hidden, Button } from "@material-ui/core";
+import { Grid, makeStyles, Hidden, Button, AppBar } from "@material-ui/core";
 import { motion } from "framer-motion";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
 import { createMuiTheme } from "@material-ui/core/styles";
+import Navigation from './SubComponents/Navigation'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -98,6 +99,7 @@ export const Appointments = ({ setSelectedDiv }) => {
   return (
     <div className={classes.bodyDiv}>
       <div>
+      <Navigation/>
         <div>
           <div className={classes.header}>
             <Delivery className={classes.DeliveryH} />

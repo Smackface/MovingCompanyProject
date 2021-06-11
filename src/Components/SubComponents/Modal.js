@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "firebase/firestore";
-import { Box, Hidden, makeStyles, Tab, Tabs, Button } from "@material-ui/core";
+import { Box, Hidden, makeStyles, Tab, Tabs, Button, AppBar } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import PhoneIcon from "@material-ui/icons/Phone";
@@ -14,7 +14,6 @@ import MoveEdit from "./EditAppointments";
 import { usePlacesWidget } from "react-google-autocomplete";
 import GoogleMap from "./GoogleMap";
 import StreetviewIcon from "@material-ui/icons/Streetview";
-import AppBar from "@material-ui/core/AppBar";
 import { projectFirestore } from "../firebase";
 import C from "../../Constants/Collections";
 
