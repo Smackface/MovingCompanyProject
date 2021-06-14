@@ -86,7 +86,7 @@ const useStyles = makeStyles({
     width: "350px",
     height: "40px",
     borderRadius: "15px",
-    backgroundColor: "#1074d8",
+    backgroundColor: "#72b2df",
     color: "white",
     textTransform: "initial",
     fontSize: "1em",
@@ -132,6 +132,12 @@ const useStyles = makeStyles({
   SocialLinks: {
     marginLeft: "5%",
     marginRight: "5%",
+  },
+  PasswordButton: {
+    textTransform: "initial",
+    backgroundColor: "#72b2df",
+    color: "white",
+    borderRadius: "15px",
   },
 });
 
@@ -208,7 +214,7 @@ export default function ForgotPassword() {
         </form>
         <div className={classes.BottomDiv}>
         <Link to="/SignIn">
-          <Button>Sign In</Button>
+          <Button className={classes.PasswordButton}>Sign In</Button>
         </Link>
           <div className={classes.DividerDiv}>
             <Divider className={classes.Divider} />

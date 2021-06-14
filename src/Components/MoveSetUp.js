@@ -330,19 +330,21 @@ export default function MoveSetUp() {
 
   return (
     <ThemeProvider theme={theme}>
-    <motion.div
-    initial={{opacity: 0}}
-    animate={{opacity: 1}}
-    transition={{duration: .55}}>
+    <motion.div>
       {currentUser ? (<div className={classes.movegrid}>
       <Navigation />
+        <motion.div
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{delay: .7}}>
         <Delivery className={classes.Delivery} />
         <h1>Place an order</h1>
+        </motion.div>
         <form className={classes.FormDiv} onSubmit={formik.handleSubmit}>
           <motion.div className={classes.InputGrid}
-          initial={{y: '-100vh'}}
-          animate={{y: '0vh'}}
-          transition={{duration: .8}}>
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          transition={{delay: 1}}>
             <label className={classes.FormLabel}>Person to talk to</label>
             <div className={classes.InputGroup}>
               <TextField
@@ -388,9 +390,9 @@ export default function MoveSetUp() {
             </Button>
           </motion.div>
           <motion.div className={classes.MainContainer}
-          initial={{y: '100vh'}}
-          animate={{y: '0vh'}}
-          transition={{duration: .8}}>
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          transition={{delay: 1.3}}>
             <TableHead className={classes.TableHead}>
               Items to move
               <TableBody className={classes.TableBody}>

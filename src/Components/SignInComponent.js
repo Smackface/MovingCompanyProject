@@ -139,7 +139,7 @@ const useStyles = makeStyles({
     backgroundColor: "#72b2df",
     color: "white",
     borderRadius: "15px",
-  }
+  },
 });
 
 export default function SignInComponent() {

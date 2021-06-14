@@ -9,6 +9,7 @@ import MoveSetUp from "./Components/MoveSetUp";
 import {Appointments} from "./Components/Appointments";
 import Modal from "./Components/SubComponents/Modal"
 import ForgotPassword from './Components/ForgotPassword'
+import ProfileUpdate from "./Components/ProfileUpdate";
 
 function App() {
   const [selectedDiv, setSelectedDiv] = useState(null);
@@ -39,6 +40,9 @@ function App() {
             </Route>
             <Route path="/ForgotPassword" component={ForgotPassword}>
                 <ForgotPassword />
+            </Route>
+            <Route path="/ProfileUpdate" component={ProfileUpdate}>
+                <ProfileUpdate />
             </Route>
           </div>
         </Switch>

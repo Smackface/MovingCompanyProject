@@ -1,9 +1,6 @@
 import "../App.css";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import HeroBolt from "../Assets/HeroBolt.png";
-import HeroShieldCheck from "../Assets/HeroShieldCheck.png";
-import HeroCreditCard from "../Assets/credit-card.png";
 import RightArrow from "../Assets/HeroNarrowArrowRight.png";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
@@ -14,6 +11,7 @@ import { Link } from "react-router-dom";
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import CreditCardOutlinedIcon from '@material-ui/icons/CreditCardOutlined';
 import OfflineBoltOutlinedIcon from '@material-ui/icons/OfflineBoltOutlined';
+import { motion } from 'framer-motion'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -52,6 +50,12 @@ const useStyles = makeStyles({
     textAlign: "center",
     paddingBottom: "25%",
     paddingTop: "10%",
+    [theme.breakpoints.up("lg")]: {
+      clipPath: "polygon(0 0, 100% 0, 80% 100%, 0% 100%)",
+    },
+    [theme.breakpoints.down("sm")]: {
+      clipPath: "polygon(0 0, 100% 0, 100% 80%, 0% 100%)",
+    },
   },
   BodyDiv: {
     minWidth: "25vw",
@@ -177,9 +181,16 @@ const useStyles = makeStyles({
 export default function LandingPage() {
   const classes = useStyles();
   return (
+    <motion.div
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    transition={{duration: 1}}>
     <Grid container direction="row" className={classes.root}>
       <Grid item xs={12} lg={6} className={classes.HeroGrid}>
-        <div className={classes.HeroDiv}>
+        <motion.div className={classes.HeroDiv}
+        initial={{x: '-100vw'}}
+        animate={{x: '0vw'}}
+        transition={{duration: 1}}>
           <h1 className={classes.MainHeader}>
             Moving out
             <br /> was never
@@ -188,7 +199,7 @@ export default function LandingPage() {
           <h2 className={classes.SecondaryHeader}>
             We take care of the hard work.
           </h2>
-        </div>
+        </motion.div>
       </Grid>
       <Grid item xs={12} lg={6}>
         <div className={classes.BodyDiv}>
@@ -217,5 +228,6 @@ export default function LandingPage() {
         </div>
       </Grid>
     </Grid>
+    </motion.div>
   );
 }
