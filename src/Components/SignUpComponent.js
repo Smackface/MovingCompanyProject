@@ -14,6 +14,8 @@ import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router-dom";
 import Navigation from './SubComponents/Navigation'
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -136,6 +138,10 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
   },
+  SocialLinks: {
+    marginLeft: "5%",
+    marginRight: "5%",
+  },
 });
 
 export default function SignUpComponent() {
@@ -240,15 +246,21 @@ export default function SignUpComponent() {
             <Divider className={classes.Divider} />
           </div>
           <div className={classes.SocialMediaDiv}>
+          <a href="https://www.facebook.com/Moving-Mammoths-111032381211638" className={classes.SocialLinks}>
             <Button variant="outlined" className={classes.SocialMediaButton}>
               <Facebook className={classes.SocialMedia} />
             </Button>
+          </a>
+          <a href="https://www.instagram.com/movingmammoths/" className={classes.SocialLinks}>
             <Button variant="outlined" className={classes.SocialMediaButton}>
-              <Google className={classes.SocialMedia} />
+              <InstagramIcon className={classes.SocialMedia} />
             </Button>
+          </a>
+          <a href="https://twitter.com/movingmammoths" className={classes.SocialLinks}>
             <Button variant="outlined" className={classes.SocialMediaButton}>
-              <Apple className={classes.SocialMedia} />
+              <TwitterIcon className={classes.SocialMedia} />
             </Button>
+          </a>
           </div>
         </div>
       </div>
