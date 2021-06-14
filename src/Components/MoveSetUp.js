@@ -20,6 +20,7 @@ import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
 import { projectFirestore } from "./firebase";
 import { useHistory } from "react-router-dom";
 import Navigation from './SubComponents/Navigation'
+import { UseAuth } from "../Contexts/AuthContext";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -324,10 +325,12 @@ export default function MoveSetUp() {
       fields: ["formatted_address", "geometry.location"],
     },
   });
+  const {currentUser} = UseAuth()
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.movegrid}>
+    <div>
+      {currentUser ? (<div className={classes.movegrid}>
       <Navigation />
         <Delivery className={classes.Delivery} />
         <h1>Place an order</h1>
@@ -410,7 +413,8 @@ export default function MoveSetUp() {
             </TableHead>
           </div>
         </form>
-      </div>
+      </div>) : (history.push("/SignIn"))} 
+      </div>  
     </ThemeProvider>
   );
 }

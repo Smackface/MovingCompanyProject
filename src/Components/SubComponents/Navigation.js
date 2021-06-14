@@ -58,9 +58,6 @@ export default function Navigation() {
             {currentUser && (<Link className={classes.NavLink} to="/MoveSetUp">
                 <Button className={classes.NavButton}>Make An Appointment</Button>
             </Link>)}
-            <div className={classes.NavLink}>
-                <Button className={classes.NavButton}>Fun!</Button>
-            </div>
             </AppBar>           
         </div>
     )

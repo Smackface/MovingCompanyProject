@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { ReactComponent as Delivery } from "../Assets/delivery2.svg";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Navigation from './SubComponents/Navigation'
+import { UseAuth } from "../Contexts/AuthContext";
+import { useHistory } from 'react-router-dom'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -95,10 +97,12 @@ const useStyles = makeStyles({
 export const Appointments = ({ setSelectedDiv }) => {
   const classes = useStyles();
   const { docs } = useFirestore("Customer Address");
+  const { currentUser } = UseAuth()
+  const history = useHistory()
 
   return (
     <div className={classes.bodyDiv}>
-      <div>
+      {currentUser ? (<div>
       <Navigation/>
         <div>
           <div className={classes.header}>
@@ -197,7 +201,7 @@ export const Appointments = ({ setSelectedDiv }) => {
               ))}
           </Grid>
         </div>
-      </div>
+      </div>) : history.push("/SignIn")}
     </div>
   );
 };

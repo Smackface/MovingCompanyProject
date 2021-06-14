@@ -139,7 +139,6 @@ export default function SignInComponent() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    history.push("/MoveSetUp");
 
     try {
       setError("");
@@ -150,6 +149,7 @@ export default function SignInComponent() {
       setError("Failed To Sign In!");
     }
     setLoading(false);
+    history.push("/MoveSetUp");
   }
 
   function handleChange(e) {
