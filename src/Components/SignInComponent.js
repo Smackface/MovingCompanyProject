@@ -75,6 +75,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     marginTop: "auto",
     marginBottom: "10%",
+    textAlign: "center",
     [theme.breakpoints.down("md")]: {
       paddingBottom: "20px",
     },
@@ -87,7 +88,7 @@ const useStyles = makeStyles({
     width: "350px",
     height: "40px",
     borderRadius: "15px",
-    backgroundColor: "#1074d8",
+    backgroundColor: "#72b2df",
     color: "white",
     textTransform: "initial",
     fontSize: "1.4em",
@@ -133,6 +134,12 @@ const useStyles = makeStyles({
     marginLeft: "5%",
     marginRight: "5%",
   },
+  PasswordButton: {
+    textTransform: "initial",
+    backgroundColor: "#72b2df",
+    color: "white",
+    borderRadius: "15px",
+  }
 });
 
 export default function SignInComponent() {
@@ -216,6 +223,9 @@ export default function SignInComponent() {
           </Button>
         </form>
         <div className={classes.BottomDiv}>
+        <Link to="/ForgotPassword">
+          <Button className={classes.PasswordButton}>Forgot Password</Button>
+        </Link>
           <div className={classes.DividerDiv}>
             <Divider className={classes.Divider} />
             <p className={classes.DividerParagraph}>or</p>

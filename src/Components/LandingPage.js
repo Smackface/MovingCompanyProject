@@ -11,6 +11,9 @@ import Grid from "@material-ui/core/Grid";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
+import CreditCardOutlinedIcon from '@material-ui/icons/CreditCardOutlined';
+import OfflineBoltOutlinedIcon from '@material-ui/icons/OfflineBoltOutlined';
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -78,9 +81,14 @@ const useStyles = makeStyles({
       marginLeft: "20%",
       marginRight: "5%",
     },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "2.5em",
+    },
     marginLeft: "5%",
     marginRight: "5%",
     float: "left",
+    color: "red",
+    fontSize: "2em"
   },
   CTAButton: {
     [theme.breakpoints.down("sm")]: {
@@ -185,23 +193,15 @@ export default function LandingPage() {
       <Grid item xs={12} lg={6}>
         <div className={classes.BodyDiv}>
           <p className={classes.BodyParagraph}>
-            <img
-              src={HeroShieldCheck}
-              alt="Shield"
-              className={classes.HeroImages}
-            />
+          <VerifiedUserOutlinedIcon className={classes.HeroImages} />
             We will handle your belongings with the utmost in care.
           </p>
           <p className={classes.BodyParagraph}>
-            <img
-              src={HeroCreditCard}
-              alt="CreditCard"
-              className={classes.HeroImages}
-            />
+            <CreditCardOutlinedIcon className={classes.HeroImages} />
             Book our services now, and pay later.
           </p>
           <p className={classes.BodyParagraph}>
-            <img src={HeroBolt} alt="Bolt" className={classes.HeroImages} />
+          <OfflineBoltOutlinedIcon className={classes.HeroImages} />
             From start to finish, our process saves you time.
           </p>
           <Link to="/SignIn">

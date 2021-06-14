@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     NavButton: {
         marginLeft: "auto",
         marginRight: "auto",
-        backgroundColor: "RGB(238, 89, 89, 0.1)"
+        color: "RGB(238, 89, 89)"
     },
     NavLink: {
         marginLeft: "auto",

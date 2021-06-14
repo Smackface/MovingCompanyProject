@@ -209,6 +209,7 @@ const Modal = ({ selectedDiv, setSelectedDiv }) => {
                   .collection(C.customerAddress)
                   .doc(selectedDiv.id)
                   .delete({ doc });
+                  setSelectedDiv(null)
               }}
             >
               DELETE APPOINTMENT?

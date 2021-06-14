@@ -8,6 +8,7 @@ import { AuthProvider } from "./Contexts/AuthContext";
 import MoveSetUp from "./Components/MoveSetUp";
 import {Appointments} from "./Components/Appointments";
 import Modal from "./Components/SubComponents/Modal"
+import ForgotPassword from './Components/ForgotPassword'
 
 function App() {
   const [selectedDiv, setSelectedDiv] = useState(null);
@@ -35,6 +36,9 @@ function App() {
                 <Modal selectedDiv={selectedDiv} setSelectedDiv={setSelectedDiv}/>
                 </div>
               )}
+            </Route>
+            <Route path="/ForgotPassword" component={ForgotPassword}>
+                <ForgotPassword />
             </Route>
           </div>
         </Switch>

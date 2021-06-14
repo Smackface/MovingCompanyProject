@@ -9,14 +9,14 @@ import { Link, useLocation, matchPath } from "react-router-dom";
 
 const useStyles = makeStyles({
   SignUpTab: {
-    color: "#1074d8",
+    color: "#72b2df",
     fontSize: "1.3em",
     textTransform: "initial",
     marginRight: "auto",
     marginLeft: "auto",
   },
   SignInTab: {
-    color: "#1074d8",
+    color: "#72b2df",
     fontSize: "1.3em",
     textTransform: "initial",
     marginLeft: "auto",

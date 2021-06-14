@@ -83,15 +83,14 @@ const useStyles = makeStyles({
   SubmitButton: {
     marginTop: "20px",
     marginBottom: "20px",
-    paddingLeft: "10%",
-    paddingRight: "10%",
     width: "350px",
     height: "40px",
     borderRadius: "15px",
-    backgroundColor: "#72b2df",
+    backgroundColor: "#1074d8",
     color: "white",
     textTransform: "initial",
-    fontSize: "1.4em",
+    fontSize: "1em",
+    textAlign: "center",
   },
   SocialMedia: {
     minWidth: "40px",
@@ -123,16 +122,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
   },
-  Account: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.3em",
-    },
-    fontSize: "300%",
-  },
-  FormGroup: {
-    width: "100%",
-    alignItems: "center",
-  },
   Form: {
     width: "100%",
     height: "100%",
@@ -146,30 +135,28 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SignUpComponent() {
+export default function ForgotPassword() {
   const classes = useStyles();
-  const { register } = UseAuth();
+  const { resetPassword } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [message, setMessage] = useState('')
   let history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    history.push("/MoveSetUp");
-    if (password !== passwordConfirm) {
-      return setError("Passwords Do Not Match!");
-    }
 
     try {
+      setMessage('')
       setError("");
       setLoading(true);
-      await register(email, password);
+      await resetPassword(email);
+      setMessage('Check your inbox for further instructions.')
     } catch (e) {
       console.log(e);
-      setError("Failed To Create An Account!");
+      setError("Failed To Reset!");
     }
     setLoading(false);
   }
@@ -180,59 +167,34 @@ export default function SignUpComponent() {
   function handlePasswordChange(e) {
     setPassword(e.target.value);
   }
-  function handleConfirmChange(e) {
-    setPasswordConfirm(e.target.value);
-  }
 
   return (
     <motion.div className={classes.BodyDiv}
     initial={{opacity: 0}}
     animate={{opacity: 1}}
     transition={{duration: .5}}>
-      <Template className={classes.Template} />
+      <Template />
       <div className={classes.SignUpsDiv}>
       <Navigation />
-        <NavBar />
         <div className={classes.HeaderDiv}></div>
-        <h1 className={classes.Account}>Create an account</h1>
+        <h1>Reset Password</h1>
+        {error && (
+          <Alert variant="outlined" severity="error">
+            {error}
+          </Alert>
+        )}
+        {message && <Alert variant="outlined" severity="info">{message}</Alert>}
         <form className={classes.Form} onSubmit={handleSubmit}>
-          {error && (
-            <Alert variant="outlined" severity="error">
-              {error}
-            </Alert>
-          )}
-          <TextField
-            className={classes.TextField}
-            id="email"
-            variant="outlined"
-            placeholder="john@doe.com"
-            type="email"
-            value={email}
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            className={classes.TextField}
-            id="password"
-            variant="outlined"
-            label="Password"
-            placeholder="******"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            required
-          />
-          <TextField
-            className={classes.TextField}
-            id="password-confirm"
-            variant="outlined"
-            label="Confirm Password"
-            type="password"
-            placeholder="******"
-            value={passwordConfirm}
-            onChange={handleConfirmChange}
-            required
-          />
+        <TextField
+          className={classes.TextField}
+          id="email"
+          variant="outlined"
+          placeholder="john@doe.com"
+          type="email"
+          value={email}
+          onChange={handleChange}
+          required
+        />
           <Button
             className={classes.SubmitButton}
             disabled={loading}
@@ -241,10 +203,13 @@ export default function SignUpComponent() {
             size="large"
             type="submit"
           >
-            Sign Up
+            Reset Password
           </Button>
         </form>
         <div className={classes.BottomDiv}>
+        <Link to="/SignIn">
+          <Button>Sign In</Button>
+        </Link>
           <div className={classes.DividerDiv}>
             <Divider className={classes.Divider} />
             <p className={classes.DividerParagraph}>or</p>
