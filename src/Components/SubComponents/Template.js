@@ -3,6 +3,7 @@ import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 import "@fontsource/roboto/300.css";
 import { ReactComponent as Delivery } from "../../Assets/delivery2.svg";
+import { motion } from 'framer-motion'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -51,7 +52,12 @@ export default function Template() {
   return (
     <div className={classes.BodyDiv}>
       <div className={classes.TruckDiv}>
+      <motion.div 
+      initial={{x: '-100vw'}}
+      animate={{x: '0vw'}}
+      transition={{duration: 1}}>
         <Delivery className={classes.Delivery} />
+        </motion.div>
         <h2 className={classes.TruckText}>
           Moving out has never been{" "}
           <span className={classes.TruckTextE}>easier</span>

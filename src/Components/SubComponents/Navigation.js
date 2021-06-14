@@ -47,7 +47,9 @@ export default function Navigation() {
 
     const classes = useStyles()
     return (
-        <div className={classes.NavigationBar}>
+        <motion.div className={classes.NavigationBar}
+        initial={{opacity: .3}}
+        animate={{opacity: 1}}>
             <AppBar className={classes.AppBar}>
             <Link className={classes.NavLink} to="/">
                 <Button className={classes.NavButton} type="button">Home</Button>
@@ -58,8 +60,11 @@ export default function Navigation() {
             {currentUser && (<Link className={classes.NavLink} to="/MoveSetUp">
                 <Button className={classes.NavButton}>Make An Appointment</Button>
             </Link>)}
+            {currentUser && (<Link className={classes.NavLink} to="/Appointments">
+                <Button className={classes.NavButton}>Review Appointments</Button>
+            </Link>)}
             </AppBar>           
-        </div>
+        </motion.div>
     )
 }
 

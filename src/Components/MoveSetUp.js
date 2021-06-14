@@ -21,6 +21,7 @@ import { projectFirestore } from "./firebase";
 import { useHistory } from "react-router-dom";
 import Navigation from './SubComponents/Navigation'
 import { UseAuth } from "../Contexts/AuthContext";
+import { motion } from 'framer-motion'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -329,13 +330,19 @@ export default function MoveSetUp() {
 
   return (
     <ThemeProvider theme={theme}>
-    <div>
+    <motion.div
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    transition={{duration: .55}}>
       {currentUser ? (<div className={classes.movegrid}>
       <Navigation />
         <Delivery className={classes.Delivery} />
         <h1>Place an order</h1>
         <form className={classes.FormDiv} onSubmit={formik.handleSubmit}>
-          <div className={classes.InputGrid}>
+          <motion.div className={classes.InputGrid}
+          initial={{y: '-100vh'}}
+          animate={{y: '0vh'}}
+          transition={{duration: .8}}>
             <label className={classes.FormLabel}>Person to talk to</label>
             <div className={classes.InputGroup}>
               <TextField
@@ -379,8 +386,11 @@ export default function MoveSetUp() {
             <Button variant="outlined" type="button" onClick={formik.handleSubmit} className={classes.FormSubmit}>
               Submit
             </Button>
-          </div>
-          <div className={classes.MainContainer}>
+          </motion.div>
+          <motion.div className={classes.MainContainer}
+          initial={{y: '100vh'}}
+          animate={{y: '0vh'}}
+          transition={{duration: .8}}>
             <TableHead className={classes.TableHead}>
               Items to move
               <TableBody className={classes.TableBody}>
@@ -411,10 +421,10 @@ export default function MoveSetUp() {
                 ))}
               </TableBody>
             </TableHead>
-          </div>
+          </motion.div>
         </form>
       </div>) : (history.push("/SignIn"))} 
-      </div>  
+      </motion.div>  
     </ThemeProvider>
   );
 }

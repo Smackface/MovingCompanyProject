@@ -105,10 +105,13 @@ export const Appointments = ({ setSelectedDiv }) => {
       {currentUser ? (<div>
       <Navigation/>
         <div>
-          <div className={classes.header}>
+          <motion.div className={classes.header}
+          animate={{ x: 100, opacity: 1 }}
+          transition={{ duration: 0.65 }}
+          initial={{opacity: 0}}>
             <Delivery className={classes.DeliveryH} />
             <h1 classname={classes.headerText}>Appointments</h1>
-          </div>
+          </motion.div>
           <Grid container className={classes.AppointmentsGrid}>
             {docs &&
               docs.map((doc) => (
@@ -116,10 +119,12 @@ export const Appointments = ({ setSelectedDiv }) => {
                   xs={12}
                   key={doc.id}
                   className={classes.dataDiv}
-                  layout
                   onClick={() => setSelectedDiv(doc)}
                 >
-                  <div className={classes.dataInsideDiv}>
+                  <motion.div className={classes.dataInsideDiv}
+                  initial={{opacity: 0}}
+                  animate={{opacity: 1}}
+                  transition={{duration: .5}}>
                     {" "}
                     <p className={classes.cardP}>
                       <svg
@@ -182,7 +187,7 @@ export const Appointments = ({ setSelectedDiv }) => {
                       )}{" "}
                       items to move
                     </p>
-                  </div>
+                  </motion.div>
                   <svg
                     className={classes.cardMap}
                     fill="none"

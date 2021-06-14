@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import Navigation from './SubComponents/Navigation'
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import { motion } from 'framer-motion'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -183,7 +184,10 @@ export default function SignUpComponent() {
   }
 
   return (
-    <div className={classes.BodyDiv}>
+    <motion.div className={classes.BodyDiv}
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    transition={{duration: .5}}>
       <Template className={classes.Template} />
       <div className={classes.SignUpsDiv}>
       <Navigation />
@@ -264,6 +268,6 @@ export default function SignUpComponent() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
