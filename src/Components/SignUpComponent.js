@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { UseAuth } from "../Contexts/AuthContext";
 import Alert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router-dom";
+import Navigation from './SubComponents/Navigation'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -179,6 +180,7 @@ export default function SignUpComponent() {
     <div className={classes.BodyDiv}>
       <Template className={classes.Template} />
       <div className={classes.SignUpsDiv}>
+      <Navigation />
         <NavBar />
         <div className={classes.HeaderDiv}></div>
         <h1 className={classes.Account}>Create an account</h1>

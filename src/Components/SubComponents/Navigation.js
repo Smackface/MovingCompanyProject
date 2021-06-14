@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, AppBar, makeStyles } from '@material-ui/core'
 import { motion } from "framer-motion";
 import { Link, useHistory } from 'react-router-dom'
-import { useAuth } from '../../Contexts/AuthContext'
+import { UseAuth } from '../../Contexts/AuthContext'
 
 const useStyles = makeStyles({
     NavigationBar: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 export default function Navigation() {
     const [error, setError] = useState('')
     const history = useHistory()
-    const {currentUser} = useAuth()
+    const {currentUser, logout} = UseAuth()
 
 
     async function handleLogout() {
@@ -52,12 +52,12 @@ export default function Navigation() {
             <Link className={classes.NavLink} to="/">
                 <Button className={classes.NavButton} type="button">Home</Button>
             </Link>
-            <Link className={classes.NavLink} to="/SignIn">             
+            {currentUser && (<Link className={classes.NavLink} to="/SignIn">             
                 <Button onClick={handleLogout} className={classes.NavButton}>Log Out</Button>
-            </Link>
-            <Link className={classes.NavLink} to="/MoveSetUp">
+            </Link>)}
+            {currentUser && (<Link className={classes.NavLink} to="/MoveSetUp">
                 <Button className={classes.NavButton}>Make An Appointment</Button>
-            </Link>
+            </Link>)}
             <div className={classes.NavLink}>
                 <Button className={classes.NavButton}>Fun!</Button>
             </div>
@@ -65,3 +65,6 @@ export default function Navigation() {
         </div>
     )
 }
+
+
+

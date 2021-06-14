@@ -19,6 +19,7 @@ import AddSharpIcon from "@material-ui/icons/AddSharp";
 import RemoveSharpIcon from "@material-ui/icons/RemoveSharp";
 import { projectFirestore } from "./firebase";
 import { useHistory } from "react-router-dom";
+import Navigation from './SubComponents/Navigation'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -327,6 +328,7 @@ export default function MoveSetUp() {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.movegrid}>
+      <Navigation />
         <Delivery className={classes.Delivery} />
         <h1>Place an order</h1>
         <form className={classes.FormDiv} onSubmit={formik.handleSubmit}>
