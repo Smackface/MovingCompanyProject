@@ -38,7 +38,7 @@ export default function Navigation() {
     
         try {
             await logout()
-            history.pushState('/login')
+            history.push('/SignIn')
         } catch {
             setError("Failed to log out")
         }

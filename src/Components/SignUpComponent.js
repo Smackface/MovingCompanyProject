@@ -5,8 +5,6 @@ import NavBar from "./SubComponents/NavBar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Divider } from "@material-ui/core";
-import { ReactComponent as Google } from "../Assets/GOOGLogo.svg";
-import { ReactComponent as Apple } from "../Assets/AAPLLogo.svg";
 import { ReactComponent as Facebook } from "../Assets/FBLogo.svg";
 import Template from "./SubComponents/Template";
 import React, { useState } from "react";
@@ -17,6 +15,7 @@ import Navigation from './SubComponents/Navigation'
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import { motion } from 'framer-motion'
+import { projectFirestore } from "./firebase";
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -148,7 +147,7 @@ const useStyles = makeStyles({
 
 export default function SignUpComponent() {
   const classes = useStyles();
-  const { register } = UseAuth();
+  const { register, login, currentUser } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -156,23 +155,64 @@ export default function SignUpComponent() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   let history = useHistory();
 
+  
+  function AccountCreate() {
+    const promises=[]
+    setLoading(true)
+    setError("")
+    if (currentUser==null) {
+      promises.push(console.log("Hi"))      
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-    history.push("/MoveSetUp");
+    // history.push("/MoveSetUp");
     if (password !== passwordConfirm) {
       return setError("Passwords Do Not Match!");
     }
 
-    try {
-      setError("");
-      setLoading(true);
-      await register(email, password);
-    } catch (e) {
-      console.log(e);
-      setError("Failed To Create An Account!");
+    const promises=[]
+    setLoading(true)
+    setError("")
+    if (email, password) {
+      promises.push(register(email, password))
     }
-    setLoading(false);
+    Promise.all(promises)
+      .then(() => {
+        login(email, password)
+      })
+      .catch(() => {
+        setError("Failed To Create An Account!")
+        setLoading(false)
+      })
+      .then(() => {
+        console.log(currentUser)
+        setLoading(false)
+      })
+      .catch(() => {
+        setError("Failed To Store User!")
+        setLoading(false)
+      })
+
+    // try {
+    //   setError("");
+    //   setLoading(true);
+    //   await register(email, password);
+    //   await login(email, password);
+    // } catch (e) {
+    //   console.log(e);
+    //   setError("Failed To Create An Account!");
+    // } finally {
+    //     console.log(currentUser)
+    //     projectFirestore
+    //     .collection("Users")
+    //     .docs(currentUser)
+    //     .set({name: email})
+    // };
   }
+  
+
 
   function handleChange(e) {
     setEmail(e.target.value);

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { TextField, Button, Grid } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { UseAuth } from "../Contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import Navigation from "./SubComponents/Navigation";
 import Template from "./SubComponents/Template";
+import { projectFirestore } from "./firebase";
 
 const useStyles = makeStyles({
   UpdateRoot: {
@@ -40,40 +42,72 @@ const useStyles = makeStyles({
 
 export default function ProfileUpdate() {
   const classes = useStyles();
-  const { currentUser, updatePassword, updateEmail } = UseAuth();
+  const { currentUser, updatePassword, updateEmail, logout, setUsername } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [displayName, setDisplayName] = useState("")
   let history = useHistory();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (password !== passwordConfirm) {
-      return setError("Passwords Do Not Match!");
+  // function ProfileCreate() {
+  //   projectFirestore.collection("Users")
+  //   .doc(currentUser.uid)
+  //   .set({name: currentUser.email})
+  // }
+
+  async function handleLogout() {
+    setError('')
+
+    try {
+        await logout()
+    } catch {
+      await  setError("Failed to log out")
+    } finally {
+      history.push('/SignIn')
     }
+}
+  async function handlePasswordSubmit(e) {
+    e.preventDefault();
+
+    const promises=[];
+    setLoading(true);
+    setError("")
+    if (password) {
+      promises.push(updatePassword(password))
+    }
+    Promise.all(promises)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to update password")
+        setLoading(false)
+      })
+  }
+
+  async function handleProfileSubmit(e) {
+    e.preventDefault();
 
     const promises = [];
     setLoading(true);
     setError("");
-    if (email.value !== currentUser.email) {
-      promises.push(updateEmail(email.value));
+    if (email !== currentUser.email) {
+      promises.push(updateEmail(email));
     }
-    if (password.value) {
-      promises.push.toString(updatePassword(password.value));
+    if (displayName) {
+      promises.push(setUsername(displayName))
     }
 
     Promise.all(promises)
       .then(() => {
-        history.push("/SignIn");
+        setLoading(false);
       })
       .catch(() => {
         setError("Failed to update account");
-      })
-      .finally(() => {
         setLoading(false);
-      });
+      })
   }
   function handleChange(e) {
     setEmail(e.target.value);
@@ -84,7 +118,10 @@ export default function ProfileUpdate() {
   function handleConfirmChange(e) {
     setPasswordConfirm(e.target.value);
   }
-  console.log(email)
+  function handleDisplayNameChange(e) {
+    setDisplayName(e.target.value)
+  }
+  console.log(currentUser.uid)
 
   return (
     <div>
@@ -94,9 +131,14 @@ export default function ProfileUpdate() {
           <div className={classes.UpdateBody}>
             <Navigation />
             <h2 className={classes.UpdateHeader}>Update Profile</h2>
-            {JSON.stringify(currentUser.email)}
+            <Alert serverity="info">
+              <AlertTitle>Profile Data</AlertTitle>
+              Your Email: {JSON.stringify(currentUser.email)}
+              Your Name: {currentUser.displayName}
+            </Alert>
+            {error && <Alert severity="error">{JSON.stringify(error)}</Alert>}
             <Grid>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleProfileSubmit}>
                 <Grid item>
                   <TextField
                     className={classes.TextField}
@@ -106,10 +148,32 @@ export default function ProfileUpdate() {
                     type="email"
                     value={email}
                     onChange={handleChange}
-                    required
                     defaultValue={currentUser.email}
                   />
                 </Grid>
+                <Grid item>
+                  <TextField
+                    className={classes.TextField}
+                    id='email'
+                    variant='outlined'
+                    placeholder='Your Name'
+                    type='text'
+                    value={displayName}
+                    onChange={handleDisplayNameChange}
+                  />
+                </Grid>
+                <Button
+                  className={classes.SubmitButton}
+                  disabled={loading}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  type="submit"
+                >
+                  Update
+                </Button>
+              </form>
+              <form onSubmit={handlePasswordSubmit}>
                 <Grid item>
                   <TextField
                     className={classes.TextField}
