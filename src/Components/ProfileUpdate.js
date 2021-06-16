@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 
 export default function ProfileUpdate() {
   const classes = useStyles();
-  const { currentUser, updatePassword, updateEmail, logout, setUsername } = UseAuth();
+  const { currentUser, updatePassword, updateEmail, logout } = UseAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -50,12 +50,6 @@ export default function ProfileUpdate() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [displayName, setDisplayName] = useState("")
   let history = useHistory();
-
-  // function ProfileCreate() {
-  //   projectFirestore.collection("Users")
-  //   .doc(currentUser.uid)
-  //   .set({name: currentUser.email})
-  // }
 
   async function handleLogout() {
     setError('')
@@ -95,9 +89,6 @@ export default function ProfileUpdate() {
     setError("");
     if (email !== currentUser.email) {
       promises.push(updateEmail(email));
-    }
-    if (displayName) {
-      promises.push(setUsername(displayName))
     }
 
     Promise.all(promises)
@@ -154,7 +145,7 @@ export default function ProfileUpdate() {
                 <Grid item>
                   <TextField
                     className={classes.TextField}
-                    id='email'
+                    id='name'
                     variant='outlined'
                     placeholder='Your Name'
                     type='text'

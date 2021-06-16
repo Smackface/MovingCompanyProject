@@ -156,18 +156,10 @@ export default function SignUpComponent() {
   let history = useHistory();
 
   
-  function AccountCreate() {
-    const promises=[]
-    setLoading(true)
-    setError("")
-    if (currentUser==null) {
-      promises.push(console.log("Hi"))      
-    }
-  }
+
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // history.push("/MoveSetUp");
     if (password !== passwordConfirm) {
       return setError("Passwords Do Not Match!");
     }
@@ -176,7 +168,16 @@ export default function SignUpComponent() {
     setLoading(true)
     setError("")
     if (email, password) {
-      promises.push(register(email, password))
+      promises.push(register(email, password)
+      .then(credential => {
+        if (credential && credential.user) {
+          projectFirestore.collection("Users")
+          .doc(credential.user.uid)
+          .set({
+            name: ""
+          })
+        }
+      }) )
     }
     Promise.all(promises)
       .then(() => {
@@ -188,6 +189,7 @@ export default function SignUpComponent() {
       })
       .then(() => {
         console.log(currentUser)
+        history.push("/MoveSetUp");
         setLoading(false)
       })
       .catch(() => {
@@ -212,7 +214,6 @@ export default function SignUpComponent() {
     // };
   }
   
-
 
   function handleChange(e) {
     setEmail(e.target.value);
