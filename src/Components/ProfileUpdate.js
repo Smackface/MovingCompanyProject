@@ -51,6 +51,7 @@ export default function ProfileUpdate() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [displayName, setDisplayName] = useState("")
   const {docs} = useFirestore("Users")
+  const [myName, setMyName] = useState("")
   let history = useHistory();
 
   useEffect(() => {
@@ -65,6 +66,19 @@ export default function ProfileUpdate() {
         console.log(error);
       });
   }, [currentUser.uid]);
+
+  projectFirestore
+    .collection("Users")
+    .doc(currentUser.uid)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        // console.log("Document data:",  JSON.stringify(doc.data())),
+        setMyName(doc.data())
+      } else {
+        console.log("No such document!")
+      };
+    });
 
   async function handleLogout() {
     setError('')
@@ -127,7 +141,6 @@ export default function ProfileUpdate() {
   function handleDisplayNameChange(e) {
     setDisplayName(e.target.value)
   }
-  console.log(currentUser.uid)
 
   return (
     <div>
@@ -139,8 +152,9 @@ export default function ProfileUpdate() {
             <Alert severity="info">
               <AlertTitle>Profile Data</AlertTitle>
               Your Email: {JSON.stringify(currentUser.email)}
+              {JSON.stringify(myName.name)}
             </Alert>
-            {error && <Alert severity="error">{JSON.stringify(error)}</Alert>}
+            {error && <Alert severity="error">{JSON.stringify(error)}</Alert>}            
             <Grid>
               <form onSubmit={handleProfileSubmit}>
                 <Grid item>
