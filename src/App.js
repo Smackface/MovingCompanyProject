@@ -10,10 +10,10 @@ import {Appointments} from "./Components/Appointments";
 import Modal from "./Components/SubComponents/Modal"
 import ForgotPassword from './Components/ForgotPassword'
 import ProfileUpdate from "./Components/ProfileUpdate";
-import CreateAccount from "./Components/SubComponents/CreateAccount";
 
 function App() {
   const [selectedDiv, setSelectedDiv] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null)
 
   return (
     <AuthProvider>
@@ -43,10 +43,7 @@ function App() {
                 <ForgotPassword />
             </Route>
             <Route path="/ProfileUpdate" component={ProfileUpdate}>
-                <ProfileUpdate />
-            </Route>
-            <Route path="/CreateAccount" component={CreateAccount}>
-                <CreateAccount />
+                {selectedUser && <ProfileUpdate selectedUser={selectedUser} setSelectedUser={setSelectedUser} />}
             </Route>
           </div>
         </Switch>

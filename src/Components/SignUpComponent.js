@@ -163,7 +163,6 @@ export default function SignUpComponent() {
     if (password !== passwordConfirm) {
       return setError("Passwords Do Not Match!");
     }
-
     const promises=[]
     setLoading(true)
     setError("")

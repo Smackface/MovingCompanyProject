@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Grid } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import Navigation from "./SubComponents/Navigation";
 import Template from "./SubComponents/Template";
 import { projectFirestore } from "./firebase";
+import useFirestore from "../Hooks/useFirestore";
 
 const useStyles = makeStyles({
   UpdateRoot: {
@@ -49,7 +50,21 @@ export default function ProfileUpdate() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [displayName, setDisplayName] = useState("")
+  const {docs} = useFirestore("Users")
   let history = useHistory();
+
+  useEffect(() => {
+    projectFirestore
+      .collection("Users")
+      .doc(currentUser.uid)
+      .get()
+      .then((doc) => {
+        console.log(doc.data());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [currentUser.uid]);
 
   async function handleLogout() {
     setError('')
@@ -116,16 +131,14 @@ export default function ProfileUpdate() {
 
   return (
     <div>
-      {currentUser ? (
         <div className={classes.UpdateRoot}>
           <Template />
           <div className={classes.UpdateBody}>
             <Navigation />
             <h2 className={classes.UpdateHeader}>Update Profile</h2>
-            <Alert serverity="info">
+            <Alert severity="info">
               <AlertTitle>Profile Data</AlertTitle>
               Your Email: {JSON.stringify(currentUser.email)}
-              Your Name: {currentUser.displayName}
             </Alert>
             {error && <Alert severity="error">{JSON.stringify(error)}</Alert>}
             <Grid>
@@ -149,7 +162,6 @@ export default function ProfileUpdate() {
                     variant='outlined'
                     placeholder='Your Name'
                     type='text'
-                    value={displayName}
                     onChange={handleDisplayNameChange}
                   />
                 </Grid>
@@ -205,9 +217,6 @@ export default function ProfileUpdate() {
             </Grid>
           </div>
         </div>
-      ) : (
-        history.push("/SignIn")
-      )}
     </div>
   );
 }
