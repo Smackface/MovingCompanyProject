@@ -173,7 +173,9 @@ export default function SignUpComponent() {
           projectFirestore.collection("Users")
           .doc(credential.user.uid)
           .set({
-            name: ""
+            payload: {
+              myUserName: ""
+            }
           })
         }
       }) )
@@ -195,22 +197,6 @@ export default function SignUpComponent() {
         setError("Failed To Store User!")
         setLoading(false)
       })
-
-    // try {
-    //   setError("");
-    //   setLoading(true);
-    //   await register(email, password);
-    //   await login(email, password);
-    // } catch (e) {
-    //   console.log(e);
-    //   setError("Failed To Create An Account!");
-    // } finally {
-    //     console.log(currentUser)
-    //     projectFirestore
-    //     .collection("Users")
-    //     .docs(currentUser)
-    //     .set({name: email})
-    // };
   }
   
 
