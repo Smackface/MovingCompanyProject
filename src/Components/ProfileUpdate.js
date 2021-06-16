@@ -10,6 +10,7 @@ import { projectFirestore } from "./firebase";
 import useFirestore from "../Hooks/useFirestore";
 import { useFormik } from "formik";
 import PropTypes from "prop-types";
+import UploadForm from "./SubComponents/UploadForm";
 
 const useStyles = makeStyles({
   UpdateRoot: {
@@ -239,6 +240,8 @@ export default function ProfileUpdate() {
               className={classes.UpdateTabs} label="Your Name" {...a11yProps(1)}></Tab>
               <Tab
               className={classes.UpdateTabs} label="Your Password" {...a11yProps(2)}></Tab>
+              <Tab className={classes.UpdateTabs} label="Your Profile Image" {...a11yProps(3)}>
+              </Tab>
             </Tabs>
             <div>
             <TabPanel value={value} index={0} className={classes.ProfilePanel}>
@@ -330,6 +333,9 @@ export default function ProfileUpdate() {
                   </Button>
                 </Grid>
               </form>
+            </TabPanel>
+            <TabPanel value={value} index={3} className={classes.ProfilePanel}>
+              <UploadForm />
             </TabPanel>
             </div>
            </Grid>
