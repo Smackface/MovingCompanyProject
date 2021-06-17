@@ -174,9 +174,18 @@ export default function SignUpComponent() {
           .doc(credential.user.uid)
           .set({
             payload: {
-              myUserName: ""
+              myUserName: "",
             }
-          })
+          });
+          projectFirestore.collection("images")
+            .doc(credential.user.uid)
+            .set({
+              payload: {
+                url: {
+                  url: ""
+                }
+              }
+            })
         }
       }) )
     }

@@ -11,10 +11,31 @@ import useFirestore from "../Hooks/useFirestore";
 import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import UploadForm from "./SubComponents/UploadForm";
+import { motion } from "framer-motion";
+
+const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 760,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+});
 
 const useStyles = makeStyles({
   UpdateRoot: {
     display: "flex",
+    height: "125vh",
+    [theme.breakpoints.only("md")]: {
+      
+    },
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      width: "360px",
+    },
   },
   UpdateBody: {
     marginLeft: "auto",
@@ -23,6 +44,9 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     alignContent: "center",
+    textAlign: "center",
+  },
+  UpdateHeader: {
     textAlign: "center",
   },
   TextField: {
@@ -35,7 +59,8 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     paddingLeft: "10%",
     paddingRight: "10%",
-    width: "350px",
+    maxWidth: "350px",
+    width: "80%",
     height: "40px",
     borderRadius: "15px",
     backgroundColor: "#72b2df",
@@ -45,14 +70,28 @@ const useStyles = makeStyles({
   },
   ProfileAlert: {
     display: "flex",
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "50%",
+  },
+  DataAlert: {
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   ProfileGrid: {
     margin: "5%",
     boxShadow: "0px 0px 1px grey",
     borderRadius: "20px",
+    textAlign: "center",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "360px",
+    },
   },
   ProfileTabs: {
-    marginTop: "5%"
+    marginTop: "5%",
   },
   UpdateTabs: {
     marginTop: "5%",
@@ -61,7 +100,20 @@ const useStyles = makeStyles({
     marginTop: "5%",
     marginLeft: "2.5%",
     marginRight: "2.5%",
-  }
+  },
+  ProfilePicture: {
+    width: "400px",
+    height: "400px",
+    [theme.breakpoints.down("sm")]: {
+      width: "300px",
+      height: "300px",
+    },
+  },
+  AlertDiv: {
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
 });
 
 function TabPanel(props) {
@@ -102,7 +154,7 @@ export default function ProfileUpdate() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const { docs } = useFirestore("Users");
+  const { docs } = useFirestore("images");
   const [myName, setMyName] = useState({});
   let history = useHistory();
   const [value, setValue] = useState(0);
@@ -179,17 +231,31 @@ export default function ProfileUpdate() {
 
   async function handleProfileSubmit(e) {
     e.preventDefault();
-
+    const promises = [];
+    setLoading(true);
+    setError("");
+    if (displayName) {
+      promises.push(
+        projectFirestore.collection("Users").doc(currentUser.uid).update()
+      );
+    }
+    Promise.all(promises)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to update account");
+        setLoading(false);
+        console.log(error);
+      });
+  }
+  async function handleEmailChange(e) {
+    e.preventDefault();
     const promises = [];
     setLoading(true);
     setError("");
     if (email !== currentUser.email) {
       promises.push(updateEmail(email));
-    }
-    if (displayName) {
-      promises.push(
-        projectFirestore.collection("Users").doc(currentUser.uid).update()
-      );
     }
     Promise.all(promises)
       .then(() => {
@@ -217,110 +283,78 @@ export default function ProfileUpdate() {
         <Template />
         <div className={classes.UpdateBody}>
           <Navigation />
-          <h2 className={classes.UpdateHeader}>Update Profile</h2>
-          <Alert severity="info" className={classes.ProfileAlert}>
-            <AlertTitle>Profile Data</AlertTitle>
-            <div>
-              Your Email:{}
-              {JSON.stringify(currentUser.email)}
-            </div>
-            <div>
-              Your Name:{}
-              {JSON.stringify(myName)}
-            </div>
-          </Alert>
           {error && <Alert severity="error">{JSON.stringify(error)}</Alert>}
           <Grid className={classes.ProfileGrid}>
-            <Tabs value={value} 
-            onChange={handleTabChange}
-            className={classes.ProfileTabs}>
+            <h2 className={classes.UpdateHeader}>Update Profile</h2>
+            <Alert severity="info" className={classes.ProfileAlert}>
+              <AlertTitle className={classes.DataAlert}>
+                Profile Data
+              </AlertTitle>
+              <div className={classes.AlertDiv}>
+                Your Email:{}
+                {JSON.stringify(currentUser.email)}
+              </div>
+              <div className={classes.AlertDiv}>
+                Your Name:{}
+                {JSON.stringify(myName)}
+              </div>
+            </Alert>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              className={classes.ProfileTabs}
+              variant="scrollable"
+              scrollButtons="auto"
+            >
               <Tab
-              className={classes.UpdateTabs} label="Your Email" {...a11yProps(0)}></Tab>
+                className={classes.UpdateTabs}
+                label="Your Email"
+                {...a11yProps(0)}
+              ></Tab>
               <Tab
-              className={classes.UpdateTabs} label="Your Name" {...a11yProps(1)}></Tab>
+                className={classes.UpdateTabs}
+                label="Your Name"
+                {...a11yProps(1)}
+              ></Tab>
               <Tab
-              className={classes.UpdateTabs} label="Your Password" {...a11yProps(2)}></Tab>
-              <Tab className={classes.UpdateTabs} label="Your Profile Image" {...a11yProps(3)}>
-              </Tab>
+                className={classes.UpdateTabs}
+                label="Your Password"
+                {...a11yProps(2)}
+              ></Tab>
+              <Tab
+                className={classes.UpdateTabs}
+                label="Your Profile Image"
+                {...a11yProps(3)}
+              ></Tab>
             </Tabs>
             <div>
-            <TabPanel value={value} index={0} className={classes.ProfilePanel}>
-              <form onSubmit={handleProfileSubmit}>
-                <Grid item>
-                  <TextField
-                    className={classes.TextField}
-                    id="email"
-                    variant="outlined"
-                    placeholder="john@doe.com"
-                    type="email"
-                    value={email}
-                    onChange={handleChange}
-                    defaultValue={currentUser.email}
-                  />
-                </Grid>
-                <Button
-                  className={classes.SubmitButton}
-                  disabled={loading}
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  type="submit"
-                >
-                  Update
-                </Button>
-              </form>
-            </TabPanel>
-            <TabPanel value={value} index={1} className={classes.ProfilePanel}>
-              <form onSubmit={formik.handleSubmit}>
-                <Grid item>
-                  <TextField
-                    className={classes.TextField}
-                    id="myUserName"
-                    variant="outlined"
-                    placeholder="Your Name"
-                    type="text"
-                    onChange={formik.handleChange}
-                  />
-                </Grid>
-                <Button
-                  className={classes.SubmitButton}
-                  disabled={loading}
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  type="submit"
-                >
-                  Update
-                </Button>
-              </form>
-            </TabPanel>
-            <TabPanel value={value} index={2} className={classes.ProfilePanel}>
-              <form onSubmit={handlePasswordSubmit}>
-                <Grid item>
-                  <TextField
-                    className={classes.TextField}
-                    id="password"
-                    variant="outlined"
-                    label="Password"
-                    placeholder="Leave Blank to Keep Old"
-                    type="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    className={classes.TextField}
-                    id="password-confirm"
-                    variant="outlined"
-                    label="Confirm Password"
-                    type="password"
-                    placeholder="Leave Blank to Keep Old"
-                    value={passwordConfirm}
-                    onChange={handleConfirmChange}
-                  />
-                </Grid>
-                <Grid item>
+              <TabPanel
+                value={value}
+                index={0}
+                className={classes.ProfilePanel}
+              >
+                {docs &&
+                  docs.map((doc) => (
+                    <div key={currentUser.uid}>
+                      <img
+                        src={doc.payload.url.url}
+                        className={classes.ProfilePicture}
+                      ></img>
+                    </div>
+                  ))}
+                <form onSubmit={handleEmailChange}>
+                  <Grid item>
+                    <TextField
+                      className={classes.TextField}
+                      id="email"
+                      variant="outlined"
+                      placeholder="john@doe.com"
+                      type="email"
+                      value={email}
+                      onChange={handleChange}
+                      defaultValue={currentUser.email}
+                    />
+                  </Grid>
                   <Button
                     className={classes.SubmitButton}
                     disabled={loading}
@@ -331,14 +365,116 @@ export default function ProfileUpdate() {
                   >
                     Update
                   </Button>
-                </Grid>
-              </form>
-            </TabPanel>
-            <TabPanel value={value} index={3} className={classes.ProfilePanel}>
-              <UploadForm />
-            </TabPanel>
+                </form>
+              </TabPanel>
+              <TabPanel
+                value={value}
+                index={1}
+                className={classes.ProfilePanel}
+              >
+                {docs &&
+                  docs.map((doc) => (
+                    <div key={currentUser.uid}>
+                      <img
+                        src={doc.payload.url.url}
+                        className={classes.ProfilePicture}
+                      ></img>
+                    </div>
+                  ))}
+                <form onSubmit={formik.handleSubmit}>
+                  <Grid item>
+                    <TextField
+                      className={classes.TextField}
+                      id="myUserName"
+                      variant="outlined"
+                      placeholder="Your Name"
+                      type="text"
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
+                  <Button
+                    className={classes.SubmitButton}
+                    disabled={loading}
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    type="submit"
+                  >
+                    Update
+                  </Button>
+                </form>
+              </TabPanel>
+              <TabPanel
+                value={value}
+                index={2}
+                className={classes.ProfilePanel}
+              >
+                {docs &&
+                  docs.map((doc) => (
+                    <div key={currentUser.uid}>
+                      <img
+                        src={doc.payload.url.url}
+                        className={classes.ProfilePicture}
+                      ></img>
+                    </div>
+                  ))}
+                <form onSubmit={handlePasswordSubmit}>
+                  <Grid item>
+                    <TextField
+                      className={classes.TextField}
+                      id="password"
+                      variant="outlined"
+                      label="Password"
+                      placeholder="Leave Blank to Keep Old"
+                      type="password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      className={classes.TextField}
+                      id="password-confirm"
+                      variant="outlined"
+                      label="Confirm Password"
+                      type="password"
+                      placeholder="Leave Blank to Keep Old"
+                      value={passwordConfirm}
+                      onChange={handleConfirmChange}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      className={classes.SubmitButton}
+                      disabled={loading}
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      type="submit"
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                </form>
+              </TabPanel>
+              <TabPanel
+                value={value}
+                index={3}
+                className={classes.ProfilePanel}
+              >
+                {docs &&
+                  docs.map((doc) => (
+                    <div key={currentUser.uid}>
+                      <img
+                        src={doc.payload.url.url}
+                        className={classes.ProfilePicture}
+                      ></img>
+                    </div>
+                  ))}
+                <UploadForm currentUser={currentUser} />
+              </TabPanel>
             </div>
-           </Grid>
+          </Grid>
         </div>
       </div>
     </div>

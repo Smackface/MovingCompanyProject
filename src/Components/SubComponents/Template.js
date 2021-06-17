@@ -19,7 +19,8 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles({
   TruckDiv: {
-    height: "100vh",
+    minHeight: "100vh",
+    height: "100%",
     width: "33.5vw",
     alignItems: "center",
     backgroundColor: "#2b2323",
@@ -27,7 +28,11 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.only("md")]: {
+      height: "50vh",
+      width: "100vw",
+    },
+    [theme.breakpoints.down("sm")]: {
       height: "50vh",
       width: "100vw",
     },

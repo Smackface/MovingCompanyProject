@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { AlertTitle, Alert } from "@material-ui/lab";
+import { UseAuth } from "../../Contexts/AuthContext";
 
 const useStyles = makeStyles({
 })
 
-const UploadForm = () => {
+const UploadForm = ({currentUser}) => {
     const classes = useStyles()
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
@@ -17,6 +19,7 @@ const UploadForm = () => {
   
       if (selected && types.includes(selected.type)) {
         setFile(selected);
+        console.log(file)
         setError(null);
       } else {
         setFile(null);
@@ -28,7 +31,7 @@ const UploadForm = () => {
       <form>
         <input type="file" onChange={handleChange} />
         <div>
-          {error && <div className="error">{error}</div>}
+          {error && <Alert severity="error"><AlertTitle>{error}</AlertTitle></Alert>}
           {error && <div>{file.name}</div>}
           {file && <ProgressBar file={file} setFile={setFile} />}
         </div>

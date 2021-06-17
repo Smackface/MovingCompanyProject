@@ -1,12 +1,29 @@
 import React, { useState } from 'react'
-import { Button, AppBar, makeStyles } from '@material-ui/core'
+import { Button, AppBar} from '@material-ui/core'
 import { motion } from "framer-motion";
 import { Link, useHistory } from 'react-router-dom'
 import { UseAuth } from '../../Contexts/AuthContext'
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 760,
+        lg: 1280,
+        xl: 1920,
+      },
+    },
+  });
+  
 
 const useStyles = makeStyles({
     NavigationBar: {
         marginBottom: "5vh",
+        [theme.breakpoints.down("sm")]: {
+            width: "100vw",
+        },
     },
     AppBar: {
         display: "flex",
@@ -14,6 +31,9 @@ const useStyles = makeStyles({
         backgroundColor: "white",
         paddingLeft: "5%",
         paddingRight: "5%",
+        [theme.breakpoints.down("sm")]: {
+            flexDirection: "column",
+        },
     },
     NavButton: {
         marginLeft: "auto",
