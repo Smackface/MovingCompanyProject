@@ -10,8 +10,7 @@ const useStorage = (file) => {
 
   useEffect(() => {
     //references
-    const fileName = JSON.stringify(currentUser.uid)
-    const storageRef = projectStorage.ref(fileName);
+    const storageRef = projectStorage.ref(currentUser.uid);
 
     storageRef.put(file).on(
       "state_changed",

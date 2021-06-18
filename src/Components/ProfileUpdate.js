@@ -336,7 +336,9 @@ export default function ProfileUpdate() {
                 className={classes.ProfilePanel}
               >
                 {docs &&
-                  docs.map((doc) => (
+                  docs.filter( (item,index) => {
+                    if ( item.uid === currentUser.uid ) return true
+                  }).map((doc) => (
                     <div>
                       <img
                         src={doc.payload.url.url}
