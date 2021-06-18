@@ -158,6 +158,7 @@ export default function ProfileUpdate() {
   const [myName, setMyName] = useState({});
   let history = useHistory();
   const [value, setValue] = useState(0);
+  const [myPic, setMyPic] = useState(null)
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -228,6 +229,7 @@ export default function ProfileUpdate() {
         setLoading(false);
       });
   }
+
 
   async function handleProfileSubmit(e) {
     e.preventDefault();
@@ -335,7 +337,7 @@ export default function ProfileUpdate() {
               >
                 {docs &&
                   docs.map((doc) => (
-                    <div key={currentUser.uid}>
+                    <div>
                       <img
                         src={doc.payload.url.url}
                         className={classes.ProfilePicture}

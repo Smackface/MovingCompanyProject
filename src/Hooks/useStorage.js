@@ -34,7 +34,7 @@ const useStorage = (file) => {
         setUrl(url);
       }
     );
-  }, [file]);
+  }, [file, currentUser.uid]);
 
   return { progress, url, error };
 };
